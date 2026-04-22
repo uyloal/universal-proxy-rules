@@ -1,140 +1,204 @@
-# Proxy Rules Aggregation Engine
+# Universal Proxy Rules
 
-基于配置驱动 (Config as Code) 的代理规则与模板聚合引擎，支持 Clash Meta/Mihomo、Shadowrocket 等客户端。
+[![Build Status](https://github.com/Uyloal/universal-proxy-rules/workflows/Build%20and%20Release/badge.svg)](https://github.com/Uyloal/universal-proxy-rules/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 核心架构哲学
+A **Config-as-Code** driven proxy rules aggregation engine for Clash Meta/Mihomo and Shadowrocket. Fetches upstream rule sets, deduplicates them, and generates ready-to-use configuration templates.
 
-1. **彻底解耦**: 本仓库只存放「上游规则抓取逻辑」、「路由策略组配置」和「基础模板」。**绝对不含任何节点信息**
-2. **本地聚合**: 生成的动态配置文件作为模板下发，与用户的私密节点在客户端本地完成合体
-3. **配置驱动**: 所有策略组和上游地址由 `config/` 目录下的 YAML 文件动态驱动
+## Philosophy
 
-## 技术栈
+This project follows three core principles:
 
-- **Runtime**: Node.js 22+
-- **Package Manager**: pnpm
-- **Bundler**: tsdown (基于 Rolldown)
-- **Language**: TypeScript (ESM only)
-- **Dependencies**: 原生 `fetch`, `yaml` 包
+1. **Complete Decoupling**: This repository contains only rule aggregation logic and templates — **no proxy nodes are included**. Your node subscriptions remain private.
+2. **Local Composition**: Generated configuration templates are merged with your private nodes on the client-side using Merge/Script/Sub-Store.
+3. **Config-Driven**: All upstream sources and policy groups are defined in YAML files under `config/`, making changes trackable and reviewable.
 
-## 项目结构
+## Features
 
-```
-.
-├── config/                  # 配置驱动核心
-│   ├── upstreams.yaml       # 上游规则源管理
-│   └── policy-groups.yaml   # 策略组定义与路由规则
-├── templates/               # 基础模板 (无节点)
-│   ├── clash-base.yaml      # Clash 网络底层配置
-│   └── shadowrocket-base.conf
-├── src/                     # TypeScript 核心逻辑
-│   ├── index.ts             # 主入口
-│   ├── fetcher.ts           # 并发下载与清洗
-│   ├── builder.ts           # 配置构建
-│   └── types.ts             # 类型定义
-├── .github/workflows/
-│   └── deploy.yml           # 自动化发布
-├── package.json
-├── tsdown.config.ts         # 构建配置
-└── tsconfig.json
-```
+- **Multi-Source Aggregation**: Fetch from multiple URLs per rule set (GitHub + CDNs) and merge automatically
+- **Smart Deduplication**: Cross-source deduplication with 300k+ rules support
+- **Zero Runtime Dependencies**: Generated configs use `inline` rule-providers, no external downloads needed at runtime
+- **Dual Format Output**: Both Clash (YAML) and Shadowrocket (.conf) configurations
+- **Automated Updates**: GitHub Actions builds twice daily (00:00 & 12:00 UTC)
+- **Dual Publishing**: GitHub Releases (ZIP) + `release` branch (raw links)
 
-## 快速开始
+## Supported Services
+
+| Category | Services |
+|----------|----------|
+| **AI** | OpenAI, Gemini, Claude |
+| **Streaming** | YouTube, Netflix, Disney+, HBO, Spotify, TikTok, BiliBili |
+| **Social** | Telegram, Twitter/X, Facebook, Discord, Reddit, WeChat, Zhihu |
+| **Gaming** | Steam, Epic, Sony, Nintendo |
+| **Tech** | GitHub, Google, Microsoft, Apple, Docker |
+| **Commerce** | PayPal, Amazon |
+| **China** | Baidu, Douyin, Douban, Sina |
+
+## Quick Start
+
+### For Users
+
+#### Clash Verge Rev / OpenClash / Stash
+
+1. Use the configuration URL:
+   ```
+   https://raw.githubusercontent.com/Uyloal/universal-proxy-rules/release/clash-full.yaml
+   ```
+
+2. Inject your nodes via **Merge**:
+   ```yaml
+   # In Clash Verge Rev → Profiles → Right-click → Edit → Merge
+   prepend:
+     proxies:
+       - name: "MyNode1"
+         type: ss
+         server: example.com
+         port: 8388
+         cipher: aes-256-gcm
+         password: "password"
+   ```
+
+3. Or use **Script** for dynamic injection from subscriptions.
+
+#### Shadowrocket
+
+Import `shadowrocket-full.conf` from the latest [Release](../../releases).
+
+### For Developers
 
 ```bash
-# 安装依赖
+# Clone the repository
+git clone https://github.com/Uyloal/universal-proxy-rules.git
+cd universal-proxy-rules
+
+# Install dependencies
 pnpm install
 
-# 开发模式 (直接运行 TS)
-pnpm dev
-
-# 构建项目
-pnpm build
-
-# 生成配置
+# Generate configurations
 pnpm generate
+
+# Output will be in ./output/
 ```
 
-## 配置说明
+## Architecture
 
-### upstreams.yaml - 上游规则源
+```
+config/upstreams.yaml ──┐
+config/policy-groups.yaml├─→ fetcher.ts ──→ builder.ts ──→ output/
+config/custom-rules.yaml ─┘                    (clash-full.yaml
+                                               shadowrocket-full.conf
+                                               rules/*.yaml)
+```
 
-定义从哪里获取规则，支持多 URL 聚合:
+### Key Components
+
+| File | Purpose |
+|------|---------|
+| `src/fetcher.ts` | Concurrent downloading with p-queue style control, YAML/text parsing, deduplication |
+| `src/builder.ts` | Template assembly, rule-provider construction, policy mapping |
+| `config/upstreams.yaml` | Define upstream rule sources (supports multiple URLs per group) |
+| `config/policy-groups.yaml` | Strategy groups with `include-all: true` and regex filters |
+| `config/custom-rules.yaml` | Custom rules (merge into upstream or standalone groups) |
+
+## Configuration Reference
+
+### Upstreams (`config/upstreams.yaml`)
 
 ```yaml
 upstreams:
-  ad-block:
-    name: "Ad Block"
+  ai:
+    name: "AI"
     behavior: domain
     urls:
-      - "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/.../OpenAI.list"
+      - "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script/.../OpenAI.list"
+    format: classical
     interval: 86400
 ```
 
-### policy-groups.yaml - 策略组与路由
-
-完全解耦节点，使用 `include-all: true` 和 `filter` 实现动态分组:
+### Policy Groups (`config/policy-groups.yaml`)
 
 ```yaml
 proxy-groups:
   - name: "🇭🇰 香港节点"
     type: url-test
-    include-all: true          # 包含所有节点
-    filter: "(?i)港|hk|hongkong" # 正则匹配节点名
-    url: 'https://www.gstatic.com/generate_204'
+    include-all: true
+    filter: "(?i)港|hk|hongkong"
+    url: "https://www.gstatic.com/generate_204"
     interval: 300
 
 rules:
   - type: upstream
-    upstream: "ad-block"
-    policy: "🛑 广告拦截"
+    upstream: "ai"
+    policy: "🤖 AI 服务"
 ```
 
-## 客户端使用方式
+### Custom Rules (`config/custom-rules.yaml`)
 
-### Clash Verge Rev / OpenClash
-
-1. 订阅 `release` 分支的 `clash-full.yaml`
-2. 在客户端使用 **Merge** 或 **Script** 注入节点
-
-**Merge 示例**:
 ```yaml
-# 在客户端创建 Merge 配置
-prepend:
-  proxies:
-    - { name: "节点1", ... }
-  proxy-providers:
-    my-sub:
-      type: http
-      url: "你的订阅链接"
+custom_rules:
+  my-company:
+    rules:
+      - DOMAIN-SUFFIX,internal.company.com
+      - DOMAIN,wiki.company.com
+    merge_into: "lan"  # Merge into existing group
+
+  personal-sites:
+    rules:
+      - DOMAIN-SUFFIX,personal-blog.com
+    # No merge_into = standalone group
 ```
 
-### Sub-Store 脚本操作
+## Automation
+
+GitHub Actions runs on schedule (`0 0,12 * * *`) and:
+
+1. Fetches fresh rules from all upstreams
+2. Parses and deduplicates (optimized for 100k+ rules with `for...of` loops)
+3. Generates configurations
+4. Creates a GitHub Release with ZIP attachment
+5. Pushes to `release` branch for raw URL access
+
+## Output Files
+
+| File | Description |
+|------|-------------|
+| `clash-full.yaml` | Complete Clash Meta/Mihomo config (10MB+, 300k+ rules) |
+| `shadowrocket-full.conf` | Shadowrocket configuration |
+| `rules/*.yaml` | Individual rule sets in YAML format |
+| `rules/*.txt` | Individual rule sets in text format |
+| `metadata.json` | Build statistics and timestamps |
+
+## Sub-Store Integration
 
 ```javascript
-// 操作: Script
+// Script Operator
 function operator(proxies = [], targetPlatform, context) {
-  const template = $content
-  template.proxies = proxies
+  const template = $content;
 
-  // 自动填充 include-all 策略组
+  // Auto-populate include-all groups
   template['proxy-groups'].forEach(g => {
     if (g['include-all'] && g.proxies) {
-      g.proxies.unshift(...proxies.map(p => p.name))
+      g.proxies.unshift(...proxies.map(p => p.name));
     }
-  })
+  });
 
-  return template
+  return template;
 }
 ```
 
-## 自动化发布
+## Contributing
 
-GitHub Actions 每天自动:
-1. 拉取上游规则
-2. 清洗去重
-3. 生成配置
-4. 推送到 `release` 分支
+1. Fork the repository
+2. Edit `config/upstreams.yaml` or `config/policy-groups.yaml`
+3. Test locally: `pnpm generate`
+4. Submit a Pull Request
+
+## Acknowledgments
+
+- Rule sources: [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)
+- Icons: [Koolson/Qure](https://github.com/Koolson/Qure)
 
 ## License
 
-MIT
+[MIT](LICENSE) © Uyloal
