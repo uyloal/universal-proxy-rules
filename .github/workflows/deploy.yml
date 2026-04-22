@@ -1,15 +1,9 @@
-name: Build and Deploy
+name: Build and Release
 
 on:
-  # 手动触发
   workflow_dispatch:
-  # 定时触发 (每天 UTC 00:00 和 12:00)
   schedule:
     - cron: '0 0,12 * * *'
-  # 推送时触发 (可选，关闭以避免频繁构建)
-  # push:
-  #   branches:
-  #     - main
 
 permissions:
   contents: write
@@ -36,26 +30,54 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build project
-        run: pnpm build
-
       - name: Generate configurations
         run: pnpm generate
 
-      - name: Prepare release branch
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=$(date -u +"%Y%m%d-%H%M%S")
+          COMMIT_SHA=$(git rev-parse --short HEAD)
+
+          # 打包 output 目录
+          cd output && zip -r ../proxy-rules-${VERSION}.zip . && cd ..
+
+          # 创建 release
+          gh release create "v${VERSION}" \
+            --title "Proxy Rules ${VERSION}" \
+            --notes "Auto-generated rules update
+
+          - Commit: ${COMMIT_SHA}
+          - Generated at: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+
+          ## Files
+
+          - \`clash-full.yaml\` - Complete Clash Meta/Mihomo config template (no proxies)
+          - \`rules/*.yaml\` - Standalone rule sets
+          - \`rules/*.txt\` - Plain text rule sets
+          - \`metadata.json\` - Build metadata
+
+          ## Usage
+
+          Download ZIP or use raw links above.
+          Inject your own proxy nodes via Merge/Script/Sub-Store." \
+            --target main
+
+          # 上传产物到 release
+          gh release upload "v${VERSION}" proxy-rules-${VERSION}.zip
+
+      - name: Push to release branch
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # 创建临时目录保存输出
-          mkdir -p /tmp/output
-          cp -r dist/output/* /tmp/output/
-
-          # 获取当前提交信息
+          # 保存 output
+          cp -r output /tmp/output
           COMMIT_SHA=$(git rev-parse --short HEAD)
           COMMIT_MSG=$(git log -1 --pretty=%B)
 
-          # 切换到 release 分支 (或创建)
+          # 切换到 release 分支
           git fetch origin release || true
           git checkout release 2>/dev/null || git checkout -b release
 
@@ -80,32 +102,24 @@ jobs:
 
           ## 使用方法
 
+          ### 直接引用链接
+
+          ```
+          https://raw.githubusercontent.com/${{ github.repository }}/release/clash-full.yaml
+          https://raw.githubusercontent.com/${{ github.repository }}/release/rules/ai.txt
+          ```
+
           ### Clash Verge Rev / OpenClash / Stash
 
           在客户端中使用 `clash-full.yaml` 作为配置模板，
           通过 Merge 或 Script 方式注入本地节点订阅。
 
-          ### Sub-Store 脚本操作
+          ## 上游配置仓库
 
-          ```javascript
-          // 在 Sub-Store 中合并节点
-          $content = YAML.parse($content);
-          $content.proxies = $subStore.proxies;
-          $content['proxy-groups'].forEach(g => {
-            if (g['include-all']) {
-              // 自动包含所有节点
-            }
-          });
-          ```
-
-          ## 上游规则源
-
-          配置仓库: https://github.com/${{ github.repository }}
-
-          生成时间: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          https://github.com/${{ github.repository }}
           EOF
 
-          # 提交更改
+          # 提交
           git add .
           if git diff --cached --quiet; then
             echo "No changes to commit"
@@ -122,5 +136,5 @@ jobs:
         if: always()
         with:
           name: generated-configs
-          path: dist/output/
+          path: output/
           retention-days: 7

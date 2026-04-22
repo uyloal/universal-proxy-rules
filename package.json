@@ -3,12 +3,9 @@
   "version": "1.0.0",
   "description": "Config-as-Code driven proxy rules aggregation engine for Clash Meta/Mihomo",
   "type": "module",
-  "main": "dist/index.js",
   "scripts": {
-    "build": "tsdown",
     "dev": "tsx src/index.ts",
-    "start": "node dist/index.js",
-    "generate": "node dist/index.js"
+    "generate": "tsx src/index.ts"
   },
   "keywords": [
     "clash",
@@ -22,7 +19,6 @@
   "packageManager": "pnpm@10.33.0",
   "devDependencies": {
     "@types/node": "^25.6.0",
-    "tsdown": "^0.21.9",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "yaml": "^2.8.3"

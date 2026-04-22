@@ -25,7 +25,7 @@ const __dirname = dirname(__filename)
 const ROOT_DIR = join(__dirname, '..')
 const CONFIG_DIR = join(ROOT_DIR, 'config')
 const TEMPLATES_DIR = join(ROOT_DIR, 'templates')
-const OUTPUT_DIR = join(ROOT_DIR, 'dist', 'output')
+const OUTPUT_DIR = join(ROOT_DIR, 'output')
 
 /**
  * 读取 YAML 配置文件

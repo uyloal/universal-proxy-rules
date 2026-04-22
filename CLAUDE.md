@@ -4,10 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- `pnpm dev` - Run generator in development mode (tsx, no build needed)
-- `pnpm build` - Build with tsdown (outputs to `dist/`)
-- `pnpm generate` - Run the built generator (outputs to `dist/output/`)
-- `pnpm start` - Run built generator
+- `pnpm dev` - Run generator in development mode (tsx)
+- `pnpm generate` - Generate configurations (outputs to `output/`)
 
 ## Architecture Overview
 
@@ -17,7 +15,7 @@ This is a **config-driven proxy rules aggregation engine** for Clash Meta/Mihomo
 
 ```
 config/upstreams.yaml ──┐
-config/policy-groups.yaml├─→ fetcher.ts ──→ builder.ts ──→ dist/output/
+config/policy-groups.yaml├─→ fetcher.ts ──→ builder.ts ──→ output/
 templates/clash-base.yaml─┘                  (full config + rules/)
 ```
 
@@ -25,7 +23,7 @@ templates/clash-base.yaml─┘                  (full config + rules/)
 
 2. **Builder** (`src/builder.ts`): Reads templates, constructs `rule-providers` (type: `inline` for zero external dependencies at runtime), maps rules to policies per `policy-groups.yaml`, outputs `clash-full.yaml`.
 
-3. **Output** (`dist/output/`):
+3. **Output** (`output/`):
    - `clash-full.yaml` - Complete config with inline rule-providers (10MB+ with 300k+ rules)
    - `rules/*.yaml` - Standalone rule sets for external reference
    - `metadata.json` - Build stats
@@ -42,7 +40,11 @@ templates/clash-base.yaml─┘                  (full config + rules/)
 
 `.github/workflows/deploy.yml` runs daily (cron `0 0,12 * * *`) to:
 1. Fetch fresh rules
-2. Build project
-3. Push `dist/output/` contents to `release` branch (squashed, no history)
+2. Generate configurations
+3. **Dual publishing:**
+   - Create GitHub Release with ZIP attachment (for download)
+   - Push to `release` branch (for direct raw links)
 
-Users subscribe to the `release` branch `clash-full.yaml`, not `main`.
+**Usage:**
+- Download ZIP from [Releases](../../releases)
+- Direct links: `https://raw.githubusercontent.com/OWNER/REPO/release/clash-full.yaml`

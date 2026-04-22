@@ -5,8 +5,6 @@
  *
  * 命令:
  *   pnpm dev          - 开发模式 (tsx)
- *   pnpm build        - 构建项目 (tsdown)
- *   pnpm start        - 运行构建后的版本
  *   pnpm generate     - 生成配置
  */
 
