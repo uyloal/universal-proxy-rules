@@ -1,98 +1,295 @@
 # 上游规则源配置 (Config-as-Code)
+# 基于 https://johnshall.github.io/Shadowrocket-ADBlock-Rules-Forever/lazy_group.conf 提取
 # 支持多URL聚合，同一规则组可从多个源获取并去重合并
 
 upstreams:
-  # 广告拦截规则
-  ad-block:
-    name: "Ad Block"
+  # ==================== AI 服务 ====================
+  ai:
+    name: "AI"
     behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
-      - "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+      - "https://raw.githubusercontent.com/iab0x00/ProxyRules/main/Rule/AI.txt"
+    format: classical
     interval: 86400
 
-  # 代理域名规则
-  proxy-domains:
-    name: "Proxy Domains"
+  # ==================== 流媒体 & 娱乐 ====================
+  youtube:
+    name: "YouTube"
     behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
-      - "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/YouTube/YouTube.list"
+    format: classical
     interval: 86400
 
-  # 直连域名规则
-  direct-domains:
-    name: "Direct Domains"
+  netflix:
+    name: "Netflix"
     behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
-      - "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Netflix/Netflix.list"
+    format: classical
     interval: 86400
 
-  # 中国大陆 IP 段
-  cn-ip:
-    name: "CN IP"
-    behavior: ipcidr
+  disney:
+    name: "Disney"
+    behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
-      - "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Disney/Disney.list"
+    format: classical
     interval: 86400
 
-  # 局域网地址
-  lan:
-    name: "LAN"
-    behavior: ipcidr
+  hbo:
+    name: "HBO"
+    behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/HBO/HBO.list"
+    format: classical
     interval: 86400
 
-  # Telegram 域名
+  spotify:
+    name: "Spotify"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Spotify/Spotify.list"
+    format: classical
+    interval: 86400
+
+  tiktok:
+    name: "TikTok"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/TikTok/TikTok.list"
+    format: classical
+    interval: 86400
+
+  bilibili:
+    name: "BiliBili"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/BiliBili/BiliBili.list"
+    format: classical
+    interval: 86400
+
+  netease-music:
+    name: "NetEase Music"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/NetEaseMusic/NetEaseMusic.list"
+    format: classical
+    interval: 86400
+
+  douyin:
+    name: "DouYin"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/DouYin/DouYin.list"
+    format: classical
+    interval: 86400
+
+  # ==================== 社交 & 通讯 ====================
   telegram:
     name: "Telegram"
     behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Telegram/Telegram.list"
+    format: classical
     interval: 86400
 
-  # 苹果服务
-  apple:
-    name: "Apple"
+  twitter:
+    name: "Twitter"
     behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Twitter/Twitter.list"
+    format: classical
     interval: 86400
 
-  # 谷歌服务
-  google:
-    name: "Google"
+  facebook:
+    name: "Facebook"
     behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Facebook/Facebook.list"
+    format: classical
     interval: 86400
 
-  # GitHub 服务
+  wechat:
+    name: "WeChat"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/WeChat/WeChat.list"
+    format: classical
+    interval: 86400
+
+  sina:
+    name: "Sina"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Sina/Sina.list"
+    format: classical
+    interval: 86400
+
+  zhihu:
+    name: "Zhihu"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Zhihu/Zhihu.list"
+    format: classical
+    interval: 86400
+
+  xiaohongshu:
+    name: "XiaoHongShu"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/XiaoHongShu/XiaoHongShu.list"
+    format: classical
+    interval: 86400
+
+  # ==================== 游戏 ====================
+  sony:
+    name: "Sony"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Sony/Sony.list"
+    format: classical
+    interval: 86400
+
+  nintendo:
+    name: "Nintendo"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Nintendo/Nintendo.list"
+    format: classical
+    interval: 86400
+
+  epic:
+    name: "Epic"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Epic/Epic.list"
+    format: classical
+    interval: 86400
+
+  steam-cn:
+    name: "Steam CN"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/SteamCN/SteamCN.list"
+    format: classical
+    interval: 86400
+
+  steam:
+    name: "Steam"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Steam/Steam.list"
+    format: classical
+    interval: 86400
+
+  gaming:
+    name: "Gaming"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Game/Game.list"
+    format: classical
+    interval: 86400
+
+  # ==================== 科技 & 云服务 ====================
   github:
     name: "GitHub"
     behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/GitHub/GitHub.list"
     format: classical
     interval: 86400
 
-  # 微软服务
   microsoft:
     name: "Microsoft"
     behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Microsoft/Microsoft.list"
+    format: classical
+    interval: 86400
+
+  google:
+    name: "Google"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list"
+    format: classical
+    interval: 86400
+
+  apple:
+    name: "Apple"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Apple/Apple.list"
+    format: classical
+    interval: 86400
+
+  # ==================== 电商 & 支付 ====================
+  paypal:
+    name: "PayPal"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/PayPal/PayPal.list"
+    format: classical
+    interval: 86400
+
+  amazon:
+    name: "Amazon"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Amazon/Amazon.list"
+    format: classical
+    interval: 86400
+
+  # ==================== 国内服务 ====================
+  baidu:
+    name: "Baidu"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Baidu/Baidu.list"
+    format: classical
+    interval: 86400
+
+  douban:
+    name: "DouBan"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/DouBan/DouBan.list"
+    format: classical
+    interval: 86400
+
+  # ==================== 网络 & GeoIP ====================
+  global:
+    name: "Global"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list"
+    format: classical
+    interval: 86400
+
+  china:
+    name: "China"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/China/China.list"
+    format: classical
+    interval: 86400
+
+  lan:
+    name: "LAN"
+    behavior: ipcidr
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Lan/Lan.list"
     format: classical
     interval: 86400
 
 # 清洗配置
 cleanup:
-  # 移除的正则模式 (避免复杂正则导致性能问题)
+  # 移除的正则模式
   exclude_patterns:
     - "^#"           # 注释行
+    - "^//"          # 注释行
+    - "^\\s*$"       # 空行
   # 去重前排序
   sort: true
   # 转换为小写

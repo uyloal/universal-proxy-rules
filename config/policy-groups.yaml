@@ -3,15 +3,13 @@
 
 # 策略组定义
 proxy-groups:
-  # 手动选择主出口
+  # ========== 核心节点选择 ==========
   - name: "🚀 节点选择"
     type: select
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png"
-    # 用户本地节点将自动注入到 include-all
     include-all: true
     default: "⚡ 自动测速"
 
-  # 自动测速组
   - name: "⚡ 自动测速"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Speedtest.png"
@@ -22,7 +20,6 @@ proxy-groups:
     lazy: true
     timeout: 5000
 
-  # 故障转移
   - name: "♻️ 故障转移"
     type: fallback
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png"
@@ -32,16 +29,7 @@ proxy-groups:
     lazy: true
     timeout: 5000
 
-  # 负载均衡 - 散列
-  - name: "⚖️ 负载均衡"
-    type: load-balance
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Balance.png"
-    include-all: true
-    strategy: consistent-hashing
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-
-  # 地区分组 - 香港 (通过正则过滤器匹配节点名)
+  # ========== 地区分组 ==========
   - name: "🇭🇰 香港节点"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"
@@ -51,17 +39,15 @@ proxy-groups:
     interval: 300
     tolerance: 50
 
-  # 地区分组 - 台湾
-  - name: "🇹🇼 台湾节点"
+  - name: "🇨🇳 台湾节点"
     type: url-test
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China.png"
     include-all: true
     filter: "(?i)台|tw|taiwan|tai wan"
     url: "https://www.gstatic.com/generate_204"
     interval: 300
     tolerance: 50
 
-  # 地区分组 - 日本
   - name: "🇯🇵 日本节点"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"
@@ -71,7 +57,6 @@ proxy-groups:
     interval: 300
     tolerance: 50
 
-  # 地区分组 - 新加坡
   - name: "🇸🇬 新加坡节点"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"
@@ -81,7 +66,6 @@ proxy-groups:
     interval: 300
     tolerance: 50
 
-  # 地区分组 - 美国
   - name: "🇺🇸 美国节点"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"
@@ -91,7 +75,86 @@ proxy-groups:
     interval: 300
     tolerance: 50
 
-  # 特定服务分组
+  - name: "🇪🇺 欧洲节点"
+    type: url-test
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Nations.png"
+    include-all: true
+    filter: "(?i)英|uk|德|de|法|fr|意|it|荷|nl|瑞|se|西|es|eu|europe|england|germany|france"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  # ========== 流媒体服务 ==========
+  - name: "🎬 流媒体"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Streaming.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇯🇵 日本节点"
+      - "🇺🇸 美国节点"
+      - "🇸🇬 新加坡节点"
+      - "🇪🇺 欧洲节点"
+    default: "🚀 节点选择"
+
+  - name: "🎥 Netflix"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "🇭🇰 香港节点"
+      - "🇨🇳 台湾节点"
+      - "🇯🇵 日本节点"
+      - "🇸🇬 新加坡节点"
+      - "🇪🇺 欧洲节点"
+    default: "🚀 节点选择"
+
+  - name: "📺 YouTube"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "🇭🇰 香港节点"
+      - "🇯🇵 日本节点"
+      - "🇸🇬 新加坡节点"
+    default: "🚀 节点选择"
+
+  - name: "🎵 TikTok"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "🇭🇰 香港节点"
+      - "🇸🇬 新加坡节点"
+    default: "🚀 节点选择"
+
+  - name: "📱 国内流媒体"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili.png"
+    proxies:
+      - "DIRECT"
+      - "🚀 节点选择"
+    default: "DIRECT"
+
+  # ========== AI 服务 ==========
+  - name: "🤖 AI 服务"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "🇯🇵 日本节点"
+      - "🇺🇸 美国节点"
+      - "🇸🇬 新加坡节点"
+      - "🇪🇺 欧洲节点"
+    default: "🚀 节点选择"
+
+  # ========== 社交服务 ==========
   - name: "📲 电报消息"
     type: select
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png"
@@ -102,6 +165,17 @@ proxy-groups:
       - "♻️ 故障转移"
     default: "🚀 节点选择"
 
+  - name: "🐦 社交媒体"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Twitter.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "🇭🇰 香港节点"
+      - "🇺🇸 美国节点"
+    default: "🚀 节点选择"
+
+  # ========== 科技 & 云服务 ==========
   - name: "🍎 苹果服务"
     type: select
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png"
@@ -138,6 +212,7 @@ proxy-groups:
       - "🚀 节点选择"
     default: "DIRECT"
 
+  # ========== 游戏平台 ==========
   - name: "🎮 游戏平台"
     type: select
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png"
@@ -147,14 +222,25 @@ proxy-groups:
       - "⚡ 自动测速"
     default: "DIRECT"
 
-  - name: "🛑 广告拦截"
+  # ========== 电商 & 支付 ==========
+  - name: "🛒 电商支付"
     type: select
-    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Advertising.png"
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/PayPal.png"
     proxies:
-      - "REJECT"
       - "DIRECT"
-    default: "REJECT"
+      - "🚀 节点选择"
+    default: "DIRECT"
 
+  # ========== 国内服务 ==========
+  - name: "🏠 国内服务"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China.png"
+    proxies:
+      - "DIRECT"
+      - "🚀 节点选择"
+    default: "DIRECT"
+
+  # ========== 兜底 ==========
   - name: "🎯 全球直连"
     type: select
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png"
@@ -172,86 +258,160 @@ proxy-groups:
       - "DIRECT"
     default: "🚀 节点选择"
 
-# 规则绑定配置
-# 定义规则如何映射到策略组
+# ========== 规则绑定配置 ==========
+# 定义规则如何映射到策略组 (优先级从上到下)
 rules:
-  # 自定义规则 (最高优先级)
-  - type: domain
-    payload:
-      - "localhost"
-      - "127.0.0.1"
-    policy: "DIRECT"
-
-  # 局域网规则
-  - type: ipcidr
-    payload:
-      - "192.168.0.0/16"
-      - "10.0.0.0/8"
-      - "172.16.0.0/12"
-      - "127.0.0.0/8"
-      - "100.64.0.0/10"
-      - "::1/128"
-      - "fc00::/7"
-      - "fe80::/10"
+  # ========== 最高优先级：网络基础 ==========
+  # 局域网
+  - type: upstream
+    upstream: "lan"
     policy: "🎯 全球直连"
 
-  # 广告拦截规则 (引用上游)
+  # ========== AI 服务 ==========
   - type: upstream
-    upstream: "ad-block"
-    policy: "🛑 广告拦截"
+    upstream: "ai"
+    policy: "🤖 AI 服务"
 
-  # 苹果服务
+  # ========== 流媒体服务 ==========
   - type: upstream
-    upstream: "apple"
-    policy: "🍎 苹果服务"
+    upstream: "youtube"
+    policy: "📺 YouTube"
 
-  # 微软服务
   - type: upstream
-    upstream: "microsoft"
-    policy: "Ⓜ️ 微软服务"
+    upstream: "netflix"
+    policy: "🎥 Netflix"
 
-  # GitHub
   - type: upstream
-    upstream: "github"
-    policy: "🐱 GitHub"
+    upstream: "disney"
+    policy: "🎬 流媒体"
 
-  # 谷歌服务
   - type: upstream
-    upstream: "google"
-    policy: "🔍 谷歌服务"
+    upstream: "hbo"
+    policy: "🎬 流媒体"
 
-  # Telegram
+  - type: upstream
+    upstream: "spotify"
+    policy: "🎬 流媒体"
+
+  - type: upstream
+    upstream: "tiktok"
+    policy: "🎵 TikTok"
+
+  - type: upstream
+    upstream: "bilibili"
+    policy: "📱 国内流媒体"
+
+  - type: upstream
+    upstream: "netease-music"
+    policy: "📱 国内流媒体"
+
+  - type: upstream
+    upstream: "douyin"
+    policy: "📱 国内流媒体"
+
+  # ========== 社交服务 ==========
   - type: upstream
     upstream: "telegram"
     policy: "📲 电报消息"
 
-  # 游戏平台 (自定义规则)
-  - type: domain
-    payload:
-      - "epicgames.com"
-      - "steamcommunity.com"
+  - type: upstream
+    upstream: "twitter"
+    policy: "🐦 社交媒体"
+
+  - type: upstream
+    upstream: "facebook"
+    policy: "🐦 社交媒体"
+
+  - type: upstream
+    upstream: "wechat"
+    policy: "🏠 国内服务"
+
+  - type: upstream
+    upstream: "sina"
+    policy: "🏠 国内服务"
+
+  - type: upstream
+    upstream: "zhihu"
+    policy: "🏠 国内服务"
+
+  - type: upstream
+    upstream: "xiaohongshu"
+    policy: "🏠 国内服务"
+
+  # ========== 游戏平台 ==========
+  - type: upstream
+    upstream: "sony"
     policy: "🎮 游戏平台"
 
-  # 代理域名
   - type: upstream
-    upstream: "proxy-domains"
+    upstream: "nintendo"
+    policy: "🎮 游戏平台"
+
+  - type: upstream
+    upstream: "epic"
+    policy: "🎮 游戏平台"
+
+  - type: upstream
+    upstream: "steam-cn"
+    policy: "🎯 全球直连"
+
+  - type: upstream
+    upstream: "steam"
+    policy: "🎮 游戏平台"
+
+  - type: upstream
+    upstream: "gaming"
+    policy: "🎮 游戏平台"
+
+  # ========== 科技 & 云服务 ==========
+  - type: upstream
+    upstream: "github"
+    policy: "🐱 GitHub"
+
+  - type: upstream
+    upstream: "google"
+    policy: "🔍 谷歌服务"
+
+  - type: upstream
+    upstream: "microsoft"
+    policy: "Ⓜ️ 微软服务"
+
+  - type: upstream
+    upstream: "apple"
+    policy: "🍎 苹果服务"
+
+  # ========== 电商 & 支付 ==========
+  - type: upstream
+    upstream: "paypal"
+    policy: "🛒 电商支付"
+
+  - type: upstream
+    upstream: "amazon"
+    policy: "🛒 电商支付"
+
+  # ========== 国内服务 ==========
+  - type: upstream
+    upstream: "baidu"
+    policy: "🏠 国内服务"
+
+  - type: upstream
+    upstream: "douban"
+    policy: "🏠 国内服务"
+
+  # ========== 网络 & GeoIP ==========
+  - type: upstream
+    upstream: "china"
+    policy: "🎯 全球直连"
+
+  - type: upstream
+    upstream: "global"
     policy: "🚀 节点选择"
 
-  # 直连域名
-  - type: upstream
-    upstream: "direct-domains"
-    policy: "🎯 全球直连"
-
-  # 中国大陆 IP
-  - type: upstream
-    upstream: "cn-ip"
-    policy: "🎯 全球直连"
-
-  # GEOIP 规则
+  # GEOIP 中国
   - type: geoip
     country: "CN"
     policy: "🎯 全球直连"
 
-  # 兜底规则
+  # ========== 兜底规则 ==========
   - type: match
     policy: "🐟 漏网之鱼"
