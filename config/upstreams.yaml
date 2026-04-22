@@ -8,7 +8,9 @@ upstreams:
     name: "AI"
     behavior: domain
     urls:
-      - "https://raw.githubusercontent.com/iab0x00/ProxyRules/main/Rule/AI.txt"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/OpenAI/OpenAI.list"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Gemini/Gemini.list"
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Claude/Claude.list"
     format: classical
     interval: 86400
 
@@ -142,6 +144,22 @@ upstreams:
     format: classical
     interval: 86400
 
+  discord:
+    name: "Discord"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Discord/Discord.list"
+    format: classical
+    interval: 86400
+
+  reddit:
+    name: "Reddit"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Reddit/Reddit.list"
+    format: classical
+    interval: 86400
+
   # ==================== 游戏 ====================
   sony:
     name: "Sony"
@@ -221,6 +239,30 @@ upstreams:
     behavior: domain
     urls:
       - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Apple/Apple.list"
+    format: classical
+    interval: 86400
+
+  google-drive:
+    name: "Google Drive"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/GoogleDrive/GoogleDrive.list"
+    format: classical
+    interval: 86400
+
+  onedrive:
+    name: "OneDrive"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/OneDrive/OneDrive.list"
+    format: classical
+    interval: 86400
+
+  docker:
+    name: "Docker"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Docker/Docker.list"
     format: classical
     interval: 86400
 
