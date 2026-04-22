@@ -1,0 +1,126 @@
+name: Build and Deploy
+
+on:
+  # 手动触发
+  workflow_dispatch:
+  # 定时触发 (每天 UTC 00:00 和 12:00)
+  schedule:
+    - cron: '0 0,12 * * *'
+  # 推送时触发 (可选，关闭以避免频繁构建)
+  # push:
+  #   branches:
+  #     - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Generate configurations
+        run: pnpm generate
+
+      - name: Prepare release branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # 创建临时目录保存输出
+          mkdir -p /tmp/output
+          cp -r dist/output/* /tmp/output/
+
+          # 获取当前提交信息
+          COMMIT_SHA=$(git rev-parse --short HEAD)
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+
+          # 切换到 release 分支 (或创建)
+          git fetch origin release || true
+          git checkout release 2>/dev/null || git checkout -b release
+
+          # 清空旧内容，保留 .git
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+
+          # 复制新内容
+          cp -r /tmp/output/* .
+
+          # 创建 README
+          cat > README.md << 'EOF'
+          # Proxy Rules Generated Configurations
+
+          此分支由 GitHub Actions 自动生成，请勿手动编辑。
+
+          ## 文件说明
+
+          - `clash-full.yaml` - 完整的 Clash Meta/Mihomo 配置模板 (无节点)
+          - `rules/*.yaml` - 独立规则集文件
+          - `rules/*.txt` - 纯文本格式规则集
+          - `metadata.json` - 构建元数据
+
+          ## 使用方法
+
+          ### Clash Verge Rev / OpenClash / Stash
+
+          在客户端中使用 `clash-full.yaml` 作为配置模板，
+          通过 Merge 或 Script 方式注入本地节点订阅。
+
+          ### Sub-Store 脚本操作
+
+          ```javascript
+          // 在 Sub-Store 中合并节点
+          $content = YAML.parse($content);
+          $content.proxies = $subStore.proxies;
+          $content['proxy-groups'].forEach(g => {
+            if (g['include-all']) {
+              // 自动包含所有节点
+            }
+          });
+          ```
+
+          ## 上游规则源
+
+          配置仓库: https://github.com/${{ github.repository }}
+
+          生成时间: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          EOF
+
+          # 提交更改
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: auto-generated rules [${COMMIT_SHA}]
+
+          Source commit: ${COMMIT_SHA}
+          Source message: ${COMMIT_MSG}"
+            git push origin release
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: generated-configs
+          path: dist/output/
+          retention-days: 7

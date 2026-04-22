@@ -1,0 +1,257 @@
+# 策略组与路由规则配置 (Config-as-Code)
+# 完全解耦节点信息，仅定义策略组结构和规则绑定
+
+# 策略组定义
+proxy-groups:
+  # 手动选择主出口
+  - name: "🚀 节点选择"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png"
+    # 用户本地节点将自动注入到 include-all
+    include-all: true
+    default: "⚡ 自动测速"
+
+  # 自动测速组
+  - name: "⚡ 自动测速"
+    type: url-test
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Speedtest.png"
+    include-all: true
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+    lazy: true
+    timeout: 5000
+
+  # 故障转移
+  - name: "♻️ 故障转移"
+    type: fallback
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png"
+    include-all: true
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    lazy: true
+    timeout: 5000
+
+  # 负载均衡 - 散列
+  - name: "⚖️ 负载均衡"
+    type: load-balance
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Balance.png"
+    include-all: true
+    strategy: consistent-hashing
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+
+  # 地区分组 - 香港 (通过正则过滤器匹配节点名)
+  - name: "🇭🇰 香港节点"
+    type: url-test
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"
+    include-all: true
+    filter: "(?i)港|hk|hongkong|hong kong"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  # 地区分组 - 台湾
+  - name: "🇹🇼 台湾节点"
+    type: url-test
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"
+    include-all: true
+    filter: "(?i)台|tw|taiwan|tai wan"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  # 地区分组 - 日本
+  - name: "🇯🇵 日本节点"
+    type: url-test
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"
+    include-all: true
+    filter: "(?i)日|jp|japan"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  # 地区分组 - 新加坡
+  - name: "🇸🇬 新加坡节点"
+    type: url-test
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"
+    include-all: true
+    filter: "(?i)新|坡|sg|singapore"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  # 地区分组 - 美国
+  - name: "🇺🇸 美国节点"
+    type: url-test
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"
+    include-all: true
+    filter: "(?i)美|us|usa|united states|america"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
+  # 特定服务分组
+  - name: "📲 电报消息"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "🇸🇬 新加坡节点"
+      - "♻️ 故障转移"
+    default: "🚀 节点选择"
+
+  - name: "🍎 苹果服务"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png"
+    proxies:
+      - "DIRECT"
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+    default: "DIRECT"
+
+  - name: "🔍 谷歌服务"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "🇭🇰 香港节点"
+      - "🇺🇸 美国节点"
+    default: "🚀 节点选择"
+
+  - name: "🐱 GitHub"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/GitHub.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "🇭🇰 香港节点"
+    default: "🚀 节点选择"
+
+  - name: "Ⓜ️ 微软服务"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png"
+    proxies:
+      - "DIRECT"
+      - "🚀 节点选择"
+    default: "DIRECT"
+
+  - name: "🎮 游戏平台"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png"
+    proxies:
+      - "DIRECT"
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+    default: "DIRECT"
+
+  - name: "🛑 广告拦截"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Advertising.png"
+    proxies:
+      - "REJECT"
+      - "DIRECT"
+    default: "REJECT"
+
+  - name: "🎯 全球直连"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png"
+    proxies:
+      - "DIRECT"
+      - "🚀 节点选择"
+    default: "DIRECT"
+
+  - name: "🐟 漏网之鱼"
+    type: select
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png"
+    proxies:
+      - "🚀 节点选择"
+      - "⚡ 自动测速"
+      - "DIRECT"
+    default: "🚀 节点选择"
+
+# 规则绑定配置
+# 定义规则如何映射到策略组
+rules:
+  # 自定义规则 (最高优先级)
+  - type: domain
+    payload:
+      - "localhost"
+      - "127.0.0.1"
+    policy: "DIRECT"
+
+  # 局域网规则
+  - type: ipcidr
+    payload:
+      - "192.168.0.0/16"
+      - "10.0.0.0/8"
+      - "172.16.0.0/12"
+      - "127.0.0.0/8"
+      - "100.64.0.0/10"
+      - "::1/128"
+      - "fc00::/7"
+      - "fe80::/10"
+    policy: "🎯 全球直连"
+
+  # 广告拦截规则 (引用上游)
+  - type: upstream
+    upstream: "ad-block"
+    policy: "🛑 广告拦截"
+
+  # 苹果服务
+  - type: upstream
+    upstream: "apple"
+    policy: "🍎 苹果服务"
+
+  # 微软服务
+  - type: upstream
+    upstream: "microsoft"
+    policy: "Ⓜ️ 微软服务"
+
+  # GitHub
+  - type: upstream
+    upstream: "github"
+    policy: "🐱 GitHub"
+
+  # 谷歌服务
+  - type: upstream
+    upstream: "google"
+    policy: "🔍 谷歌服务"
+
+  # Telegram
+  - type: upstream
+    upstream: "telegram"
+    policy: "📲 电报消息"
+
+  # 游戏平台 (自定义规则)
+  - type: domain
+    payload:
+      - "epicgames.com"
+      - "steamcommunity.com"
+    policy: "🎮 游戏平台"
+
+  # 代理域名
+  - type: upstream
+    upstream: "proxy-domains"
+    policy: "🚀 节点选择"
+
+  # 直连域名
+  - type: upstream
+    upstream: "direct-domains"
+    policy: "🎯 全球直连"
+
+  # 中国大陆 IP
+  - type: upstream
+    upstream: "cn-ip"
+    policy: "🎯 全球直连"
+
+  # GEOIP 规则
+  - type: geoip
+    country: "CN"
+    policy: "🎯 全球直连"
+
+  # 兜底规则
+  - type: match
+    policy: "🐟 漏网之鱼"

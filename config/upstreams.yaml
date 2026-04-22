@@ -1,0 +1,99 @@
+# 上游规则源配置 (Config-as-Code)
+# 支持多URL聚合，同一规则组可从多个源获取并去重合并
+
+upstreams:
+  # 广告拦截规则
+  ad-block:
+    name: "Ad Block"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
+      - "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+    interval: 86400
+
+  # 代理域名规则
+  proxy-domains:
+    name: "Proxy Domains"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt"
+      - "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
+    interval: 86400
+
+  # 直连域名规则
+  direct-domains:
+    name: "Direct Domains"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt"
+      - "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
+    interval: 86400
+
+  # 中国大陆 IP 段
+  cn-ip:
+    name: "CN IP"
+    behavior: ipcidr
+    urls:
+      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt"
+      - "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt"
+    interval: 86400
+
+  # 局域网地址
+  lan:
+    name: "LAN"
+    behavior: ipcidr
+    urls:
+      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt"
+    interval: 86400
+
+  # Telegram 域名
+  telegram:
+    name: "Telegram"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt"
+    interval: 86400
+
+  # 苹果服务
+  apple:
+    name: "Apple"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt"
+    interval: 86400
+
+  # 谷歌服务
+  google:
+    name: "Google"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt"
+    interval: 86400
+
+  # GitHub 服务
+  github:
+    name: "GitHub"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml"
+    format: classical
+    interval: 86400
+
+  # 微软服务
+  microsoft:
+    name: "Microsoft"
+    behavior: domain
+    urls:
+      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"
+    format: classical
+    interval: 86400
+
+# 清洗配置
+cleanup:
+  # 移除的正则模式 (避免复杂正则导致性能问题)
+  exclude_patterns:
+    - "^#"           # 注释行
+  # 去重前排序
+  sort: true
+  # 转换为小写
+  lowercase: true
