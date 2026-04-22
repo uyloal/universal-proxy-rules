@@ -12,11 +12,13 @@ import { fileURLToPath } from 'node:url'
 import {
   UpstreamsConfig,
   PolicyGroupsConfig,
+  CustomRulesConfig,
   ProxyGroup,
   Rule,
   RuleProviderEntry,
   GeneratedConfig,
   FetchResult,
+  MergedFetchResult,
 } from './types.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -117,8 +119,9 @@ function formatRuleToClash(rule: Rule): string | null {
  * 使用 http 类型从 release 分支获取规则文件
  */
 function buildRuleProviders(
-  fetchResults: Map<string, FetchResult>,
-  upstreamsConfig: UpstreamsConfig
+  fetchResults: Map<string, MergedFetchResult>,
+  upstreamsConfig: UpstreamsConfig,
+  customConfig: CustomRulesConfig
 ): Record<string, RuleProviderEntry> {
   const providers: Record<string, RuleProviderEntry> = {}
 
@@ -126,14 +129,19 @@ function buildRuleProviders(
     if (result.count === 0) continue
 
     const upstreamDef = upstreamsConfig.upstreams[name]
+    const customDef = customConfig?.custom_rules?.[name]
+
+    // 优先使用 upstream 定义，否则使用自定义规则定义
+    const behavior = upstreamDef?.behavior || customDef?.behavior || 'domain'
+    const interval = upstreamDef?.interval || customDef?.interval || 86400
 
     // 使用 http 方式引用外部规则文件 (Clash 使用 yaml 格式)
     providers[name] = {
       type: 'http',
-      behavior: upstreamDef?.behavior || 'domain',
+      behavior,
       url: `https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/${name}.yaml`,
       path: `./rules/${name}.yaml`,
-      interval: upstreamDef?.interval || 86400,
+      interval,
     }
   }
 
@@ -145,7 +153,7 @@ function buildRuleProviders(
  */
 function buildRules(
   policyConfig: PolicyGroupsConfig,
-  fetchResults: Map<string, FetchResult>
+  fetchResults: Map<string, MergedFetchResult>
 ): string[] {
   const rules: string[] = []
 
@@ -250,7 +258,7 @@ function formatRuleToShadowrocket(rule: Rule): string | null {
  */
 function buildShadowrocketRules(
   policyConfig: PolicyGroupsConfig,
-  fetchResults: Map<string, FetchResult>
+  fetchResults: Map<string, MergedFetchResult>
 ): string[] {
   const rules: string[] = []
 
@@ -372,7 +380,7 @@ function buildShadowrocketProxyGroups(policyConfig: PolicyGroupsConfig): string[
  */
 export async function buildShadowrocketConfig(
   policyConfig: PolicyGroupsConfig,
-  fetchResults: Map<string, FetchResult>
+  fetchResults: Map<string, MergedFetchResult>
 ): Promise<string> {
   // 1. 读取基础模板
   let baseConfig = await readTextTemplate('shadowrocket-base.conf')
@@ -402,13 +410,14 @@ export async function buildShadowrocketConfig(
 export async function buildClashConfig(
   upstreamsConfig: UpstreamsConfig,
   policyConfig: PolicyGroupsConfig,
-  fetchResults: Map<string, FetchResult>
+  customConfig: CustomRulesConfig,
+  fetchResults: Map<string, MergedFetchResult>
 ): Promise<GeneratedConfig> {
   // 1. 读取基础模板
   const baseConfig = await readBaseTemplate('clash-base.yaml')
 
   // 2. 构建 rule-providers (使用 http 类型)
-  const ruleProviders = buildRuleProviders(fetchResults, upstreamsConfig)
+  const ruleProviders = buildRuleProviders(fetchResults, upstreamsConfig, customConfig)
 
   // 3. 构建规则列表
   const rules = buildRules(policyConfig, fetchResults)
@@ -429,8 +438,9 @@ export async function buildClashConfig(
  * 输出: .yaml (Clash) 和 .list (Shadowrocket)
  */
 export async function exportStandaloneRules(
-  fetchResults: Map<string, FetchResult>,
-  upstreamsConfig: UpstreamsConfig
+  fetchResults: Map<string, MergedFetchResult>,
+  upstreamsConfig: UpstreamsConfig,
+  customConfig: CustomRulesConfig
 ): Promise<void> {
   const rulesDir = join(OUTPUT_DIR, 'rules')
   const generatedAt = new Date().toISOString()
@@ -439,13 +449,37 @@ export async function exportStandaloneRules(
     if (result.count === 0) continue
 
     const upstreamDef = upstreamsConfig.upstreams[name]
-    const metadataLines = [
-      `# Name: ${upstreamDef?.name || name}`,
-      `# Behavior: ${upstreamDef?.behavior || 'domain'}`,
-      `# Count: ${result.count}`,
-      `# Generated: ${generatedAt}`,
-      `# Source: ${upstreamDef?.urls?.[0] || 'custom'}`,
-    ]
+    const customDef = customConfig?.custom_rules?.[name]
+
+    const metadataLines: string[] = []
+
+    // 基础元数据
+    if (upstreamDef) {
+      metadataLines.push(`# Name: ${upstreamDef.name}`)
+      metadataLines.push(`# Behavior: ${upstreamDef.behavior || 'domain'}`)
+    } else if (customDef) {
+      metadataLines.push(`# Name: ${customDef.name}`)
+      metadataLines.push(`# Behavior: ${customDef.behavior || 'domain'}`)
+      metadataLines.push(`# Type: Custom`)
+    } else {
+      metadataLines.push(`# Name: ${name}`)
+      metadataLines.push(`# Behavior: domain`)
+    }
+
+    metadataLines.push(`# Count: ${result.count}`)
+    metadataLines.push(`# Generated: ${generatedAt}`)
+
+    // 添加合并来源信息
+    if (result.mergedFrom && result.mergedFrom.length > 0) {
+      metadataLines.push(`# Merged From: ${result.mergedFrom.join(', ')}`)
+    }
+
+    // 源信息
+    if (upstreamDef?.urls?.[0]) {
+      metadataLines.push(`# Source: ${upstreamDef.urls[0]}`)
+    } else if (customDef) {
+      metadataLines.push(`# Source: custom-rules.yaml`)
+    }
 
     // YAML 格式 (Clash)
     const yamlMetadata = metadataLines.join('\n')
@@ -457,7 +491,11 @@ export async function exportStandaloneRules(
     const listContent = result.rules.join('\n')
     await writeTextFile(join(rulesDir, `${name}.list`), `${listMetadata}\n${listContent}`)
 
-    console.log(`✓ Exported rules/${name}.yaml / ${name}.list (${result.count} rules)`)
+    // 输出信息
+    const extraInfo = result.mergedFrom && result.mergedFrom.length > 0
+      ? ` (merged: ${result.mergedFrom.join(', ')})`
+      : ''
+    console.log(`✓ Exported rules/${name}.yaml / ${name}.list (${result.count} rules)${extraInfo}`)
   }
 }
 
@@ -475,11 +513,25 @@ export async function buildAll(): Promise<void> {
     join(CONFIG_DIR, 'policy-groups.yaml')
   )
 
+  // 读取自定义规则配置 (如果不存在则使用空配置)
+  let customConfig: CustomRulesConfig = { custom_rules: {} }
+  try {
+    customConfig = await readYamlFile<CustomRulesConfig>(
+      join(CONFIG_DIR, 'custom-rules.yaml')
+    )
+    const customCount = Object.keys(customConfig?.custom_rules || {}).length
+    if (customCount > 0) {
+      console.log(`  ✓ Custom rules: ${customCount} sources`)
+    }
+  } catch {
+    // 文件不存在，使用空配置
+  }
+
   console.log(`  ✓ Upstreams: ${Object.keys(upstreamsConfig.upstreams).length} sources`)
   console.log(`  ✓ Policy groups: ${policyConfig['proxy-groups'].length} groups`)
 
   // 获取所有上游规则
-  const { fetchAllUpstreams } = await import('./fetcher.js')
+  const { fetchAllUpstreams, mergeCustomRules } = await import('./fetcher.js')
   console.log('\n🌐 Fetching upstream rules...')
 
   const fetchResults = await fetchAllUpstreams(
@@ -487,7 +539,7 @@ export async function buildAll(): Promise<void> {
     upstreamsConfig.cleanup?.exclude_patterns
   )
 
-  // 显示结果
+  // 显示上游结果
   for (const [name, result] of fetchResults) {
     if (result.count > 0) {
       console.log(`  ✓ ${name}: ${result.count} rules`)
@@ -501,9 +553,28 @@ export async function buildAll(): Promise<void> {
     }
   }
 
+  // 合并自定义规则
+  console.log('\n📝 Processing custom rules...')
+  const mergedResults = mergeCustomRules(fetchResults, customConfig)
+
+  // 统计合并后的结果
+  let mergedCount = 0
+  let standaloneCount = 0
+  for (const [, result] of mergedResults) {
+    if (result.isCustomOnly) {
+      standaloneCount++
+    } else if (result.mergedFrom && result.mergedFrom.length > 0) {
+      mergedCount++
+    }
+  }
+  if (mergedCount > 0 || standaloneCount > 0) {
+    console.log(`  ✓ Merged into upstreams: ${mergedCount} groups`)
+    console.log(`  ✓ Standalone groups: ${standaloneCount} groups`)
+  }
+
   // 构建 Clash 配置
   console.log('\n🔨 Building Clash configuration...')
-  const clashConfig = await buildClashConfig(upstreamsConfig, policyConfig, fetchResults)
+  const clashConfig = await buildClashConfig(upstreamsConfig, policyConfig, customConfig, mergedResults)
 
   // 输出完整配置
   const outputPath = join(OUTPUT_DIR, 'clash-full.yaml')
@@ -512,21 +583,25 @@ export async function buildAll(): Promise<void> {
 
   // 构建 Shadowrocket 配置
   console.log('\n🚀 Building Shadowrocket configuration...')
-  const shadowrocketConfig = await buildShadowrocketConfig(policyConfig, fetchResults)
+  const shadowrocketConfig = await buildShadowrocketConfig(policyConfig, mergedResults)
   const srOutputPath = join(OUTPUT_DIR, 'shadowrocket-full.conf')
   await writeTextFile(srOutputPath, shadowrocketConfig)
   console.log(`  ✓ ${srOutputPath}`)
 
   // 输出独立规则文件 (供外部引用)
   console.log('\n📦 Exporting standalone rule files...')
-  await exportStandaloneRules(fetchResults, upstreamsConfig)
+  await exportStandaloneRules(mergedResults, upstreamsConfig, customConfig)
 
   // 输出元数据
   const metadata = {
     generatedAt: new Date().toISOString(),
     upstreams: Object.fromEntries(
-      Array.from(fetchResults).map(([name, r]) => [name, r.count])
+      Array.from(mergedResults).map(([name, r]) => [name, r.count])
     ),
+    custom: {
+      merged: mergedCount,
+      standalone: standaloneCount,
+    },
   }
   await writeTextFile(
     join(OUTPUT_DIR, 'metadata.json'),

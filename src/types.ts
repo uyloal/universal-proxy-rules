@@ -181,6 +181,20 @@ export interface GeneratedConfig {
   rules?: string[]
 }
 
+// ==================== 自定义规则类型 ====================
+
+export interface CustomRuleSource {
+  name: string
+  behavior: 'domain' | 'ipcidr' | 'classical'
+  rules: string[]
+  merge_into?: string
+  interval?: number
+}
+
+export interface CustomRulesConfig {
+  custom_rules: Record<string, CustomRuleSource>
+}
+
 // ==================== Fetcher 结果 ====================
 
 export interface FetchedRule {
@@ -193,4 +207,9 @@ export interface FetchResult {
   rules: string[]
   count: number
   errors: string[]
+}
+
+export interface MergedFetchResult extends FetchResult {
+  mergedFrom?: string[]  // 记录合并了哪些自定义规则源
+  isCustomOnly?: boolean  // 标记是否只有自定义规则(无upstream)
 }

@@ -1,0 +1,27 @@
+# 自定义规则配置
+# 支持合并到 upstream 或单独成组
+#
+# 字段说明:
+#   name: 显示名称 (必填)
+#   behavior: 规则行为 domain/ipcidr/classical (默认：domain)
+#   rules: 规则列表 (必填)
+#   merge_into: 合并到指定 upstream (可选，不指定则单独成组)
+#   interval: 更新间隔 (仅单独成组时有效，默认：86400)
+
+custom_rules:
+  # 示例: 合并到现有 AI upstream (会合并到 ai.yaml 并去重)
+  # ai-custom:
+  #   name: "AI Custom"
+  #   behavior: domain
+  #   merge_into: ai
+  #   rules:
+  #     - "DOMAIN-SUFFIX,perplexity.ai"
+  #     - "DOMAIN-SUFFIX,poe.com"
+
+  # 示例: 单独成组的新规则
+  # dev-tools:
+  #   name: "Dev Tools"
+  #   behavior: domain
+  #   rules:
+  #     - "DOMAIN-SUFFIX,vercel.app"
+  #     - "DOMAIN-SUFFIX,netlify.app"

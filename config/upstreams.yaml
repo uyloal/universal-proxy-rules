@@ -1,6 +1,5 @@
 # 上游规则源配置 (Config-as-Code)
-# 基于 https://johnshall.github.io/Shadowrocket-ADBlock-Rules-Forever/lazy_group.conf 提取
-# 支持多URL聚合，同一规则组可从多个源获取并去重合并
+# 支持多 URL 聚合，同一规则组可从多个源获取并去重合并
 
 upstreams:
   # ==================== AI 服务 ====================

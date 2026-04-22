@@ -4,7 +4,7 @@
  * 使用原生 fetch API，零第三方 HTTP 依赖
  */
 
-import { UpstreamSource, FetchResult } from './types.js'
+import { UpstreamSource, FetchResult, CustomRulesConfig, CustomRuleSource, MergedFetchResult } from './types.js'
 
 // 并发控制配置
 const DEFAULT_CONCURRENCY = 5
@@ -305,4 +305,152 @@ export function exportRules(
     return rules.join('\n')
   }
   return rulesToYamlPayload(rules)
+}
+
+/**
+ * 解析单行规则，提取类型和值用于去重
+ */
+function parseRuleForDedup(rule: string): { type: string; value: string } {
+  const trimmed = rule.trim().toLowerCase()
+
+  // 已经是 DOMAIN-SUFFIX,example.com 格式
+  const commaIndex = trimmed.indexOf(',')
+  if (commaIndex > 0) {
+    const type = trimmed.substring(0, commaIndex).toUpperCase()
+    const rest = trimmed.substring(commaIndex + 1)
+
+    // 处理可能的 policy (第三个逗号后)
+    const secondComma = rest.indexOf(',')
+    if (secondComma > 0) {
+      return { type, value: rest.substring(0, secondComma) }
+    }
+    return { type, value: rest }
+  }
+
+  // 纯域名格式，默认 DOMAIN-SUFFIX
+  if (trimmed.includes('.')) {
+    return { type: 'DOMAIN-SUFFIX', value: trimmed }
+  }
+
+  return { type: 'UNKNOWN', value: trimmed }
+}
+
+/**
+ * 创建去重键
+ */
+function createDedupKey(type: string, value: string): string {
+  return `${type}:${value}`
+}
+
+/**
+ * 合并自定义规则到 upstream 结果
+ * - merge_into 指定的: 合并到对应 upstream，检查重复
+ * - 未指定的: 创建新的独立分组
+ */
+export function mergeCustomRules(
+  fetchResults: Map<string, FetchResult>,
+  customConfig: CustomRulesConfig
+): Map<string, MergedFetchResult> {
+  const mergedResults = new Map<string, MergedFetchResult>()
+
+  // 首先复制所有 upstream 结果
+  for (const [key, result] of fetchResults) {
+    mergedResults.set(key, {
+      ...result,
+      mergedFrom: [],
+      isCustomOnly: false,
+    })
+  }
+
+  if (!customConfig?.custom_rules) {
+    return mergedResults
+  }
+
+  // 处理每个自定义规则
+  for (const [customKey, customRule] of Object.entries(customConfig.custom_rules)) {
+    const customRulesList = customRule.rules || []
+
+    if (!customRulesList.length) {
+      continue
+    }
+
+    // 解析并清洗自定义规则
+    const parsedCustomRules: string[] = []
+    for (const rule of customRulesList) {
+      const trimmed = rule.trim()
+      if (!trimmed || trimmed.startsWith('#')) continue
+
+      // 标准化规则格式
+      const commaIndex = trimmed.indexOf(',')
+      if (commaIndex > 0) {
+        // 已经是规则格式
+        parsedCustomRules.push(trimmed.toLowerCase())
+      } else if (trimmed.includes('.')) {
+        // 纯域名，添加前缀
+        const behavior = customRule.behavior || 'domain'
+        parsedCustomRules.push(`${behavior.toUpperCase()},${trimmed.toLowerCase()}`)
+      }
+    }
+
+    if (customRule.merge_into) {
+      // 合并到指定 upstream
+      const targetUpstream = customRule.merge_into
+      const targetResult = mergedResults.get(targetUpstream)
+
+      if (targetResult) {
+        // 使用 Set 去重合并
+        const existingSet = new Set<string>()
+        for (const rule of targetResult.rules) {
+          const parsed = parseRuleForDedup(rule)
+          existingSet.add(createDedupKey(parsed.type, parsed.value))
+        }
+
+        let addedCount = 0
+        for (const rule of parsedCustomRules) {
+          const parsed = parseRuleForDedup(rule)
+          const key = createDedupKey(parsed.type, parsed.value)
+
+          if (!existingSet.has(key)) {
+            existingSet.add(key)
+            targetResult.rules.push(rule)
+            addedCount++
+          }
+        }
+
+        // 重新排序
+        targetResult.rules = targetResult.rules.toSorted()
+        targetResult.count = targetResult.rules.length
+        targetResult.mergedFrom = targetResult.mergedFrom || []
+        targetResult.mergedFrom.push(customKey)
+
+        console.log(`  ↪ Merged ${customKey} → ${targetUpstream} (+${addedCount} rules)`)
+      } else {
+        console.warn(`  ⚠ Custom rule "${customKey}" wants to merge into unknown upstream "${targetUpstream}", treating as standalone`)
+
+        // 作为独立组创建
+        mergedResults.set(customKey, {
+          upstreamName: customKey,
+          rules: parsedCustomRules.toSorted(),
+          count: parsedCustomRules.length,
+          errors: [],
+          mergedFrom: [customKey],
+          isCustomOnly: true,
+        })
+      }
+    } else {
+      // 单独成组
+      mergedResults.set(customKey, {
+        upstreamName: customKey,
+        rules: parsedCustomRules.toSorted(),
+        count: parsedCustomRules.length,
+        errors: [],
+        mergedFrom: [customKey],
+        isCustomOnly: true,
+      })
+
+      console.log(`  ↪ Created standalone group: ${customKey} (${parsedCustomRules.length} rules)`)
+    }
+  }
+
+  return mergedResults
 }
