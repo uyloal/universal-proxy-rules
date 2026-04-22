@@ -57,6 +57,14 @@ async function writeTextFile(path: string, content: string): Promise<void> {
 }
 
 /**
+ * 读取文本模板文件
+ */
+async function readTextTemplate(name: string): Promise<string> {
+  const path = join(TEMPLATES_DIR, name)
+  return readFile(path, 'utf-8')
+}
+
+/**
  * 读取基础模板
  */
 async function readBaseTemplate(name: string): Promise<Record<string, unknown>> {
@@ -106,20 +114,26 @@ function formatRuleToClash(rule: Rule): string | null {
 
 /**
  * 构建 Rule Providers
+ * 使用 http 类型从 release 分支获取规则文件
  */
 function buildRuleProviders(
-  fetchResults: Map<string, FetchResult>
+  fetchResults: Map<string, FetchResult>,
+  upstreamsConfig: UpstreamsConfig
 ): Record<string, RuleProviderEntry> {
   const providers: Record<string, RuleProviderEntry> = {}
 
   for (const [name, result] of fetchResults) {
     if (result.count === 0) continue
 
-    // 使用内联方式存储规则 (简化部署，无需额外 HTTP 请求)
+    const upstreamDef = upstreamsConfig.upstreams[name]
+
+    // 使用 http 方式引用外部规则文件 (Clash 使用 yaml 格式)
     providers[name] = {
-      type: 'inline',
-      behavior: 'domain', // 实际行为由规则内容决定
-      payload: result.rules,
+      type: 'http',
+      behavior: upstreamDef?.behavior || 'domain',
+      url: `https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/${name}.yaml`,
+      path: `./rules/${name}.yaml`,
+      interval: upstreamDef?.interval || 86400,
     }
   }
 
@@ -200,6 +214,189 @@ function buildRules(
 }
 
 /**
+ * 转换规则为 Shadowrocket 格式
+ */
+function formatRuleToShadowrocket(rule: Rule): string | null {
+  switch (rule.type) {
+    case 'domain':
+      // Shadowrocket 不支持多 payload，取第一个
+      return `DOMAIN,${rule.payload[0]},${rule.policy}`
+    case 'domain-suffix':
+      return `DOMAIN-SUFFIX,${rule.payload[0]},${rule.policy}`
+    case 'domain-keyword':
+      return `DOMAIN-KEYWORD,${rule.payload[0]},${rule.policy}`
+    case 'ipcidr': {
+      const noResolve = rule['no-resolve'] ? ',no-resolve' : ''
+      return `IP-CIDR,${rule.payload[0]},${rule.policy}${noResolve}`
+    }
+    case 'geoip': {
+      const noResolve = rule['no-resolve'] ? ',no-resolve' : ''
+      return `GEOIP,${rule.country},${rule.policy}${noResolve}`
+    }
+    case 'dst-port':
+      return `DST-PORT,${rule.ports[0]},${rule.policy}`
+    case 'src-port':
+      return `SRC-PORT,${rule.ports[0]},${rule.policy}`
+    case 'match':
+      return `FINAL,${rule.policy}`
+    default:
+      return null
+  }
+}
+
+/**
+ * 构建 Shadowrocket 规则列表
+ * 对于上游规则，使用 DOMAIN-SET 引用外部规则文件
+ */
+function buildShadowrocketRules(
+  policyConfig: PolicyGroupsConfig,
+  fetchResults: Map<string, FetchResult>
+): string[] {
+  const rules: string[] = []
+
+  for (const ruleDef of policyConfig.rules) {
+    const type = ruleDef.type as string
+
+    if (type === 'upstream') {
+      const upstreamName = ruleDef.upstream as string
+      const policy = ruleDef.policy as string
+
+      // 检查上游是否存在且有数据
+      const result = fetchResults.get(upstreamName)
+      if (result && result.count > 0) {
+        // 使用 DOMAIN-SET 引用规则文件的 GitHub raw URL
+        // Shadowrocket 使用 .list 格式
+        const ruleUrl = `https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/${upstreamName}.list`
+        rules.push(`DOMAIN-SET,${ruleUrl},${policy}`)
+      }
+    } else if (type === 'domain') {
+      const payload = ruleDef.payload as string[]
+      const policy = ruleDef.policy as string
+      for (const domain of payload) {
+        rules.push(`DOMAIN,${domain},${policy}`)
+      }
+    } else if (type === 'domain-suffix') {
+      const payload = ruleDef.payload as string[]
+      const policy = ruleDef.policy as string
+      for (const domain of payload) {
+        rules.push(`DOMAIN-SUFFIX,${domain},${policy}`)
+      }
+    } else if (type === 'domain-keyword') {
+      const payload = ruleDef.payload as string[]
+      const policy = ruleDef.policy as string
+      for (const keyword of payload) {
+        rules.push(`DOMAIN-KEYWORD,${keyword},${policy}`)
+      }
+    } else if (type === 'ipcidr') {
+      const payload = ruleDef.payload as string[]
+      const policy = ruleDef.policy as string
+      const noResolve = ruleDef['no-resolve'] ? ',no-resolve' : ''
+      for (const cidr of payload) {
+        rules.push(`IP-CIDR,${cidr},${policy}${noResolve}`)
+      }
+    } else if (type === 'geoip') {
+      const country = ruleDef.country as string
+      const policy = ruleDef.policy as string
+      const noResolve = ruleDef['no-resolve'] ? ',no-resolve' : ''
+      rules.push(`GEOIP,${country},${policy}${noResolve}`)
+    } else if (type === 'dst-port') {
+      const ports = ruleDef.ports as string[]
+      const policy = ruleDef.policy as string
+      for (const port of ports) {
+        rules.push(`DST-PORT,${port},${policy}`)
+      }
+    } else if (type === 'src-port') {
+      const ports = ruleDef.ports as string[]
+      const policy = ruleDef.policy as string
+      for (const port of ports) {
+        rules.push(`SRC-PORT,${port},${policy}`)
+      }
+    } else if (type === 'match') {
+      const policy = ruleDef.policy as string
+      rules.push(`FINAL,${policy}`)
+    }
+  }
+
+  return rules
+}
+
+/**
+ * 构建 Shadowrocket 代理组配置
+ */
+function buildShadowrocketProxyGroups(policyConfig: PolicyGroupsConfig): string[] {
+  const lines: string[] = []
+
+  for (const group of policyConfig['proxy-groups']) {
+    const parts: string[] = []
+
+    // 基本格式: name = type, options...
+    if (group.type === 'select') {
+      // select 类型: name = select, option1, option2, ...
+      const options = group.proxies || ['DIRECT', 'REJECT']
+      parts.push(`${group.name} = ${group.type}, ${options.join(', ')}`)
+    } else if (group.type === 'url-test' || group.type === 'fallback') {
+      // url-test/fallback: name = type, include-all=true, url=..., interval=...
+      const options: string[] = []
+
+      // Shadowrocket 使用 include-all 和 filter
+      options.push('include-all=true')
+      if (group.filter) {
+        options.push(`policy-regex-filter=${group.filter}`)
+      }
+      if (group.url) {
+        options.push(`url=${group.url}`)
+      }
+      if (group.interval) {
+        options.push(`interval=${group.interval}`)
+      }
+      if (group.tolerance) {
+        options.push(`tolerance=${group.tolerance}`)
+      }
+      if (group.timeout) {
+        options.push(`timeout=${group.timeout}`)
+      }
+
+      parts.push(`${group.name} = ${group.type}, ${options.join(', ')}`)
+    }
+
+    if (parts.length > 0) {
+      lines.push(parts[0])
+    }
+  }
+
+  return lines
+}
+
+/**
+ * 构建完整 Shadowrocket 配置
+ */
+export async function buildShadowrocketConfig(
+  policyConfig: PolicyGroupsConfig,
+  fetchResults: Map<string, FetchResult>
+): Promise<string> {
+  // 1. 读取基础模板
+  let baseConfig = await readTextTemplate('shadowrocket-base.conf')
+
+  // 2. 构建代理组配置
+  const proxyGroups = buildShadowrocketProxyGroups(policyConfig)
+
+  // 3. 替换 [Proxy Group] 部分（保留 [Proxy Group] 标题行）
+  const proxyGroupPattern = /(\[Proxy Group\])[^\[]*/
+  const proxyGroupContent = proxyGroups.join('\n')
+  baseConfig = baseConfig.replace(proxyGroupPattern, `$1\n${proxyGroupContent}\n\n`)
+
+  // 4. 构建规则列表
+  const rules = buildShadowrocketRules(policyConfig, fetchResults)
+
+  // 5. 替换 [Rule] 部分（保留 [Rule] 标题行，并确保换行）
+  const rulePattern = /(\[Rule\])[^\[]*/
+  const ruleContent = rules.join('\n')
+  baseConfig = baseConfig.replace(rulePattern, `$1\n${ruleContent}\n\n`)
+
+  return baseConfig
+}
+
+/**
  * 构建完整 Clash 配置
  */
 export async function buildClashConfig(
@@ -210,8 +407,8 @@ export async function buildClashConfig(
   // 1. 读取基础模板
   const baseConfig = await readBaseTemplate('clash-base.yaml')
 
-  // 2. 构建 rule-providers
-  const ruleProviders = buildRuleProviders(fetchResults)
+  // 2. 构建 rule-providers (使用 http 类型)
+  const ruleProviders = buildRuleProviders(fetchResults, upstreamsConfig)
 
   // 3. 构建规则列表
   const rules = buildRules(policyConfig, fetchResults)
@@ -229,24 +426,38 @@ export async function buildClashConfig(
 
 /**
  * 生成独立规则文件 (用于 HTTP rule-providers)
+ * 输出: .yaml (Clash) 和 .list (Shadowrocket)
  */
 export async function exportStandaloneRules(
-  fetchResults: Map<string, FetchResult>
+  fetchResults: Map<string, FetchResult>,
+  upstreamsConfig: UpstreamsConfig
 ): Promise<void> {
   const rulesDir = join(OUTPUT_DIR, 'rules')
+  const generatedAt = new Date().toISOString()
 
   for (const [name, result] of fetchResults) {
     if (result.count === 0) continue
 
-    // YAML 格式
+    const upstreamDef = upstreamsConfig.upstreams[name]
+    const metadataLines = [
+      `# Name: ${upstreamDef?.name || name}`,
+      `# Behavior: ${upstreamDef?.behavior || 'domain'}`,
+      `# Count: ${result.count}`,
+      `# Generated: ${generatedAt}`,
+      `# Source: ${upstreamDef?.urls?.[0] || 'custom'}`,
+    ]
+
+    // YAML 格式 (Clash)
+    const yamlMetadata = metadataLines.join('\n')
     const yamlContent = stringify({ payload: result.rules }, { indent: 2 })
-    await writeTextFile(join(rulesDir, `${name}.yaml`), yamlContent)
+    await writeTextFile(join(rulesDir, `${name}.yaml`), `${yamlMetadata}\n${yamlContent}`)
 
-    // Text 格式 (纯规则列表)
-    const textContent = result.rules.join('\n')
-    await writeTextFile(join(rulesDir, `${name}.txt`), textContent)
+    // List 格式 (Shadowrocket) - 纯规则列表带头部注释
+    const listMetadata = metadataLines.map(line => line.replace(/^# /, '# ')).join('\n')
+    const listContent = result.rules.join('\n')
+    await writeTextFile(join(rulesDir, `${name}.list`), `${listMetadata}\n${listContent}`)
 
-    console.log(`✓ Exported rules/${name}.yaml (${result.count} rules)`)
+    console.log(`✓ Exported rules/${name}.yaml / ${name}.list (${result.count} rules)`)
   }
 }
 
@@ -299,9 +510,16 @@ export async function buildAll(): Promise<void> {
   await writeYamlFile(outputPath, clashConfig)
   console.log(`  ✓ ${outputPath}`)
 
+  // 构建 Shadowrocket 配置
+  console.log('\n🚀 Building Shadowrocket configuration...')
+  const shadowrocketConfig = await buildShadowrocketConfig(policyConfig, fetchResults)
+  const srOutputPath = join(OUTPUT_DIR, 'shadowrocket-full.conf')
+  await writeTextFile(srOutputPath, shadowrocketConfig)
+  console.log(`  ✓ ${srOutputPath}`)
+
   // 输出独立规则文件 (供外部引用)
   console.log('\n📦 Exporting standalone rule files...')
-  await exportStandaloneRules(fetchResults)
+  await exportStandaloneRules(fetchResults, upstreamsConfig)
 
   // 输出元数据
   const metadata = {
