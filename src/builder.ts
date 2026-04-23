@@ -39,15 +39,18 @@ async function readYamlFile<T>(path: string): Promise<T> {
 
 /**
  * 写入 YAML 文件
+ * @param header - 可选的 YAML 头部注释（不包含 # 前缀，会自动添加）
  */
-async function writeYamlFile(path: string, data: unknown): Promise<void> {
+async function writeYamlFile(path: string, data: unknown, header?: string): Promise<void> {
   await mkdir(dirname(path), { recursive: true })
   const yaml = stringify(data, {
     indent: 2,
     defaultKeyType: 'PLAIN',
     defaultStringType: 'PLAIN',
   })
-  await writeFile(path, yaml, 'utf-8')
+  // 如果有头部注释，添加在前面（每行添加 # 前缀）
+  const content = header ? `${header}\n${yaml}` : yaml
+  await writeFile(path, content, 'utf-8')
 }
 
 /**
@@ -380,10 +383,25 @@ function buildShadowrocketProxyGroups(policyConfig: PolicyGroupsConfig): string[
  */
 export async function buildShadowrocketConfig(
   policyConfig: PolicyGroupsConfig,
-  fetchResults: Map<string, MergedFetchResult>
+  fetchResults: Map<string, MergedFetchResult>,
+  buildInfo?: { version?: string; commitSha?: string; generatedAt?: string }
 ): Promise<string> {
   // 1. 读取基础模板
   let baseConfig = await readTextTemplate('shadowrocket-base.conf')
+
+  // 1.5 添加动态生成信息头部
+  if (buildInfo) {
+    const generatedAt = buildInfo.generatedAt || new Date().toISOString()
+    const version = buildInfo.version || 'dev'
+    const commitSha = buildInfo.commitSha || 'unknown'
+    const generatedHeader = `# --- Build Info ---
+# Generated: ${generatedAt}
+# Version: ${version}
+# Commit: ${commitSha}
+#`
+    // 在第一个 [Section] 之前插入生成信息
+    baseConfig = baseConfig.replace(/^(\[General\])/m, `${generatedHeader}\n$1`)
+  }
 
   // 2. 构建代理组配置
   const proxyGroups = buildShadowrocketProxyGroups(policyConfig)
@@ -500,10 +518,34 @@ export async function exportStandaloneRules(
 }
 
 /**
+ * 获取构建版本信息
+ */
+async function getBuildInfo(): Promise<{ version: string; commitSha: string; generatedAt: string }> {
+  const generatedAt = new Date().toISOString()
+  const dateVersion = generatedAt.replace(/[:T-]/g, '').slice(0, 14) // YYYYMMDDHHMMSS
+
+  let commitSha = 'unknown'
+  try {
+    const { execSync } = await import('node:child_process')
+    commitSha = execSync('git rev-parse --short HEAD', { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] }).trim()
+  } catch {
+    // git 不可用，使用默认值
+  }
+
+  return {
+    version: `v${dateVersion}`,
+    commitSha,
+    generatedAt,
+  }
+}
+
+/**
  * 主构建流程
  */
 export async function buildAll(): Promise<void> {
-  console.log('📖 Reading configurations...')
+  // 获取构建信息
+  const buildInfo = await getBuildInfo()
+  console.log(`📖 Reading configurations... (Build: ${buildInfo.version})`)
 
   // 读取配置
   const upstreamsConfig = await readYamlFile<UpstreamsConfig>(
@@ -576,14 +618,21 @@ export async function buildAll(): Promise<void> {
   console.log('\n🔨 Building Clash configuration...')
   const clashConfig = await buildClashConfig(upstreamsConfig, policyConfig, customConfig, mergedResults)
 
+  // 准备 Clash 头部注释
+  const clashHeader = `# Universal Proxy Rules for Clash Meta/Mihomo
+# Generated: ${buildInfo.generatedAt}
+# Version: ${buildInfo.version}
+# Commit: ${buildInfo.commitSha}
+#`
+
   // 输出完整配置
   const outputPath = join(OUTPUT_DIR, 'clash-full.yaml')
-  await writeYamlFile(outputPath, clashConfig)
+  await writeYamlFile(outputPath, clashConfig, clashHeader)
   console.log(`  ✓ ${outputPath}`)
 
   // 构建 Shadowrocket 配置
   console.log('\n🚀 Building Shadowrocket configuration...')
-  const shadowrocketConfig = await buildShadowrocketConfig(policyConfig, mergedResults)
+  const shadowrocketConfig = await buildShadowrocketConfig(policyConfig, mergedResults, buildInfo)
   const srOutputPath = join(OUTPUT_DIR, 'shadowrocket-full.conf')
   await writeTextFile(srOutputPath, shadowrocketConfig)
   console.log(`  ✓ ${srOutputPath}`)
@@ -593,8 +642,12 @@ export async function buildAll(): Promise<void> {
   await exportStandaloneRules(mergedResults, upstreamsConfig, customConfig)
 
   // 输出元数据
+  const totalRules = Array.from(mergedResults.values()).reduce((sum, r) => sum + r.count, 0)
   const metadata = {
-    generatedAt: new Date().toISOString(),
+    version: buildInfo.version,
+    generatedAt: buildInfo.generatedAt,
+    commitSha: buildInfo.commitSha,
+    totalRules,
     upstreams: Object.fromEntries(
       Array.from(mergedResults).map(([name, r]) => [name, r.count])
     ),
@@ -607,7 +660,7 @@ export async function buildAll(): Promise<void> {
     join(OUTPUT_DIR, 'metadata.json'),
     JSON.stringify(metadata, null, 2)
   )
-  console.log(`  ✓ metadata.json`)
+  console.log(`  ✓ metadata.json (${totalRules} total rules)`)
 
   console.log('\n✅ Build complete!')
   console.log(`   Output: ${OUTPUT_DIR}`)
