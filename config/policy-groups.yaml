@@ -29,6 +29,16 @@ proxy-groups:
     lazy: true
     timeout: 5000
 
+  # ========== 自建节点 ==========
+  - name: "🛠️ 自建节点"
+    type: url-test
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Server.png"
+    include-all: true
+    filter: "(?i)自建|vps|home|self|dedicated|私有"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+
   # ========== 地区分组 ==========
   - name: "🇭🇰 香港节点"
     type: url-test
@@ -91,6 +101,7 @@ proxy-groups:
     proxies:
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
       - "🇭🇰 香港节点"
       - "🇨🇳 台湾节点"
       - "🇯🇵 日本节点"
@@ -105,6 +116,7 @@ proxy-groups:
     proxies:
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
       - "🇭🇰 香港节点"
       - "🇨🇳 台湾节点"
       - "🇯🇵 日本节点"
@@ -118,6 +130,7 @@ proxy-groups:
     proxies:
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
       - "🇭🇰 香港节点"
       - "🇯🇵 日本节点"
       - "🇸🇬 新加坡节点"
@@ -129,6 +142,7 @@ proxy-groups:
     proxies:
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
       - "🇭🇰 香港节点"
       - "🇸🇬 新加坡节点"
     default: "🚀 节点选择"
@@ -148,6 +162,7 @@ proxy-groups:
     proxies:
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
       - "🇯🇵 日本节点"
       - "🇺🇸 美国节点"
       - "🇸🇬 新加坡节点"
@@ -161,6 +176,7 @@ proxy-groups:
     proxies:
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
       - "🇸🇬 新加坡节点"
       - "♻️ 故障转移"
     default: "🚀 节点选择"
@@ -171,6 +187,7 @@ proxy-groups:
     proxies:
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
       - "🇭🇰 香港节点"
       - "🇺🇸 美国节点"
     default: "🚀 节点选择"
@@ -183,6 +200,7 @@ proxy-groups:
       - "DIRECT"
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
     default: "DIRECT"
 
   - name: "🔍 谷歌服务"
@@ -191,6 +209,7 @@ proxy-groups:
     proxies:
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
       - "🇭🇰 香港节点"
       - "🇺🇸 美国节点"
     default: "🚀 节点选择"
@@ -201,6 +220,7 @@ proxy-groups:
     proxies:
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
       - "🇭🇰 香港节点"
     default: "🚀 节点选择"
 
@@ -210,6 +230,7 @@ proxy-groups:
     proxies:
       - "DIRECT"
       - "🚀 节点选择"
+      - "🛠️ 自建节点"
     default: "DIRECT"
 
   # ========== 游戏平台 ==========
@@ -220,6 +241,7 @@ proxy-groups:
       - "DIRECT"
       - "🚀 节点选择"
       - "⚡ 自动测速"
+      - "🛠️ 自建节点"
     default: "DIRECT"
 
   # ========== 电商 & 支付 ==========
@@ -229,6 +251,7 @@ proxy-groups:
     proxies:
       - "DIRECT"
       - "🚀 节点选择"
+      - "🛠️ 自建节点"
     default: "DIRECT"
 
   # ========== 国内服务 ==========
@@ -238,6 +261,7 @@ proxy-groups:
     proxies:
       - "DIRECT"
       - "🚀 节点选择"
+      - "🛠️ 自建节点"
     default: "DIRECT"
 
   # ========== 兜底 ==========
