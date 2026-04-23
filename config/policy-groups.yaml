@@ -44,55 +44,71 @@ proxy-groups:
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"
     include-all: true
-    filter: "(?i)港|hk|hongkong|hong kong"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
+    filter: "🇭🇰|HK|Hong|hong|香港|深港|沪港|京港|港"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 0
+    timeout: 5000
 
   - name: "🇨🇳 台湾节点"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China.png"
     include-all: true
-    filter: "(?i)台|tw|taiwan|tai wan"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
+    filter: "🇹🇼|TW|TWN|Taiwan|Taipei|taiwan|台湾|台灣|台北|台中|新北|彰化"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 0
+    timeout: 5000
 
   - name: "🇯🇵 日本节点"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"
     include-all: true
-    filter: "(?i)日|jp|japan"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
+    filter: "🇯🇵|JP|Japan|japan|Tokyo|tokyo|日本|东京|大阪|京日|苏日|沪日|上日|川日|深日|广日|日"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 0
+    timeout: 5000
 
   - name: "🇸🇬 新加坡节点"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"
     include-all: true
-    filter: "(?i)新|坡|sg|singapore"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
+    filter: "🇸🇬|SG|Sing|sing|新加坡|狮城|沪新|京新|深新|杭新|广新"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 0
+    timeout: 5000
+
+  - name: "🇰🇷 韩国节点"
+    type: url-test
+    icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png"
+    include-all: true
+    filter: "🇰🇷|KR|Korea|korea|KOR|韩国|首尔|韩|韓|春川"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 0
+    timeout: 5000
 
   - name: "🇺🇸 美国节点"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"
     include-all: true
-    filter: "(?i)美|us|usa|united states|america"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
+    filter: "🇺🇸|US|USA|America|america|United States|美国|凤凰城|洛杉矶|西雅图|芝加哥|纽约|沪美|美"
+    url: "http://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 0
+    timeout: 5000
 
   - name: "🇪🇺 欧洲节点"
     type: url-test
     icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Nations.png"
     include-all: true
     filter: "(?i)英|uk|德|de|法|fr|意|it|荷|nl|瑞|se|西|es|eu|europe|england|germany|france"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
+    url: "http://www.gstatic.com/generate_204"
+    interval: 600
+    tolerance: 0
+    timeout: 5000
 
   # ========== 流媒体服务 ==========
   - name: "🎬 流媒体"
@@ -105,8 +121,9 @@ proxy-groups:
       - "🇭🇰 香港节点"
       - "🇨🇳 台湾节点"
       - "🇯🇵 日本节点"
-      - "🇺🇸 美国节点"
+      - "🇰🇷 韩国节点"
       - "🇸🇬 新加坡节点"
+      - "🇺🇸 美国节点"
       - "🇪🇺 欧洲节点"
     default: "🚀 节点选择"
 
@@ -120,7 +137,9 @@ proxy-groups:
       - "🇭🇰 香港节点"
       - "🇨🇳 台湾节点"
       - "🇯🇵 日本节点"
+      - "🇰🇷 韩国节点"
       - "🇸🇬 新加坡节点"
+      - "🇺🇸 美国节点"
       - "🇪🇺 欧洲节点"
     default: "🚀 节点选择"
 
@@ -164,8 +183,9 @@ proxy-groups:
       - "⚡ 自动测速"
       - "🛠️ 自建节点"
       - "🇯🇵 日本节点"
-      - "🇺🇸 美国节点"
+      - "🇰🇷 韩国节点"
       - "🇸🇬 新加坡节点"
+      - "🇺🇸 美国节点"
       - "🇪🇺 欧洲节点"
     default: "🚀 节点选择"
 
