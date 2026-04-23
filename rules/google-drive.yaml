@@ -1,0 +1,14 @@
+# Name: Google Drive
+# Behavior: domain
+# Count: 8
+# Generated: 2026-04-23T12:11:19.778Z
+# Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/GoogleDrive/GoogleDrive.list
+payload:
+  - domain,www.googleapis.com
+  - domain-suffix,docs.google.com
+  - domain-suffix,drive.google.com
+  - domain-suffix,googledrive.com
+  - domain-suffix,googleusercontent.com
+  - user-agent,%e4%ba%91%e7%ab%af%e7%a1%ac%e7%9b%98*
+  - user-agent,*com.google.drive*
+  - user-agent,google.drive*

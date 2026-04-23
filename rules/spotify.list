@@ -1,0 +1,35 @@
+# Name: Spotify
+# Behavior: domain
+# Count: 30
+# Generated: 2026-04-23T12:11:19.778Z
+# Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Spotify/Spotify.list
+domain,audio4-ak-spotify-com.akamaized.net
+domain,cdn-spotify-experiments.conductrics.com
+domain,heads-ak-spotify-com.akamaized.net
+domain,spotify.com.edgesuite.net
+domain,spotify.map.fastly.net
+domain,spotify.map.fastlylb.net
+domain-keyword,spotify
+domain-suffix,audio-ak-spotify-com.akamaized.net
+domain-suffix,byspotify.com
+domain-suffix,heads4-ak-spotify-com.akamaized.net
+domain-suffix,pscdn.co
+domain-suffix,scdn.co
+domain-suffix,spoti.fi
+domain-suffix,spotify-com.akamaized.net
+domain-suffix,spotify-everywhere.com
+domain-suffix,spotify.app.link
+domain-suffix,spotify.com
+domain-suffix,spotify.design
+domain-suffix,spotifycdn.com
+domain-suffix,spotifycdn.net
+domain-suffix,spotifycharts.com
+domain-suffix,spotifycodes.com
+domain-suffix,spotifyforbrands.com
+domain-suffix,spotifyjobs.com
+domain-suffix,spotifynewsroom.jp
+domain-suffix,spotilocal.com
+domain-suffix,tospotify.com
+ip-cidr,104.154.127.126/32,no-resolve
+ip-cidr,35.186.224.47/32,no-resolve
+user-agent,spotify*

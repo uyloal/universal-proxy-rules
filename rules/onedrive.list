@@ -1,0 +1,21 @@
+# Name: OneDrive
+# Behavior: domain
+# Count: 16
+# Generated: 2026-04-23T12:11:19.778Z
+# Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/OneDrive/OneDrive.list
+domain-keyword,1drv
+domain-keyword,onedrive
+domain-keyword,skydrive
+domain-suffix,1drv.com
+domain-suffix,livefilestore.com
+domain-suffix,microsoftpersonalcontent.com
+domain-suffix,oneclient.sfx.ms
+domain-suffix,onedrive.com
+domain-suffix,onedrive.live.com
+domain-suffix,photos.live.com
+domain-suffix,sharepoint.com
+domain-suffix,sharepointonline.com
+domain-suffix,skydrive.wns.windows.com
+domain-suffix,spoprod-a.akamaihd.net
+domain-suffix,storage.live.com
+domain-suffix,storage.msn.com

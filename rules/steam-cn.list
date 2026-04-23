@@ -1,0 +1,22 @@
+# Name: Steam CN
+# Behavior: domain
+# Count: 17
+# Generated: 2026-04-23T12:11:19.778Z
+# Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/SteamCN/SteamCN.list
+domain,csgo.wmsj.cn
+domain,dl.steam.clngaa.com
+domain,dl.steam.ksyna.com
+domain,dota2.wmsj.cn
+domain,st.dl.bscstorage.net
+domain,st.dl.eccdnx.com
+domain,st.dl.pinyuncloud.com
+domain,steampipe.steamcontent.tnkjmec.com
+domain,steampowered.com.8686c.com
+domain,steamstatic.com.8686c.com
+domain,wmsjsteam.com
+domain,xz.pphimalayanrt.com
+domain-suffix,cm.steampowered.com
+domain-suffix,steamchina.com
+domain-suffix,steamcontent.com
+domain-suffix,steamserver.net
+domain-suffix,steamusercontent.com

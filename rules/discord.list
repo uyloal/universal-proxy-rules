@@ -1,0 +1,34 @@
+# Name: Discord
+# Behavior: domain
+# Count: 29
+# Generated: 2026-04-23T12:11:19.778Z
+# Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Discord/Discord.list
+domain-suffix,airhorn.solutions
+domain-suffix,airhornbot.com
+domain-suffix,bigbeans.solutions
+domain-suffix,dis.gd
+domain-suffix,discord-activities.com
+domain-suffix,discord-attachments-uploads-prd.storage.googleapis.com
+domain-suffix,discord.co
+domain-suffix,discord.com
+domain-suffix,discord.design
+domain-suffix,discord.dev
+domain-suffix,discord.gg
+domain-suffix,discord.gift
+domain-suffix,discord.gifts
+domain-suffix,discord.media
+domain-suffix,discord.new
+domain-suffix,discord.store
+domain-suffix,discord.tools
+domain-suffix,discordactivities.com
+domain-suffix,discordapp.com
+domain-suffix,discordapp.io
+domain-suffix,discordapp.net
+domain-suffix,discordapp.page.link
+domain-suffix,discordcdn.com
+domain-suffix,discordmerch.com
+domain-suffix,discordpartygames.com
+domain-suffix,discordsays.com
+domain-suffix,discordstatus.com
+domain-suffix,hammerandchisel.ssl.zendesk.com
+domain-suffix,watchanimeattheoffice.com

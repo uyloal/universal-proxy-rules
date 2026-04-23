@@ -1,0 +1,698 @@
+# Universal Proxy Rules for Clash Meta/Mihomo
+# Generated: 2026-04-23T12:11:18.545Z
+# Version: v20260423121118
+# Commit: d3b8a98
+#
+mixed-port: 7890
+allow-lan: true
+bind-address: "*"
+ipv6: true
+unified-delay: true
+tcp-concurrent: true
+enable-process: true
+find-process-mode: strict
+global-client-fingerprint: chrome
+log-level: warning
+keep-alive-idle: 600
+keep-alive-interval: 15
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  cache-algorithm: arc
+  respect-rules: true
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "*.lan"
+    - "*.localdomain"
+    - "*.example"
+    - "*.localhost"
+    - "*.local"
+    - "*.home.arpa"
+    - time.*.com
+    - time.*.gov
+    - time.*.edu.cn
+    - time.*.apple.com
+    - time-ios.apple.com
+    - time1.*.com
+    - time2.*.com
+    - time3.*.com
+    - time4.*.com
+    - time5.*.com
+    - time6.*.com
+    - time7.*.com
+    - ntp.*.com
+    - ntp1.*.com
+    - ntp2.*.com
+    - ntp3.*.com
+    - ntp4.*.com
+    - ntp5.*.com
+    - ntp6.*.com
+    - ntp7.*.com
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - +.pool.ntp.org
+    - msftconnecttest.com
+    - msftncsi.com
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+    - localhost.ptlogin2.qq.com
+    - "*.id.qq.com"
+    - "*.ptlogin2.qq.com"
+    - captive.apple.com
+    - gsp1.apple.com
+    - www.apple.com
+    - www.apple.com.cn
+    - detectportal.firefox.com
+    - connectivitycheck.gstatic.com
+    - connectivitycheck.android.com
+    - clients3.google.com
+    - clients4.google.com
+    - connectivitycheck.cbg-dev-mx-apple.com
+    - wifi.vivo.com.cn
+    - wifi.miwifi.com
+    - www.gstatic.com
+    - 0.0.0.0/8
+    - 10.0.0.0/8
+    - 100.64.0.0/10
+    - 127.0.0.0/8
+    - 169.254.0.0/16
+    - 172.16.0.0/12
+    - 192.0.0.0/24
+    - 192.0.2.0/24
+    - 192.88.99.0/24
+    - 192.168.0.0/16
+    - 198.18.0.0/15
+    - 198.51.100.0/24
+    - 203.0.113.0/24
+    - 224.0.0.0/4
+    - 240.0.0.0/4
+    - 255.255.255.255/32
+    - ::/128
+    - ::1/128
+    - ::ffff:0:0/96
+    - ::ffff:0:0:0/96
+    - 64:ff9b::/96
+    - 100::/64
+    - 2001::/32
+    - 2001:20::/28
+    - 2001:db8::/32
+    - 2002::/16
+    - fc00::/7
+    - fe80::/10
+    - ff00::/8
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  proxy-server-nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+    - tls://1.1.1.1:853
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+      - gfw
+    ipcidr:
+      - 240.0.0.0/4
+    domain:
+      - +.google.com
+      - +.facebook.com
+      - +.youtube.com
+      - +.twitter.com
+      - +.x.com
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+  auto-route: true
+  auto-detect-interface: true
+  auto-redirect: false
+  strict-route: false
+  device: utun123
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
+  force-domain:
+    - +.v2ex.com
+    - +.netflix.com
+    - +.hbomax.com
+  skip-domain:
+    - +.apple.com
+    - +.icloud.com
+    - +.icloud-content.com
+    - +.cdn-apple.com
+    - +.mzstatic.com
+    - Mijia Cloud
+listeners:
+  - name: mixed-in
+    type: mixed
+    port: 7890
+    listen: 0.0.0.0
+profile:
+  store-selected: true
+  store-fake-ip: true
+proxy-groups:
+  - name: 🚀 节点选择
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png
+    include-all: true
+    default: ⚡ 自动测速
+  - name: ⚡ 自动测速
+    type: url-test
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Speedtest.png
+    include-all: true
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    lazy: true
+    timeout: 5000
+  - name: ♻️ 故障转移
+    type: fallback
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
+    include-all: true
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    lazy: true
+    timeout: 5000
+  - name: 🛠️ 自建节点
+    type: url-test
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Server.png
+    include-all: true
+    filter: (?i)自建|vps|home|self|dedicated|私有
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+  - name: 🇭🇰 香港节点
+    type: url-test
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
+    include-all: true
+    filter: (?i)港|hk|hongkong|hong kong
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+  - name: 🇨🇳 台湾节点
+    type: url-test
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China.png
+    include-all: true
+    filter: (?i)台|tw|taiwan|tai wan
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+  - name: 🇯🇵 日本节点
+    type: url-test
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
+    include-all: true
+    filter: (?i)日|jp|japan
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+  - name: 🇸🇬 新加坡节点
+    type: url-test
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
+    include-all: true
+    filter: (?i)新|坡|sg|singapore
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+  - name: 🇺🇸 美国节点
+    type: url-test
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
+    include-all: true
+    filter: (?i)美|us|usa|united states|america
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+  - name: 🇪🇺 欧洲节点
+    type: url-test
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Nations.png
+    include-all: true
+    filter: (?i)英|uk|德|de|法|fr|意|it|荷|nl|瑞|se|西|es|eu|europe|england|germany|france
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+  - name: 🎬 流媒体
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Streaming.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+      - 🇭🇰 香港节点
+      - 🇨🇳 台湾节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+      - 🇸🇬 新加坡节点
+      - 🇪🇺 欧洲节点
+    default: 🚀 节点选择
+  - name: 🎥 Netflix
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+      - 🇭🇰 香港节点
+      - 🇨🇳 台湾节点
+      - 🇯🇵 日本节点
+      - 🇸🇬 新加坡节点
+      - 🇪🇺 欧洲节点
+    default: 🚀 节点选择
+  - name: 📺 YouTube
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+      - 🇭🇰 香港节点
+      - 🇯🇵 日本节点
+      - 🇸🇬 新加坡节点
+    default: 🚀 节点选择
+  - name: 🎵 TikTok
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+      - 🇭🇰 香港节点
+      - 🇸🇬 新加坡节点
+    default: 🚀 节点选择
+  - name: 📱 国内流媒体
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili.png
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+    default: DIRECT
+  - name: 🤖 AI 服务
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+      - 🇯🇵 日本节点
+      - 🇺🇸 美国节点
+      - 🇸🇬 新加坡节点
+      - 🇪🇺 欧洲节点
+    default: 🚀 节点选择
+  - name: 📲 电报消息
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+      - 🇸🇬 新加坡节点
+      - ♻️ 故障转移
+    default: 🚀 节点选择
+  - name: 🐦 社交媒体
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Twitter.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+      - 🇭🇰 香港节点
+      - 🇺🇸 美国节点
+    default: 🚀 节点选择
+  - name: 🍎 苹果服务
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+    default: DIRECT
+  - name: 🔍 谷歌服务
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+      - 🇭🇰 香港节点
+      - 🇺🇸 美国节点
+    default: 🚀 节点选择
+  - name: 🐱 GitHub
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/GitHub.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+      - 🇭🇰 香港节点
+    default: 🚀 节点选择
+  - name: Ⓜ️ 微软服务
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - 🛠️ 自建节点
+    default: DIRECT
+  - name: 🎮 游戏平台
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - 🛠️ 自建节点
+    default: DIRECT
+  - name: 🛒 电商支付
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/PayPal.png
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - 🛠️ 自建节点
+    default: DIRECT
+  - name: 🏠 国内服务
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China.png
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+      - 🛠️ 自建节点
+    default: DIRECT
+  - name: 🎯 全球直连
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+    default: DIRECT
+  - name: 🐟 漏网之鱼
+    type: select
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png
+    proxies:
+      - 🚀 节点选择
+      - ⚡ 自动测速
+      - DIRECT
+    default: 🚀 节点选择
+rule-providers:
+  ai:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/ai.yaml
+    path: ./rules/ai.yaml
+    interval: 86400
+  youtube:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/youtube.yaml
+    path: ./rules/youtube.yaml
+    interval: 86400
+  netflix:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/netflix.yaml
+    path: ./rules/netflix.yaml
+    interval: 86400
+  disney:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/disney.yaml
+    path: ./rules/disney.yaml
+    interval: 86400
+  hbo:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/hbo.yaml
+    path: ./rules/hbo.yaml
+    interval: 86400
+  spotify:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/spotify.yaml
+    path: ./rules/spotify.yaml
+    interval: 86400
+  tiktok:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/tiktok.yaml
+    path: ./rules/tiktok.yaml
+    interval: 86400
+  bilibili:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/bilibili.yaml
+    path: ./rules/bilibili.yaml
+    interval: 86400
+  netease-music:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/netease-music.yaml
+    path: ./rules/netease-music.yaml
+    interval: 86400
+  douyin:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/douyin.yaml
+    path: ./rules/douyin.yaml
+    interval: 86400
+  telegram:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/telegram.yaml
+    path: ./rules/telegram.yaml
+    interval: 86400
+  twitter:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/twitter.yaml
+    path: ./rules/twitter.yaml
+    interval: 86400
+  facebook:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/facebook.yaml
+    path: ./rules/facebook.yaml
+    interval: 86400
+  wechat:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/wechat.yaml
+    path: ./rules/wechat.yaml
+    interval: 86400
+  sina:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/sina.yaml
+    path: ./rules/sina.yaml
+    interval: 86400
+  zhihu:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/zhihu.yaml
+    path: ./rules/zhihu.yaml
+    interval: 86400
+  xiaohongshu:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/xiaohongshu.yaml
+    path: ./rules/xiaohongshu.yaml
+    interval: 86400
+  discord:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/discord.yaml
+    path: ./rules/discord.yaml
+    interval: 86400
+  reddit:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/reddit.yaml
+    path: ./rules/reddit.yaml
+    interval: 86400
+  sony:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/sony.yaml
+    path: ./rules/sony.yaml
+    interval: 86400
+  nintendo:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/nintendo.yaml
+    path: ./rules/nintendo.yaml
+    interval: 86400
+  epic:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/epic.yaml
+    path: ./rules/epic.yaml
+    interval: 86400
+  steam-cn:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/steam-cn.yaml
+    path: ./rules/steam-cn.yaml
+    interval: 86400
+  steam:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/steam.yaml
+    path: ./rules/steam.yaml
+    interval: 86400
+  gaming:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/gaming.yaml
+    path: ./rules/gaming.yaml
+    interval: 86400
+  github:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/github.yaml
+    path: ./rules/github.yaml
+    interval: 86400
+  microsoft:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/microsoft.yaml
+    path: ./rules/microsoft.yaml
+    interval: 86400
+  google:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/google.yaml
+    path: ./rules/google.yaml
+    interval: 86400
+  apple:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/apple.yaml
+    path: ./rules/apple.yaml
+    interval: 86400
+  google-drive:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/google-drive.yaml
+    path: ./rules/google-drive.yaml
+    interval: 86400
+  onedrive:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/onedrive.yaml
+    path: ./rules/onedrive.yaml
+    interval: 86400
+  docker:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/docker.yaml
+    path: ./rules/docker.yaml
+    interval: 86400
+  paypal:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/paypal.yaml
+    path: ./rules/paypal.yaml
+    interval: 86400
+  amazon:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/amazon.yaml
+    path: ./rules/amazon.yaml
+    interval: 86400
+  baidu:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/baidu.yaml
+    path: ./rules/baidu.yaml
+    interval: 86400
+  douban:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/douban.yaml
+    path: ./rules/douban.yaml
+    interval: 86400
+  global:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/global.yaml
+    path: ./rules/global.yaml
+    interval: 86400
+  china:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/china.yaml
+    path: ./rules/china.yaml
+    interval: 86400
+  lan:
+    type: http
+    behavior: ipcidr
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/lan.yaml
+    path: ./rules/lan.yaml
+    interval: 86400
+  port-direct:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/port-direct.yaml
+    path: ./rules/port-direct.yaml
+    interval: 86400
+rules:
+  - RULE-SET,port-direct,🎯 全球直连
+  - RULE-SET,lan,🎯 全球直连
+  - RULE-SET,ai,🤖 AI 服务
+  - RULE-SET,youtube,📺 YouTube
+  - RULE-SET,netflix,🎥 Netflix
+  - RULE-SET,disney,🎬 流媒体
+  - RULE-SET,hbo,🎬 流媒体
+  - RULE-SET,spotify,🎬 流媒体
+  - RULE-SET,tiktok,🎵 TikTok
+  - RULE-SET,bilibili,📱 国内流媒体
+  - RULE-SET,netease-music,📱 国内流媒体
+  - RULE-SET,douyin,📱 国内流媒体
+  - RULE-SET,telegram,📲 电报消息
+  - RULE-SET,twitter,🐦 社交媒体
+  - RULE-SET,facebook,🐦 社交媒体
+  - RULE-SET,wechat,🏠 国内服务
+  - RULE-SET,sina,🏠 国内服务
+  - RULE-SET,zhihu,🏠 国内服务
+  - RULE-SET,xiaohongshu,🏠 国内服务
+  - RULE-SET,sony,🎮 游戏平台
+  - RULE-SET,nintendo,🎮 游戏平台
+  - RULE-SET,epic,🎮 游戏平台
+  - RULE-SET,steam-cn,🎯 全球直连
+  - RULE-SET,steam,🎮 游戏平台
+  - RULE-SET,gaming,🎮 游戏平台
+  - RULE-SET,github,🐱 GitHub
+  - RULE-SET,google,🔍 谷歌服务
+  - RULE-SET,microsoft,Ⓜ️ 微软服务
+  - RULE-SET,apple,🍎 苹果服务
+  - RULE-SET,paypal,🛒 电商支付
+  - RULE-SET,amazon,🛒 电商支付
+  - RULE-SET,baidu,🏠 国内服务
+  - RULE-SET,douban,🏠 国内服务
+  - RULE-SET,china,🎯 全球直连
+  - RULE-SET,global,🚀 节点选择
+  - GEOIP,CN,🎯 全球直连
+  - MATCH,🐟 漏网之鱼

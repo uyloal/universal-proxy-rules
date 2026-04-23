@@ -1,0 +1,18 @@
+# Name: Port Direct
+# Behavior: classical
+# Type: Custom
+# Count: 11
+# Generated: 2026-04-23T12:11:19.778Z
+# Merged From: port-direct
+# Source: custom-rules.yaml
+dst-port,143,direct
+dst-port,22,direct
+dst-port,23,direct
+dst-port,3389,direct
+dst-port,465,direct
+dst-port,587,direct
+dst-port,5900,direct
+dst-port,6443,direct
+dst-port,9418,direct
+dst-port,993,direct
+dst-port,995,direct
