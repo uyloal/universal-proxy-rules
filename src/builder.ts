@@ -256,8 +256,16 @@ function formatRuleToShadowrocket(rule: Rule): string | null {
 }
 
 /**
+ * 转换 Shadowrocket 策略名称：核心组引用转为 PROXY
+ */
+function mapShadowrocketPolicy(policy: string): string {
+  return CORE_PROXY_GROUPS.includes(policy) ? 'PROXY' : policy
+}
+
+/**
  * 构建 Shadowrocket 规则列表
  * 对于上游规则，使用 DOMAIN-SET 引用外部规则文件
+ * 简化策略：引用核心组的规则改为直接使用 PROXY，兜底规则为 FINAL,PROXY
  */
 function buildShadowrocketRules(
   policyConfig: PolicyGroupsConfig,
@@ -270,7 +278,7 @@ function buildShadowrocketRules(
 
     if (type === 'upstream') {
       const upstreamName = ruleDef.upstream as string
-      const policy = ruleDef.policy as string
+      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
 
       // 检查上游是否存在且有数据
       const result = fetchResults.get(upstreamName)
@@ -282,49 +290,49 @@ function buildShadowrocketRules(
       }
     } else if (type === 'domain') {
       const payload = ruleDef.payload as string[]
-      const policy = ruleDef.policy as string
+      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
       for (const domain of payload) {
         rules.push(`DOMAIN,${domain},${policy}`)
       }
     } else if (type === 'domain-suffix') {
       const payload = ruleDef.payload as string[]
-      const policy = ruleDef.policy as string
+      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
       for (const domain of payload) {
         rules.push(`DOMAIN-SUFFIX,${domain},${policy}`)
       }
     } else if (type === 'domain-keyword') {
       const payload = ruleDef.payload as string[]
-      const policy = ruleDef.policy as string
+      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
       for (const keyword of payload) {
         rules.push(`DOMAIN-KEYWORD,${keyword},${policy}`)
       }
     } else if (type === 'ipcidr') {
       const payload = ruleDef.payload as string[]
-      const policy = ruleDef.policy as string
+      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
       const noResolve = ruleDef['no-resolve'] ? ',no-resolve' : ''
       for (const cidr of payload) {
         rules.push(`IP-CIDR,${cidr},${policy}${noResolve}`)
       }
     } else if (type === 'geoip') {
       const country = ruleDef.country as string
-      const policy = ruleDef.policy as string
+      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
       const noResolve = ruleDef['no-resolve'] ? ',no-resolve' : ''
       rules.push(`GEOIP,${country},${policy}${noResolve}`)
     } else if (type === 'dst-port') {
       const ports = ruleDef.ports as string[]
-      const policy = ruleDef.policy as string
+      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
       for (const port of ports) {
         rules.push(`DST-PORT,${port},${policy}`)
       }
     } else if (type === 'src-port') {
       const ports = ruleDef.ports as string[]
-      const policy = ruleDef.policy as string
+      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
       for (const port of ports) {
         rules.push(`SRC-PORT,${port},${policy}`)
       }
     } else if (type === 'match') {
-      const policy = ruleDef.policy as string
-      rules.push(`FINAL,${policy}`)
+      // 简化策略：兜底规则直接使用 PROXY
+      rules.push('FINAL,PROXY')
     }
   }
 
@@ -332,25 +340,52 @@ function buildShadowrocketRules(
 }
 
 /**
+ * Shadowrocket 核心组名称（这些组会被简化移除）
+ */
+const CORE_PROXY_GROUPS = ['🚀 节点选择', '⚡ 自动测速', '♻️ 故障转移']
+
+/**
  * 构建 Shadowrocket 代理组配置
+ * 简化策略：移除核心组，其他组引用核心组的地方替换为 PROXY
  */
 function buildShadowrocketProxyGroups(policyConfig: PolicyGroupsConfig): string[] {
   const lines: string[] = []
 
   for (const group of policyConfig['proxy-groups']) {
+    // 跳过核心组（这些在 Shadowrocket 中用 FINAL,PROXY 替代）
+    if (CORE_PROXY_GROUPS.includes(group.name)) {
+      continue
+    }
+
     const parts: string[] = []
 
     // 基本格式: name = type, options...
     if (group.type === 'select') {
       // select 类型: name = select, option1, option2, ...
-      const options = group.proxies || ['DIRECT', 'REJECT']
+      // Shadowrocket: include-all=true 时使用 PROXY 代表所有实际节点
+      let options: string[]
+      if (group.proxies) {
+        // 将引用核心组的项替换为 PROXY，并去重
+        options = group.proxies.map(p => CORE_PROXY_GROUPS.includes(p) ? 'PROXY' : p)
+        options = [...new Set(options)]
+      } else if (group['include-all']) {
+        options = ['PROXY', 'DIRECT']
+      } else {
+        options = ['DIRECT', 'REJECT']
+      }
       parts.push(`${group.name} = ${group.type}, ${options.join(', ')}`)
     } else if (group.type === 'url-test' || group.type === 'fallback') {
-      // url-test/fallback: name = type, include-all=true, url=..., interval=...
+      // url-test/fallback: name = type, PROXY, url=..., interval=...
       const options: string[] = []
 
-      // Shadowrocket 使用 include-all 和 filter
-      options.push('include-all=true')
+      // Shadowrocket: 使用 PROXY 作为所有节点的占位符
+      if (group['include-all']) {
+        options.push('PROXY')
+      } else if (group.proxies) {
+        // 同样替换核心组引用
+        const proxyList = group.proxies.map(p => CORE_PROXY_GROUPS.includes(p) ? 'PROXY' : p)
+        options.push(...[...new Set(proxyList)])
+      }
       if (group.filter) {
         options.push(`policy-regex-filter=${group.filter}`)
       }
