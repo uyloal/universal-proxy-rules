@@ -1,7 +1,7 @@
 # Name: XiaoHongShu
 # Behavior: domain
 # Count: 4
-# Generated: 2026-04-23T12:11:19.778Z
+# Generated: 2026-04-23T13:26:43.015Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/XiaoHongShu/XiaoHongShu.list
 payload:
   - domain-suffix,fengkongcloud.com
