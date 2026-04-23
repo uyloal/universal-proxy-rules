@@ -3,54 +3,31 @@
 [![Build Status](https://github.com/Uyloal/universal-proxy-rules/workflows/Build%20and%20Release/badge.svg)](https://github.com/Uyloal/universal-proxy-rules/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A **Config-as-Code** driven proxy rules aggregation engine for Clash Meta/Mihomo and Shadowrocket. Fetches upstream rule sets, deduplicates them, and generates ready-to-use configuration templates.
+支持自定义与多源代理规则聚合的程序。自动从多个上游源获取规则，去重合并后生成 Clash Meta/Mihomo 和 Shadowrocket 配置文件。
 
-## Philosophy
+## 特性
 
-This project follows three core principles:
+- **多源聚合**：同一规则集可从多个 URL（GitHub + CDN）获取，自动合并
+- **智能去重**：跨源去重，支持 30 万+ 条规则
+- **自定义规则**：通过 YAML 配置添加个人规则，可合并到现有分组或独立成组
+- **零运行时依赖**：生成的配置使用 `inline` 规则提供者，无需外部下载
+- **双格式输出**：同时生成 Clash (YAML) 和 Shadowrocket (.conf) 配置
+- **自动更新**：GitHub Actions 每日构建两次（UTC 00:00 和 12:00）
 
-1. **Complete Decoupling**: This repository contains only rule aggregation logic and templates — **no proxy nodes are included**. Your node subscriptions remain private.
-2. **Local Composition**: Generated configuration templates are merged with your private nodes on the client-side using Merge/Script/Sub-Store.
-3. **Config-Driven**: All upstream sources and policy groups are defined in YAML files under `config/`, making changes trackable and reviewable.
+## 使用方式
 
-## Features
+### Clash Verge Rev / OpenClash / Stash
 
-- **Multi-Source Aggregation**: Fetch from multiple URLs per rule set (GitHub + CDNs) and merge automatically
-- **Smart Deduplication**: Cross-source deduplication with 300k+ rules support
-- **Zero Runtime Dependencies**: Generated configs use `inline` rule-providers, no external downloads needed at runtime
-- **Dual Format Output**: Both Clash (YAML) and Shadowrocket (.conf) configurations
-- **Automated Updates**: GitHub Actions builds twice daily (00:00 & 12:00 UTC)
-- **Dual Publishing**: GitHub Releases (ZIP) + `release` branch (raw links)
-
-## Supported Services
-
-| Category | Services |
-|----------|----------|
-| **AI** | OpenAI, Gemini, Claude |
-| **Streaming** | YouTube, Netflix, Disney+, HBO, Spotify, TikTok, BiliBili |
-| **Social** | Telegram, Twitter/X, Facebook, Discord, Reddit, WeChat, Zhihu |
-| **Gaming** | Steam, Epic, Sony, Nintendo |
-| **Tech** | GitHub, Google, Microsoft, Apple, Docker |
-| **Commerce** | PayPal, Amazon |
-| **China** | Baidu, Douyin, Douban, Sina |
-
-## Quick Start
-
-### For Users
-
-#### Clash Verge Rev / OpenClash / Stash
-
-1. Use the configuration URL:
+1. 使用配置链接：
    ```
    https://raw.githubusercontent.com/Uyloal/universal-proxy-rules/release/clash-full.yaml
    ```
 
-2. Inject your nodes via **Merge**:
+2. 通过 Merge 注入节点：
    ```yaml
-   # In Clash Verge Rev → Profiles → Right-click → Edit → Merge
    prepend:
      proxies:
-       - name: "MyNode1"
+       - name: "Node1"
          type: ss
          server: example.com
          port: 8388
@@ -58,147 +35,92 @@ This project follows three core principles:
          password: "password"
    ```
 
-3. Or use **Script** for dynamic injection from subscriptions.
+### Shadowrocket
 
-#### Shadowrocket
+从 [Releases](../../releases) 下载 `shadowrocket-full.conf` 导入。
 
-Import `shadowrocket-full.conf` from the latest [Release](../../releases).
+## 支持的规则集
 
-### For Developers
+| 类别 | 服务 |
+|------|------|
+| AI | OpenAI, Gemini, Claude |
+| 流媒体 | YouTube, Netflix, Disney+, HBO, Spotify, TikTok, 哔哩哔哩 |
+| 社交 | Telegram, Twitter/X, Facebook, Discord, Reddit, 微信，知乎 |
+| 游戏 | Steam, Epic, Sony, Nintendo |
+| 科技 | GitHub, Google, Microsoft, Apple, Docker |
+| 电商 | PayPal, Amazon |
+| 国内 | 百度，抖音，豆瓣，新浪 |
 
-```bash
-# Clone the repository
-git clone https://github.com/Uyloal/universal-proxy-rules.git
-cd universal-proxy-rules
+## 自定义规则
 
-# Install dependencies
-pnpm install
-
-# Generate configurations
-pnpm generate
-
-# Output will be in ./output/
-```
-
-## Architecture
-
-```
-config/upstreams.yaml ──┐
-config/policy-groups.yaml├─→ fetcher.ts ──→ builder.ts ──→ output/
-config/custom-rules.yaml ─┘                    (clash-full.yaml
-                                               shadowrocket-full.conf
-                                               rules/*.yaml)
-```
-
-### Key Components
-
-| File | Purpose |
-|------|---------|
-| `src/fetcher.ts` | Concurrent downloading with p-queue style control, YAML/text parsing, deduplication |
-| `src/builder.ts` | Template assembly, rule-provider construction, policy mapping |
-| `config/upstreams.yaml` | Define upstream rule sources (supports multiple URLs per group) |
-| `config/policy-groups.yaml` | Strategy groups with `include-all: true` and regex filters |
-| `config/custom-rules.yaml` | Custom rules (merge into upstream or standalone groups) |
-
-## Configuration Reference
-
-### Upstreams (`config/upstreams.yaml`)
-
-```yaml
-upstreams:
-  ai:
-    name: "AI"
-    behavior: domain
-    urls:
-      - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/.../OpenAI.list"
-      - "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script/.../OpenAI.list"
-    format: classical
-    interval: 86400
-```
-
-### Policy Groups (`config/policy-groups.yaml`)
-
-```yaml
-proxy-groups:
-  - name: "🇭🇰 香港节点"
-    type: url-test
-    include-all: true
-    filter: "(?i)港|hk|hongkong"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-
-rules:
-  - type: upstream
-    upstream: "ai"
-    policy: "🤖 AI 服务"
-```
-
-### Custom Rules (`config/custom-rules.yaml`)
+编辑 `config/custom-rules.yaml`：
 
 ```yaml
 custom_rules:
-  my-company:
+  # 合并到现有分组
+  company:
     rules:
       - DOMAIN-SUFFIX,internal.company.com
-      - DOMAIN,wiki.company.com
-    merge_into: "lan"  # Merge into existing group
+    merge_into: "direct"
 
-  personal-sites:
+  # 独立分组
+  personal:
     rules:
       - DOMAIN-SUFFIX,personal-blog.com
-    # No merge_into = standalone group
 ```
 
-## Automation
+运行 `pnpm generate` 生成配置。
 
-GitHub Actions runs on schedule (`0 0,12 * * *`) and:
+## 配置结构
 
-1. Fetches fresh rules from all upstreams
-2. Parses and deduplicates (optimized for 100k+ rules with `for...of` loops)
-3. Generates configurations
-4. Creates a GitHub Release with ZIP attachment
-5. Pushes to `release` branch for raw URL access
+```
+config/
+  upstreams.yaml      # 上游规则源配置
+  policy-groups.yaml  # 策略组配置
+  custom-rules.yaml   # 自定义规则
+```
 
-## Output Files
+- `upstreams.yaml`：定义规则集名称、URL、格式等
+- `policy-groups.yaml`：定义策略组和规则映射
+- `custom-rules.yaml`：个人自定义规则
 
-| File | Description |
-|------|-------------|
-| `clash-full.yaml` | Complete Clash Meta/Mihomo config (10MB+, 300k+ rules) |
-| `shadowrocket-full.conf` | Shadowrocket configuration |
-| `rules/*.yaml` | Individual rule sets in YAML format |
-| `rules/*.txt` | Individual rule sets in text format |
-| `metadata.json` | Build statistics and timestamps |
+## 开发
 
-## Sub-Store Integration
+```bash
+pnpm install    # 安装依赖
+pnpm dev        # 开发模式
+pnpm generate   # 生成配置（输出到 output/）
+```
+
+## 输出文件
+
+| 文件 | 说明 |
+|------|------|
+| `clash-full.yaml` | Clash 完整配置（30 万+ 条规则） |
+| `shadowrocket-full.conf` | Shadowrocket 配置 |
+| `rules/*.yaml` | 独立规则集（YAML） |
+| `rules/*.txt` | 独立规则集（文本） |
+| `metadata.json` | 构建统计 |
+
+## Sub-Store 脚本
 
 ```javascript
-// Script Operator
 function operator(proxies = [], targetPlatform, context) {
   const template = $content;
-
-  // Auto-populate include-all groups
   template['proxy-groups'].forEach(g => {
     if (g['include-all'] && g.proxies) {
       g.proxies.unshift(...proxies.map(p => p.name));
     }
   });
-
   return template;
 }
 ```
 
-## Contributing
+## 致谢
 
-1. Fork the repository
-2. Edit `config/upstreams.yaml` or `config/policy-groups.yaml`
-3. Test locally: `pnpm generate`
-4. Submit a Pull Request
-
-## Acknowledgments
-
-- Rule sources: [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)
-- Icons: [Koolson/Qure](https://github.com/Koolson/Qure)
+- 规则源：[blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)
+- 图标：[Koolson/Qure](https://github.com/Koolson/Qure)
 
 ## License
 
-[MIT](LICENSE) © Uyloal
+MIT © Uyloal

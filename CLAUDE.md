@@ -9,42 +9,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-This is a **config-driven proxy rules aggregation engine** for Clash Meta/Mihomo. It fetches upstream rule sets from the internet, deduplicates them, and generates ready-to-use configuration templates that contain **no proxy nodes** (intentionally decoupled).
+Config-driven proxy rules aggregation engine for Clash Meta/Mihomo and Shadowrocket. Fetches upstream rule sets, deduplicates them, and generates configuration templates containing no proxy nodes (intentionally decoupled).
 
 ### Data Flow
 
 ```
-config/upstreams.yaml ──┐
-config/policy-groups.yaml├─→ fetcher.ts ──→ builder.ts ──→ output/
-templates/clash-base.yaml─┘                  (full config + rules/)
+config/upstreams.yaml     - Define upstream rule sources (multiple URLs per group)
+config/policy-groups.yaml - Define proxy groups and rule-to-policy mappings  
+config/custom-rules.yaml  - User-defined custom rules (merge or standalone)
+     │
+     ▼
+src/fetcher.ts  - Concurrent download, YAML/text parsing, deduplication
+     │
+     ▼
+src/builder.ts  - Template assembly, inline rule-provider construction
+     │
+     ▼
+output/         - clash-full.yaml, shadowrocket-full.conf, rules/
 ```
 
-1. **Fetcher** (`src/fetcher.ts`): Concurrently downloads rule files from URLs defined in `upstreams.yaml`, parses YAML/text formats, cleans and deduplicates rules. **Critical implementation detail**: Uses `for...of` loops instead of `array.push(...largeArray)` to avoid stack overflow with 100k+ rules.
+### Key Implementation Details
 
-2. **Builder** (`src/builder.ts`): Reads templates, constructs `rule-providers` (type: `inline` for zero external dependencies at runtime), maps rules to policies per `policy-groups.yaml`, outputs `clash-full.yaml`.
+**Fetcher** (`src/fetcher.ts`): Uses `for...of` loops instead of `array.push(...largeArray)` to avoid stack overflow when processing 100k+ rules. Downloads from multiple URLs per rule set concurrently and deduplicates across sources.
 
-3. **Output** (`output/`):
-   - `clash-full.yaml` - Complete config with inline rule-providers (10MB+ with 300k+ rules)
-   - `rules/*.yaml` - Standalone rule sets for external reference
-   - `metadata.json` - Build stats
+**Builder** (`src/builder.ts`): Constructs `rule-providers` with `type: inline` for zero external dependencies at runtime. Parses both `payload:` YAML format and plain text rules, normalizing to `DOMAIN-SUFFIX,example.com` format.
 
-### Key Design Decisions
-
-**No proxy nodes in repo**: The output templates use `include-all: true` with `filter` regex patterns (e.g., `(?i)港|hk|hongkong`) for region groups. Nodes are injected client-side via Merge/Script/Sub-Store.
-
-**Upstream rule aggregation**: Same logical rule set can have multiple URLs (GitHub + CDN); fetcher downloads all, deduplicates across sources.
-
-**Rule format support**: Parser handles both `payload:` YAML format and plain text, normalizes to `DOMAIN-SUFFIX,example.com` format.
+**Custom Rules** (`config/custom-rules.yaml`): Rules with `merge_into` field are merged into the specified upstream group; rules without it become standalone groups with their own rule files.
 
 ### GitHub Actions
 
-`.github/workflows/deploy.yml` runs daily (cron `0 0,12 * * *`) to:
-1. Fetch fresh rules
-2. Generate configurations
-3. **Dual publishing:**
-   - Create GitHub Release with ZIP attachment (for download)
-   - Push to `release` branch (for direct raw links)
-
-**Usage:**
-- Download ZIP from [Releases](../../releases)
-- Direct links: `https://raw.githubusercontent.com/OWNER/REPO/release/clash-full.yaml`
+`.github/workflows/deploy.yml` runs daily (cron `0 0,12 * * *`) to fetch fresh rules, generate configurations, create GitHub Release with ZIP, and push to `release` branch for raw URL access.
