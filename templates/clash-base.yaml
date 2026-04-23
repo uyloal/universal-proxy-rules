@@ -1,38 +1,54 @@
 # Clash Meta / Mihomo 基础配置模板
 # ⚠️ 此模板不包含任何节点信息，仅含网络底层配置
 # 节点将在客户端本地通过 Merge/Override 或 Sub-Store 注入
+#
+# 🔒 安全提示：Clash/Mihomo 无法阻止浏览器 WebRTC 泄漏真实 IP
+#    请在浏览器中禁用 WebRTC：
+#    - Chrome: chrome://flags/#disable-webrtc → Enable
+#    - Firefox: about:config → media.peerconnection.enabled → false
+#    - Safari: 设置 → 高级 → 关闭 WebRTC
 
-# 端口配置
-mixed-port: 7890
-redir-port: 7892
-tproxy-port: 7893
-allow-lan: true
-bind-address: '*'
-ipv6: true
-unified-delay: true
+# ==================== 核心端口配置 ====================
+mixed-port: 7890            # HTTP/HTTPS/SOCKS5 统一端口
+allow-lan: true            # 允许局域网连接
+bind-address: '*'          # 绑定所有接口
+ipv6: true                 # 启用 IPv6 支持
+
+# ==================== 性能与安全优化 ====================
+unified-delay: true        # 统一延迟计算（更准确的测速）
+tcp-concurrent: true        # TCP 并发连接
+enable-process: true        # 启用进程识别
+find-process-mode: strict   # 严格进程查找模式
+
+# 全局 TLS 指纹伪装（防止流量特征识别）
+global-client-fingerprint: chrome
 
 # 日志级别
 log-level: warning
 
-# 外部控制器 (Web UI)
-external-controller: 127.0.0.1:9090
+# ==================== TCP Keepalive 优化 ====================
+# 长连接保持设置，减少连接重建开销
+keep-alive-idle: 600        # 空闲 600 秒后发送探测
+keep-alive-interval: 15     # 探测间隔 15 秒
 
-# TCP Keepalive
-tcp-concurrent: true
-enable-process: true
-find-process-mode: strict
-
-# 性能优化
-keep-alive-idle: 600
-keep-alive-interval: 15
-
-# DNS 配置
+# ==================== DNS 配置（防泄漏核心）====================
 dns:
   enable: true
   listen: 0.0.0.0:1053
   ipv6: true
-  enhanced-mode: fake-ip
+
+  # DNS 处理模式
+  enhanced-mode: fake-ip    # fake-ip 模式（推荐，性能更好）
   fake-ip-range: 198.18.0.1/16
+
+  # DNS 缓存算法：arc = Adaptive Replacement Cache（更高效）
+  cache-algorithm: arc
+
+  # DNS 连接遵循路由规则（防止 DNS 绕过代理）
+  respect-rules: true
+
+  # Fake IP 过滤模式（这些域名返回真实 IP）
+  fake-ip-filter-mode: blacklist
   fake-ip-filter:
     # 本地网络
     - '*.lan'
@@ -79,7 +95,6 @@ dns:
     - 'gsp1.apple.com'
     - 'www.apple.com'
     - 'www.apple.com.cn'
-    - 'captive.apple.com'
     - 'detectportal.firefox.com'
     - 'connectivitycheck.gstatic.com'
     - 'connectivitycheck.android.com'
@@ -119,17 +134,28 @@ dns:
     - 'fc00::/7'
     - 'fe80::/10'
     - 'ff00::/8'
+  # 默认 DNS（用于解析其他 DNS 服务器域名，必须 IP 格式）
   default-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
+    - 223.5.5.5              # 阿里 DNS
+    - 119.29.29.29           # 腾讯 DNS
+
+  # 主要 DNS 服务器（国内域名）
   nameserver:
+    - https://doh.pub/dns-query          # DNSPod DoH
+    - https://dns.alidns.com/dns-query     # 阿里 DoH
+
+  # 代理节点域名解析专用 DNS（防止解析污染）
+  proxy-server-nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
-    - https://cloudflare-dns.com/dns-query
+
+  # 后备 DNS（海外域名，防污染）
   fallback:
-    - https://1.1.1.1/dns-query
-    - https://8.8.8.8/dns-query
-    - tls://1.1.1.1:853
+    - https://1.1.1.1/dns-query            # Cloudflare DoH
+    - https://8.8.8.8/dns-query            # Google DoH
+    - tls://1.1.1.1:853                    # Cloudflare DoT
+
+  # 后备 DNS 过滤规则（防止 DNS 污染）
   fallback-filter:
     geoip: true
     geoip-code: CN
@@ -137,23 +163,46 @@ dns:
       - gfw
     ipcidr:
       - 240.0.0.0/4
+    domain:
+      - "+.google.com"
+      - "+.facebook.com"
+      - "+.youtube.com"
+      - "+.twitter.com"
+      - "+.x.com"
 
-# TUN 模式配置 (macOS/Linux/Windows)
+# ==================== TUN 模式配置（透明代理）====================
 tun:
   enable: true
-  stack: system # macOS 推荐 system，Windows/Linux 推荐 gvisor
-  dns-hijack:
-    - 0.0.0.0:53
-    - 'tcp://0.0.0.0:53'
-  auto-route: true
-  auto-redirect: false
-  auto-detect-interface: true
-  # macOS 专用
-  device: utun123
-  strict-route: false
-  # endpoint-independent-nat: false
+  # 协议栈选择：
+  #   - system:   macOS 首选（性能最好）
+  #   - gvisor:   Windows/Linux 兼容性更好
+  #   - mixed:    自动选择（推荐）
+  stack: mixed
 
-# 嗅探配置
+  # DNS 劫持（确保所有 DNS 走代理）
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+
+  # 自动路由配置
+  auto-route: true
+  auto-detect-interface: true
+
+  # 自动重定向（Linux 专用）
+  auto-redirect: false
+
+  # 严格路由（设置为 true 可防止流量绕过 TUN 接口）
+  # ⚠️ 启用后可能影响某些 VPN 或特殊网络环境
+  strict-route: false
+
+  # macOS 设备名称
+  device: utun123
+
+  # NAT 配置
+  # endpoint-independent-nat: true
+
+# ==================== 流量嗅探配置 ====================
+# 用于识别加密流量中的域名，实现更精确的代理分流
 sniffer:
   enable: true
   sniff:
@@ -164,20 +213,44 @@ sniffer:
       ports: [443, 8443]
     QUIC:
       ports: [443, 8443]
+  # 强制嗅探域名（某些网站需要）
   force-domain:
-    - +.v2ex.com
+    - "+.v2ex.com"
+    - "+.netflix.com"
+    - "+.hbomax.com"
+  # 跳过嗅探域名（避免问题）
   skip-domain:
-    - +.apple.com
-    - +.icloud.com
+    - "+.apple.com"
+    - "+.icloud.com"
+    - "+.icloud-content.com"
+    - "+.cdn-apple.com"
+    - "+.mzstatic.com"
+    - "Mijia Cloud"
 
-# 入站配置
+# ==================== 入站监听配置 ====================
+# 混合端口（HTTP/HTTPS/SOCKS5 合一）
 listeners:
   - name: mixed-in
     type: mixed
     port: 7890
     listen: 0.0.0.0
 
-# 插件配置 (可选)
+  # HTTP 代理入站（可选）
+  # - name: http-in
+  #   type: http
+  #   port: 7891
+  #   listen: 0.0.0.0
+
+  # SOCKS5 代理入站（可选）
+  # - name: socks-in
+  #   type: socks
+  #   port: 7892
+  #   listen: 0.0.0.0
+  #   udp: true
+
+# ==================== 配置文件存储 ====================
 profile:
+  # 存储策略组选择状态
   store-selected: true
+  # 存储 Fake IP 映射（加快重复访问速度）
   store-fake-ip: true
