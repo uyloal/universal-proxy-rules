@@ -9,19 +9,19 @@
 #   interval: 更新间隔 (仅单独成组时有效，默认：86400)
 
 custom_rules:
-  # 示例: 合并到现有 AI upstream (会合并到 ai.yaml 并去重)
-  # ai-custom:
-  #   name: "AI Custom"
-  #   behavior: domain
-  #   merge_into: ai
-  #   rules:
-  #     - "DOMAIN-SUFFIX,perplexity.ai"
-  #     - "DOMAIN-SUFFIX,poe.com"
-
-  # 示例: 单独成组的新规则
-  # dev-tools:
-  #   name: "Dev Tools"
-  #   behavior: domain
-  #   rules:
-  #     - "DOMAIN-SUFFIX,vercel.app"
-  #     - "DOMAIN-SUFFIX,netlify.app"
+  # 端口直连规则（解决 fake-ip 导致的连接问题）
+  port-direct:
+    name: "Port Direct"
+    behavior: classical
+    rules:
+      - "DST-PORT,22,DIRECT"
+      - "DST-PORT,23,DIRECT"
+      - "DST-PORT,143,DIRECT"
+      - "DST-PORT,465,DIRECT"
+      - "DST-PORT,587,DIRECT"
+      - "DST-PORT,993,DIRECT"
+      - "DST-PORT,995,DIRECT"
+      - "DST-PORT,3389,DIRECT"
+      - "DST-PORT,5900,DIRECT"
+      - "DST-PORT,6443,DIRECT"
+      - "DST-PORT,9418,DIRECT"
