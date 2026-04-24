@@ -1,7 +1,7 @@
 # Name: Twitter
 # Behavior: domain
 # Count: 33
-# Generated: 2026-04-24T02:32:31.260Z
+# Generated: 2026-04-24T13:21:30.750Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Twitter/Twitter.list
 payload:
   - domain-keyword,twitter

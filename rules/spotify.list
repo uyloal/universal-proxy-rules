@@ -1,7 +1,7 @@
 # Name: Spotify
 # Behavior: domain
 # Count: 30
-# Generated: 2026-04-24T02:32:31.260Z
+# Generated: 2026-04-24T13:21:30.750Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Spotify/Spotify.list
 domain,audio4-ak-spotify-com.akamaized.net
 domain,cdn-spotify-experiments.conductrics.com
