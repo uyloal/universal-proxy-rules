@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34680
-# Generated: 2026-04-23T13:26:43.015Z
+# Count: 34690
+# Generated: 2026-04-24T02:32:31.260Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 host,1password.drift.click,global
 host,3dns-1.adobe.com,global
@@ -3494,6 +3494,7 @@ host-suffix,asianwomensfilm.de,global
 host-suffix,asianxxxjoy.com,global
 host-suffix,asianxxxvideos.cc,global
 host-suffix,asiaone.com,global
+host-suffix,asiasociety.org,global
 host-suffix,asiatgp.com,global
 host-suffix,asiatoday.us,global
 host-suffix,asjmapihost.cc,global
@@ -4662,6 +4663,7 @@ host-suffix,bell.wiki,global
 host-suffix,bellebound.com,global
 host-suffix,bellerbys.ac.uk,global
 host-suffix,bellesa.co,global
+host-suffix,bellingcat.com,global
 host-suffix,bellotube.com,global
 host-suffix,bellsouth.net,global
 host-suffix,bemix.ac.uk,global
@@ -8195,6 +8197,7 @@ host-suffix,crescentlearning.ac.uk,global
 host-suffix,crest.ac.uk,global
 host-suffix,crestresearch.ac.uk,global
 host-suffix,crew.ac.uk,global
+host-suffix,crewai.com,global
 host-suffix,crfr.ac.uk,global
 host-suffix,crh.ac.uk,global
 host-suffix,cri.ac.uk,global
@@ -16165,6 +16168,7 @@ host-suffix,imsrbx.xyz,global
 host-suffix,imstagram.com,global
 host-suffix,imt.ac.uk,global
 host-suffix,imtagram.com,global
+host-suffix,imtintl.com,global
 host-suffix,imtoken.fans,global
 host-suffix,imzog.com,global
 host-suffix,in-disguise.com,global
@@ -18125,6 +18129,7 @@ host-suffix,landmap.ac.uk,global
 host-suffix,landmarks.ac.uk,global
 host-suffix,landofhope.tv,global
 host-suffix,landscape.ac.uk,global
+host-suffix,langchain.com,global
 host-suffix,langdoncollege.ac.uk,global
 host-suffix,langpol.ac.uk,global
 host-suffix,langside.ac.uk,global
@@ -18680,6 +18685,7 @@ host-suffix,lmm167.shop,global
 host-suffix,lmmbtc.com,global
 host-suffix,lms.ac.uk,global
 host-suffix,lms01.com,global
+host-suffix,lmstudio.ai,global
 host-suffix,lmsys.org,global
 host-suffix,lmu.ac.uk,global
 host-suffix,lnat.ac.uk,global
@@ -22806,6 +22812,7 @@ host-suffix,olevodtv.com,global
 host-suffix,olf.ac.uk,global
 host-suffix,oli-school.com,global
 host-suffix,oli.ac.uk,global
+host-suffix,ollama.com,global
 host-suffix,olumpo.com,global
 host-suffix,olympicwatch.org,global
 host-suffix,omafotze.com,global
@@ -25287,6 +25294,7 @@ host-suffix,ravensbourneuniversitylondon.ac.uk,global
 host-suffix,ravm.tv,global
 host-suffix,rawgit.com,global
 host-suffix,rawgithub.com,global
+host-suffix,rawstory.com,global
 host-suffix,raxcdn.com,global
 host-suffix,rayark.download,global
 host-suffix,rayark.net,global
@@ -25478,6 +25486,7 @@ host-suffix,recode.net,global
 host-suffix,recoiljs.org,global
 host-suffix,reconinstruments.com,global
 host-suffix,reconjet.com,global
+host-suffix,recordedfuture.com,global
 host-suffix,recordhistory.org,global
 host-suffix,recordingachievement.ac.uk,global
 host-suffix,recovery.org.tw,global
@@ -29394,6 +29403,7 @@ host-suffix,thieme-connect.com,global
 host-suffix,thieme-connect.de,global
 host-suffix,thieme.de,global
 host-suffix,thinkboxsoftware.com,global
+host-suffix,thinkchina.sg,global
 host-suffix,thinkdifferent.us,global
 host-suffix,thinkgeek.com,global
 host-suffix,thinkhigher.ac.uk,global
