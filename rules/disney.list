@@ -1,7 +1,7 @@
 # Name: Disney
 # Behavior: domain
 # Count: 173
-# Generated: 2026-04-24T13:21:30.750Z
+# Generated: 2026-04-25T02:22:34.538Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Disney/Disney.list
 domain-suffix,20thcenturystudios.com.au
 domain-suffix,20thcenturystudios.com.br
