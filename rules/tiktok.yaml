@@ -1,7 +1,7 @@
 # Name: TikTok
 # Behavior: domain
 # Count: 32
-# Generated: 2026-04-25T02:22:34.538Z
+# Generated: 2026-04-25T13:02:02.694Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/TikTok/TikTok.list
 payload:
   - domain,lf16-effectcdn.byteeffecttos-g.com
