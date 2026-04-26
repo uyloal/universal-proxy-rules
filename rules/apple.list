@@ -1,7 +1,7 @@
 # Name: Apple
 # Behavior: domain
 # Count: 1881
-# Generated: 2026-04-26T02:37:23.124Z
+# Generated: 2026-04-26T13:04:24.866Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Apple/Apple.list
 host,a1.mzstatic.com,apple
 host,a2.mzstatic.com,apple
