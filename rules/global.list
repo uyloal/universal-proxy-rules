@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34690
-# Generated: 2026-04-25T13:02:02.694Z
+# Count: 34694
+# Generated: 2026-04-26T02:37:23.124Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 host,1password.drift.click,global
 host,3dns-1.adobe.com,global
@@ -1961,6 +1961,7 @@ host-suffix,agedm.tv,global
 host-suffix,agemys.org,global
 host-suffix,agendaweek.com,global
 host-suffix,agenet.ac.uk,global
+host-suffix,agentclientprotocol.com,global
 host-suffix,agilebits.com,global
 host-suffix,agnesb.fr,global
 host-suffix,agocg.ac.uk,global
@@ -24015,6 +24016,7 @@ host-suffix,placemyad.com.au,global
 host-suffix,placesdocs.com,global
 host-suffix,planetminecraft.com,global
 host-suffix,planetsuzy.org,global
+host-suffix,plannotator.ai,global
 host-suffix,plansondemand.com,global
 host-suffix,plant-phenomics.ac.uk,global
 host-suffix,plantsvszombies2.com,global
@@ -28979,6 +28981,7 @@ host-suffix,tec.ac.uk,global
 host-suffix,tech-mail.ru,global
 host-suffix,tech26.de,global
 host-suffix,techatbloomberg.com,global
+host-suffix,techbang.com,global
 host-suffix,techcrunch.com,global
 host-suffix,techextra.ac.uk,global
 host-suffix,techhub.ms,global
@@ -30313,6 +30316,7 @@ host-suffix,twitbrowser.net,global
 host-suffix,twitcause.com,global
 host-suffix,twitch.tv,global
 host-suffix,twitchcdn.net,global
+host-suffix,twitchcon.com,global
 host-suffix,twitchsvc.net,global
 host-suffix,twitcomike.jp,global
 host-suffix,twitgether.com,global

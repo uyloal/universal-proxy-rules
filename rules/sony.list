@@ -1,7 +1,7 @@
 # Name: Sony
 # Behavior: domain
 # Count: 116
-# Generated: 2026-04-25T13:02:02.694Z
+# Generated: 2026-04-26T02:37:23.124Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Sony/Sony.list
 domain,sonyliveevents-nonssai.akamaized.net
 domain-suffix,cn-playnow.com.cn
