@@ -1,7 +1,7 @@
 # Name: Facebook
 # Behavior: domain
 # Count: 570
-# Generated: 2026-04-26T13:04:24.866Z
+# Generated: 2026-04-27T02:39:23.760Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Facebook/Facebook.list
 domain-keyword,facebook
 domain-keyword,fbcdn
