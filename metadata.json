@@ -1,8 +1,8 @@
 {
-  "version": "v20260427135004",
-  "generatedAt": "2026-04-27T13:50:04.725Z",
+  "version": "v20260428024644",
+  "generatedAt": "2026-04-28T02:46:44.692Z",
   "commitSha": "7f93748",
-  "totalRules": 46250,
+  "totalRules": 46252,
   "upstreams": {
     "ai": 51,
     "youtube": 190,
@@ -40,7 +40,7 @@
     "amazon": 205,
     "baidu": 251,
     "douban": 3,
-    "global": 34694,
+    "global": 34696,
     "china": 3759,
     "lan": 140,
     "port-direct": 11
