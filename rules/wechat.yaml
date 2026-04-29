@@ -1,7 +1,7 @@
 # Name: WeChat
 # Behavior: domain
 # Count: 43
-# Generated: 2026-04-29T02:46:14.309Z
+# Generated: 2026-04-29T13:53:20.185Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/WeChat/WeChat.list
 payload:
   - host,apd-pcdnwxlogin.teg.tencent-cloud.net,wechat
