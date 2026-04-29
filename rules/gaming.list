@@ -1,7 +1,7 @@
 # Name: Gaming
 # Behavior: domain
 # Count: 597
-# Generated: 2026-04-28T02:46:45.225Z
+# Generated: 2026-04-29T02:46:14.309Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Game/Game.list
 domain,eaasserts-a.akamaihd.net
 domain,gog.salesmanago.com
