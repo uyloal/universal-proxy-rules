@@ -1,7 +1,7 @@
 # Name: DouYin
 # Behavior: domain
 # Count: 13
-# Generated: 2026-04-30T02:47:54.425Z
+# Generated: 2026-04-30T13:51:32.294Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/DouYin/DouYin.list
 domain,lf3-static.bytednsdoc.com
 domain,v5-dy-o-abtest.zjcdn.com
