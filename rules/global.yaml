@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34696
-# Generated: 2026-04-29T13:53:20.185Z
+# Count: 34702
+# Generated: 2026-04-30T02:47:54.425Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 payload:
   - host,1password.drift.click,global
@@ -3307,6 +3307,7 @@ payload:
   - host-suffix,apu.ac.uk,global
   - host-suffix,apuc-scot.ac.uk,global
   - host-suffix,apyle.com,global
+  - host-suffix,aqdlt.net,global
   - host-suffix,aqmen.ac.uk,global
   - host-suffix,aquinas.ac.uk,global
   - host-suffix,ar.hao123.com,global
@@ -6240,6 +6241,7 @@ payload:
   - host-suffix,bullguard.com,global
   - host-suffix,bullog.org,global
   - host-suffix,bullogger.com,global
+  - host-suffix,bululusexdoll.com,global
   - host-suffix,bumingbai.net,global
   - host-suffix,bumpshare.com,global
   - host-suffix,bumptop.ca,global
@@ -24878,6 +24880,7 @@ payload:
   - host-suffix,pttvan.org,global
   - host-suffix,ptwxz.com,global
   - host-suffix,ptzwx.com,global
+  - host-suffix,pu82.vip,global
   - host-suffix,pub.dev,global
   - host-suffix,pubg.com,global
   - host-suffix,public-sex-porn.com,global
@@ -30832,6 +30835,7 @@ payload:
   - host-suffix,upornia.com,global
   - host-suffix,uporno.xxx,global
   - host-suffix,uproxy.org,global
+  - host-suffix,upsangel.com,global
   - host-suffix,uptodown.com,global
   - host-suffix,upwill.org,global
   - host-suffix,upwork.com,global
@@ -32128,6 +32132,7 @@ payload:
   - host-suffix,warwickequine.ac.uk,global
   - host-suffix,warwickhri.ac.uk,global
   - host-suffix,warwickshire.ac.uk,global
+  - host-suffix,wasdj.com,global
   - host-suffix,waselpro.com,global
   - host-suffix,washa.tv,global
   - host-suffix,washeng.net,global
@@ -34229,6 +34234,7 @@ payload:
   - host-suffix,ysmass.com,global
   - host-suffix,ysmeal.com,global
   - host-suffix,ysmeat.com,global
+  - host-suffix,ysmeet.com,global
   - host-suffix,ysmelf.com,global
   - host-suffix,ysmere.com,global
   - host-suffix,ysmuch.com,global

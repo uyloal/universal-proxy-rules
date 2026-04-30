@@ -1,7 +1,7 @@
 # Name: DouBan
 # Behavior: domain
 # Count: 3
-# Generated: 2026-04-29T13:53:20.185Z
+# Generated: 2026-04-30T02:47:54.425Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/DouBan/DouBan.list
 domain-suffix,douban.com
 domain-suffix,douban.fm

@@ -1,7 +1,7 @@
 # Name: Docker
 # Behavior: domain
 # Count: 7
-# Generated: 2026-04-29T13:53:20.185Z
+# Generated: 2026-04-30T02:47:54.425Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Docker/Docker.list
 payload:
   - domain,d1q6f0aelx0por.cloudfront.net
