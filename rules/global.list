@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34702
-# Generated: 2026-05-01T13:16:27.223Z
+# Count: 34703
+# Generated: 2026-05-02T02:36:02.329Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 host,1password.drift.click,global
 host,3dns-1.adobe.com,global
@@ -532,6 +532,7 @@ host,time4.facebook.com,global
 host,time4.google.com,global
 host,time5.facebook.com,global
 host,tmdb-image-prod.b-cdn.net,global
+host,tmdb-web-image-prod.b-cdn.net,global
 host,translomatic.foxfortmobile.com,global
 host,tv.apple.com,global
 host,tv.applemusic.com,global
