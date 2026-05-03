@@ -1,7 +1,7 @@
 # Name: HBO
 # Behavior: domain
 # Count: 49
-# Generated: 2026-05-02T13:08:25.960Z
+# Generated: 2026-05-03T02:47:10.315Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/HBO/HBO.list
 domain-suffix,bcbolthboa-a.akamaihd.net
 domain-suffix,cf-images.ap-southeast-1.prod.boltdns.net
