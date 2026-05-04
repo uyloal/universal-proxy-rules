@@ -1,7 +1,7 @@
 # Name: Baidu
 # Behavior: domain
 # Count: 251
-# Generated: 2026-05-03T13:07:05.873Z
+# Generated: 2026-05-04T02:44:26.392Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Baidu/Baidu.list
 domain-suffix,17swan.com
 domain-suffix,37swan.com

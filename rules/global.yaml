@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34703
-# Generated: 2026-05-03T13:07:05.873Z
+# Count: 34707
+# Generated: 2026-05-04T02:44:26.392Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 payload:
   - host,1password.drift.click,global
@@ -12571,6 +12571,7 @@ payload:
   - host-suffix,ftvmilfs.com,global
   - host-suffix,ftvnews.com.tw,global
   - host-suffix,ftx.com,global
+  - host-suffix,fu62.vip,global
   - host-suffix,fubo.tv,global
   - host-suffix,fucd.com,global
   - host-suffix,fuchsia.dev,global
@@ -20287,6 +20288,7 @@ payload:
   - host-suffix,minisaskatoon.com,global
   - host-suffix,minisexdoll.com,global
   - host-suffix,minishop.ca,global
+  - host-suffix,miniso-au.com,global
   - host-suffix,miniso-bh.com,global
   - host-suffix,miniso-np.com,global
   - host-suffix,miniso-nz.com,global
@@ -21191,6 +21193,7 @@ payload:
   - host-suffix,mythicgames.com,global
   - host-suffix,mytimesplus.co.uk,global
   - host-suffix,mytizi.com,global
+  - host-suffix,mytokenapi.com,global
   - host-suffix,mytopf.com,global
   - host-suffix,mytrannycams.com,global
   - host-suffix,mytrk.link,global
@@ -25386,6 +25389,7 @@ payload:
   - host-suffix,rds-yes.buzz,global
   - host-suffix,rdtcdn.com,global
   - host-suffix,re-net.ac.uk,global
+  - host-suffix,re25.vip,global
   - host-suffix,rea-asia.com,global
   - host-suffix,rea-group.com,global
   - host-suffix,rea.design,global

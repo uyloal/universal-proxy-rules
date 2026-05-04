@@ -1,7 +1,7 @@
 # Name: Nintendo
 # Behavior: domain
-# Count: 127
-# Generated: 2026-05-03T13:07:05.873Z
+# Count: 126
+# Generated: 2026-05-04T02:44:26.392Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Nintendo/Nintendo.list
 payload:
   - domain-suffix,100classicbooks.com
@@ -36,7 +36,6 @@ payload:
   - domain-suffix,miitomo.com
   - domain-suffix,miitomo.com.cn
   - domain-suffix,miiverse.com
-  - domain-suffix,nentindo.net
   - domain-suffix,newsupermariobrosu.com
   - domain-suffix,nintendo-europe-sales.com
   - domain-suffix,nintendo-europe.com
