@@ -1,7 +1,7 @@
 # Name: Sina
 # Behavior: domain
 # Count: 108
-# Generated: 2026-05-04T02:44:26.392Z
+# Generated: 2026-05-04T13:57:11.358Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Sina/Sina.list
 domain-keyword,weibo
 domain-suffix,001wifi.com

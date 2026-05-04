@@ -1,7 +1,7 @@
 # Name: LAN
 # Behavior: ipcidr
 # Count: 140
-# Generated: 2026-05-04T02:44:26.392Z
+# Generated: 2026-05-04T13:57:11.358Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Lan/Lan.list
 domain,asusrouter.com
 domain,instant.arubanetworks.com

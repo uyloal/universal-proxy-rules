@@ -1,7 +1,7 @@
 # Name: China
 # Behavior: domain
 # Count: 3759
-# Generated: 2026-05-04T02:44:26.392Z
+# Generated: 2026-05-04T13:57:11.358Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/China/China.list
 payload:
   - host,analytics.strava.com,china
