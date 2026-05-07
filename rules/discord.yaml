@@ -1,7 +1,7 @@
 # Name: Discord
 # Behavior: domain
 # Count: 29
-# Generated: 2026-05-07T02:44:27.161Z
+# Generated: 2026-05-07T14:04:52.344Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Discord/Discord.list
 payload:
   - domain-suffix,airhorn.solutions
