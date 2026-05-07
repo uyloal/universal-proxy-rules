@@ -1,7 +1,7 @@
 # Name: PayPal
 # Behavior: domain
 # Count: 248
-# Generated: 2026-05-06T14:07:35.149Z
+# Generated: 2026-05-07T02:44:27.161Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/PayPal/PayPal.list
 domain-keyword,paypal
 domain-suffix,account-paypal.info
