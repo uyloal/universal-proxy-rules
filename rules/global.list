@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34800
-# Generated: 2026-05-07T14:04:52.344Z
+# Count: 34859
+# Generated: 2026-05-08T02:48:31.950Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 host,1password.drift.click,global
 host,3dns-1.adobe.com,global
@@ -115,7 +115,10 @@ host,cloudsync-prod.s3.amazonaws.com,global
 host,clubhouse.pubnubapi.com,global
 host,community.oneplus.com,global
 host,configuration-lb.ls-apple.com.akadns.net,global
+host,copilot-proxy.githubusercontent.com,global
+host,copilot-workspace.githubnext.com,global
 host,copilot.microsoft.com,global
+host,copilotprodattachments.blob.core.windows.net,global
 host,courier-push-apple.com.akadns.net,global
 host,crl.microsoft.com,global
 host,crl.versign.net,global
@@ -125,6 +128,7 @@ host,d1g1f25tn8m2e6.cloudfront.net,global
 host,d1k2us671qcoau.cloudfront.net,global
 host,d1m7jfoe9zdc1j.cloudfront.net,global
 host,d1mhjrowxxagfy.cloudfront.net,global
+host,d1ndex63qxojbr.cloudfront.net,global
 host,d1oca24q5dwo6d.cloudfront.net,global
 host,d1q6f0aelx0por.cloudfront.net,global
 host,d1unuk07s6td74.cloudfront.net,global
@@ -230,6 +234,11 @@ host,gamer2-cds.cdn.hinet.net,global
 host,gigabyte2.azureedge.net,global
 host,github-api.arkoselabs.com,global
 host,github-cloud.s3.amazonaws.com,global
+host,github-production-release-asset-2e65be.s3.amazonaws.com,global
+host,github-production-repository-file-5c1aeb.s3.amazonaws.com,global
+host,github-production-repository-image-32fea6.s3.amazonaws.com,global
+host,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com,global
+host,github-production-user-asset-6210df.s3.amazonaws.com,global
 host,github.global.ssl.fastly.net,global
 host,gitlab-assets.oss-cn-hongkong.aliyuncs.com,global
 host,gog.qtlglb.com,global
@@ -360,6 +369,26 @@ host,prd-priconne-redive.akamaized.net,global
 host,preprod-publicca.googleapis.com,global
 host,prodforza.blob.core.windows.net,global
 host,production-openaicom-storage.azureedge.net,global
+host,productionresultssa0.blob.core.windows.net,global
+host,productionresultssa1.blob.core.windows.net,global
+host,productionresultssa10.blob.core.windows.net,global
+host,productionresultssa11.blob.core.windows.net,global
+host,productionresultssa12.blob.core.windows.net,global
+host,productionresultssa13.blob.core.windows.net,global
+host,productionresultssa14.blob.core.windows.net,global
+host,productionresultssa15.blob.core.windows.net,global
+host,productionresultssa16.blob.core.windows.net,global
+host,productionresultssa17.blob.core.windows.net,global
+host,productionresultssa18.blob.core.windows.net,global
+host,productionresultssa19.blob.core.windows.net,global
+host,productionresultssa2.blob.core.windows.net,global
+host,productionresultssa3.blob.core.windows.net,global
+host,productionresultssa4.blob.core.windows.net,global
+host,productionresultssa5.blob.core.windows.net,global
+host,productionresultssa6.blob.core.windows.net,global
+host,productionresultssa7.blob.core.windows.net,global
+host,productionresultssa8.blob.core.windows.net,global
+host,productionresultssa9.blob.core.windows.net,global
 host,psg-int-centralus.cloudapp.net,global
 host,psg-int-eastus.cloudapp.net,global
 host,pubg1.battleye.com,global
@@ -1588,6 +1617,7 @@ host-suffix,aces.ac.uk,global
 host-suffix,acesofthunder.net,global
 host-suffix,acets.ac.uk,global
 host-suffix,acevpn.com,global
+host-suffix,acg.mn,global
 host-suffix,acg.rip,global
 host-suffix,acg18.me,global
 host-suffix,acgbox.org,global
@@ -2856,6 +2886,7 @@ host-suffix,anypornhd.com,global
 host-suffix,anypornsexxx.com,global
 host-suffix,anysex.com,global
 host-suffix,anyshemale.com,global
+host-suffix,anythingllm.com,global
 host-suffix,anyxxx.me,global
 host-suffix,anyxxx.pro,global
 host-suffix,ao3.org,global
@@ -5147,6 +5178,7 @@ host-suffix,blaoshi.cc,global
 host-suffix,blazor.net,global
 host-suffix,blc.ac.uk,global
 host-suffix,ble.ac.uk,global
+host-suffix,bleepingcomputer.com,global
 host-suffix,blend-ed.ac.uk,global
 host-suffix,blender.org,global
 host-suffix,blewpass.com,global
@@ -5841,6 +5873,7 @@ host-suffix,boom.ru,global
 host-suffix,boomba.club,global
 host-suffix,boombeach.com,global
 host-suffix,boomerang.com,global
+host-suffix,boomplay.com,global
 host-suffix,boomssr.com,global
 host-suffix,boomtrain.com,global
 host-suffix,booru.org,global
@@ -7764,6 +7797,7 @@ host-suffix,cn-proxy.com,global
 host-suffix,cn6.eu,global
 host-suffix,cna.com.tw,global
 host-suffix,cnabc.com,global
+host-suffix,cnbc.com,global
 host-suffix,cnbeta.com.tw,global
 host-suffix,cnd.org,global
 host-suffix,cnet.com,global
@@ -8328,6 +8362,7 @@ host-suffix,ctfriend.net,global
 host-suffix,ctg.ac.uk,global
 host-suffix,ctinets.com,global
 host-suffix,ctinews.com,global
+host-suffix,ctinsider.com,global
 host-suffix,ctitv.com.tw,global
 host-suffix,ctk.ac.uk,global
 host-suffix,ctkaquinas.ac.uk,global
@@ -10393,6 +10428,7 @@ host-suffix,edgesuite.net,global
 host-suffix,edhcc.ac.uk,global
 host-suffix,edicypages.com,global
 host-suffix,edifhe.ac.uk,global
+host-suffix,edigest.hk,global
 host-suffix,edina.ac.uk,global
 host-suffix,edinburgh.ac.uk,global
 host-suffix,edinburghcollege.ac.uk,global
@@ -14902,6 +14938,7 @@ host-suffix,hitbtc.com,global
 host-suffix,hitomi.la,global
 host-suffix,hitun.io,global
 host-suffix,hitxhot.com,global
+host-suffix,hive.blog,global
 host-suffix,hiveon.net,global
 host-suffix,hiwifi.com,global
 host-suffix,hizb-ut-tahrir.info,global
@@ -15737,6 +15774,7 @@ host-suffix,icair.ac.uk,global
 host-suffix,icams.com,global
 host-suffix,icashpassport.com.mx,global
 host-suffix,icca.ac.uk,global
+host-suffix,iccf.com,global
 host-suffix,iccliverpool.ac.uk,global
 host-suffix,ice-cse.ac.uk,global
 host-suffix,iced.ac.uk,global
@@ -16308,6 +16346,7 @@ host-suffix,informedchoices.ac.uk,global
 host-suffix,informer.com,global
 host-suffix,informs.org,global
 host-suffix,infosciscotland.ac.uk,global
+host-suffix,infosec.exchange,global
 host-suffix,infotimes.com.tw,global
 host-suffix,infowars.com,global
 host-suffix,infowarsmedia.com,global
@@ -17802,6 +17841,7 @@ host-suffix,kaspersky.se,global
 host-suffix,kastatic.org,global
 host-suffix,kat.cr,global
 host-suffix,katestube.com,global
+host-suffix,kathmandupost.com,global
 host-suffix,kavkazr.com,global
 host-suffix,kawaiikawaii.jp,global
 host-suffix,kawase.com,global
@@ -19726,6 +19766,7 @@ host-suffix,mediafiles-cisco.com,global
 host-suffix,mediafire.com,global
 host-suffix,mediafreakcity.com,global
 host-suffix,mediahub.ac.uk,global
+host-suffix,mediamatters.org,global
 host-suffix,median.ac.uk,global
 host-suffix,mediasama.com,global
 host-suffix,mediawiki.org,global
@@ -20491,6 +20532,7 @@ host-suffix,mizzmona.com,global
 host-suffix,mji.rip,global
 host-suffix,mjib.gov.tw,global
 host-suffix,mjj.rip,global
+host-suffix,mjj.today,global
 host-suffix,mjv-art.org,global
 host-suffix,mk.shrimpia.network,global
 host-suffix,mk.yopo.work,global
@@ -21802,6 +21844,7 @@ host-suffix,newsexxxx.com,global
 host-suffix,newsfeed.com,global
 host-suffix,newsfilm.ac.uk,global
 host-suffix,newsgawakaru.com,global
+host-suffix,newshub.co.nz,global
 host-suffix,newslicensing.co.uk,global
 host-suffix,newsmagazine.asia,global
 host-suffix,newsmart.jp,global
@@ -21817,6 +21860,7 @@ host-suffix,newstamago.com,global
 host-suffix,newstapa.org,global
 host-suffix,newstarnet.com,global
 host-suffix,newstatesman.com,global
+host-suffix,newstimes.com,global
 host-suffix,newsukadops.com,global
 host-suffix,newsupermariobrosu.com,global
 host-suffix,newsweek.com,global
@@ -21886,6 +21930,7 @@ host-suffix,nflxso.net,global
 host-suffix,nflxvideo.net,global
 host-suffix,nfo.ac.uk,global
 host-suffix,nfsc.global,global
+host-suffix,nfsc.press,global
 host-suffix,nfscdict.com,global
 host-suffix,nfscofficial.com,global
 host-suffix,nfsworld.com,global
@@ -22499,6 +22544,7 @@ host-suffix,ntyneside.ac.uk,global
 host-suffix,nu-bay.com,global
 host-suffix,nu-sense.ac.uk,global
 host-suffix,nu.nl,global
+host-suffix,nu36.vip,global
 host-suffix,nua.ac.uk,global
 host-suffix,nubilefilms.com,global
 host-suffix,nubiles-casting.com,global
@@ -22938,6 +22984,7 @@ host-suffix,onani-daisuki.com,global
 host-suffix,onapp.com,global
 host-suffix,onbeatsbydresale.com,global
 host-suffix,oncars.in,global
+host-suffix,ondigitalocean.com,global
 host-suffix,one.one,global
 host-suffix,one889.app,global
 host-suffix,oneapi.com,global
@@ -23081,6 +23128,7 @@ host-suffix,opensource.ac.uk,global
 host-suffix,opensource.guide,global
 host-suffix,opensourceinsight.dev,global
 host-suffix,opensourceinsights.dev,global
+host-suffix,openspec.dev,global
 host-suffix,openssl.org,global
 host-suffix,openstemlab.ac.uk,global
 host-suffix,openstemlabs.ac.uk,global
@@ -23254,6 +23302,7 @@ host-suffix,over18arcade.com,global
 host-suffix,overapple.com,global
 host-suffix,overcast.fm,global
 host-suffix,overdaily.org,global
+host-suffix,overdrive.com,global
 host-suffix,overleaf.com,global
 host-suffix,overplay.net,global
 host-suffix,overseas.weibo.com,global
@@ -23802,6 +23851,7 @@ host-suffix,penchinese.net,global
 host-suffix,pencoed.ac.uk,global
 host-suffix,pendcoll.ac.uk,global
 host-suffix,pendrivelinux.com,global
+host-suffix,penguin.com.au,global
 host-suffix,pengwerncollege.ac.uk,global
 host-suffix,pengyulong.com,global
 host-suffix,peninsula.ac.uk,global
@@ -26065,6 +26115,7 @@ host-suffix,rthk.org.hk,global
 host-suffix,rti.org.tw,global
 host-suffix,rti.tw,global
 host-suffix,rtings.com,global
+host-suffix,rts.ch,global
 host-suffix,rtycminnesota.org,global
 host-suffix,ru-moscow-1.myhuaweicloud.com,global
 host-suffix,rua-project.ac.uk,global
@@ -28631,6 +28682,7 @@ host-suffix,supply-chain.ac.uk,global
 host-suffix,supplybestjerseys.com,global
 host-suffix,support-uber.com,global
 host-suffix,supportfacebook.com,global
+host-suffix,supr.cl,global
 host-suffix,supremacy.com,global
 host-suffix,supremacy.net,global
 host-suffix,suprememastertv.com,global
@@ -29292,6 +29344,7 @@ host-suffix,the-etc.ac.uk,global
 host-suffix,the-japan-news.com,global
 host-suffix,the-m-festival.com,global
 host-suffix,the-monster-beats.com,global
+host-suffix,the-sun.com,global
 host-suffix,the-tls.co.uk,global
 host-suffix,the123d.com,global
 host-suffix,theaffairs.com,global
@@ -29488,6 +29541,7 @@ host-suffix,theuab.net,global
 host-suffix,theverge.com,global
 host-suffix,thevirtualsexreview.com,global
 host-suffix,thevivekspot.com,global
+host-suffix,theweek.com,global
 host-suffix,theweek.in,global
 host-suffix,thewgo.org,global
 host-suffix,thewirechina.com,global
@@ -30302,6 +30356,7 @@ host-suffix,tvbs.com.tw,global
 host-suffix,tvbusa.com,global
 host-suffix,tvbweekly.com,global
 host-suffix,tvc.ac.uk,global
+host-suffix,tvdy1.com,global
 host-suffix,tver.co.jp,global
 host-suffix,tver.jp,global
 host-suffix,tvider.com,global
@@ -30381,6 +30436,7 @@ host-suffix,twifuli.com,global
 host-suffix,twiggit.org,global
 host-suffix,twilightsex.com,global
 host-suffix,twilio.com,global
+host-suffix,twilio.jp,global
 host-suffix,twilog.org,global
 host-suffix,twimbow.com,global
 host-suffix,twimg.co,global
@@ -30494,6 +30550,7 @@ host-suffix,typography.com,global
 host-suffix,typora.io,global
 host-suffix,tyre-cadcam.com,global
 host-suffix,tyrecadcam.com,global
+host-suffix,tytch.com,global
 host-suffix,tytng189.com,global
 host-suffix,tytporno.online,global
 host-suffix,u.nu,global
@@ -30973,7 +31030,9 @@ host-suffix,userapi.ru,global
 host-suffix,usercentrics.eu,global
 host-suffix,usercontent.dev,global
 host-suffix,usercontent.goog,global
+host-suffix,userdrive.org,global
 host-suffix,userpxt.io,global
+host-suffix,usersdrive.com,global
 host-suffix,usertrust.com,global
 host-suffix,usfk.mil,global
 host-suffix,usgs.gov,global
