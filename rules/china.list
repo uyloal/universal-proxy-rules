@@ -1,12 +1,11 @@
 # Name: China
 # Behavior: domain
-# Count: 3759
-# Generated: 2026-05-09T13:15:04.381Z
+# Count: 3755
+# Generated: 2026-05-10T02:49:12.277Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/China/China.list
 host,analytics.strava.com,china
 host,blzddist1-a.akamaihd.net,china
 host,cdn.angruo.com,china
-host,cdn.lilyemby.com,china
 host,client.amplifi.com,china
 host,download.jetbrains.com,china
 host,download.microsoft.com,china
@@ -16,10 +15,8 @@ host,kc.kexinshe.com,china
 host,ntservicepack.microsoft.com,china
 host,origin-a.akamaihd.ne,china
 host,origin-a.akamaihd.net,china
-host,smart.uhdnow.com,china
 host,sms.imagetasks.com,china
 host,steamcommunity-a.akamaihd.net,china
-host,tx.lilyemby.com,china
 host,weixin.com,china
 host,www.libvideo.com,china
 host,www.yxssp.com,china
@@ -1957,7 +1954,6 @@ host-suffix,jiayuan.com,china
 host-suffix,jiazhao.com,china
 host-suffix,jibencaozuo.com,china
 host-suffix,jidian.im,china
-host-suffix,jiedaibao.gs,china
 host-suffix,jiemeng8.com,china
 host-suffix,jiemian.com,china
 host-suffix,jikeiot.cloud,china

@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34859
-# Generated: 2026-05-09T13:15:04.381Z
+# Count: 34861
+# Generated: 2026-05-10T02:49:12.277Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 host,1password.drift.click,global
 host,3dns-1.adobe.com,global
@@ -30822,6 +30822,7 @@ host-suffix,ultrayoungsex.com,global
 host-suffix,ulyssesapp.com,global
 host-suffix,uma.media,global
 host-suffix,umagazine.com.hk,global
+host-suffix,umap.openstreetmap.fr,global
 host-suffix,umass.edu,global
 host-suffix,umbrella.com,global
 host-suffix,umds.ac.uk,global
@@ -31874,6 +31875,7 @@ host-suffix,vodafone.com.au,global
 host-suffix,vodafone.com.tr,global
 host-suffix,vodafone.de,global
 host-suffix,vodafone.it,global
+host-suffix,vodafone.nl,global
 host-suffix,voicettank.org,global
 host-suffix,voila.ac.uk,global
 host-suffix,vokevr.com,global

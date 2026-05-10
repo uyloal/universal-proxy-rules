@@ -1,7 +1,7 @@
 # Name: Netflix
 # Behavior: domain
 # Count: 1157
-# Generated: 2026-05-09T13:15:04.381Z
+# Generated: 2026-05-10T02:49:12.277Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Netflix/Netflix.list
 payload:
   - domain,e13252.dscg.akamaiedge.net
