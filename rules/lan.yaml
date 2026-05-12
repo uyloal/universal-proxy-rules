@@ -1,7 +1,7 @@
 # Name: LAN
 # Behavior: ipcidr
 # Count: 140
-# Generated: 2026-05-11T14:47:08.496Z
+# Generated: 2026-05-12T02:50:20.505Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Lan/Lan.list
 payload:
   - domain,asusrouter.com

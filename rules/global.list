@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34861
-# Generated: 2026-05-11T14:47:08.496Z
+# Count: 34878
+# Generated: 2026-05-12T02:50:20.505Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 host,1password.drift.click,global
 host,3dns-1.adobe.com,global
@@ -8683,6 +8683,7 @@ host-suffix,data.ac.uk,global
 host-suffix,data.com,global
 host-suffix,data.flurry.com,global
 host-suffix,data.gov.tw,global
+host-suffix,data18.com,global
 host-suffix,datacloudmy.com,global
 host-suffix,dataframeworks.com,global
 host-suffix,datafuturesalphapilot.ac.uk,global
@@ -9837,6 +9838,7 @@ host-suffix,dsw.ac.uk,global
 host-suffix,dswz88.xyz,global
 host-suffix,dsyiren.com,global
 host-suffix,dt-toolkit.ac.uk,global
+host-suffix,dt18.com,global
 host-suffix,dtc-online.ac.uk,global
 host-suffix,dtci.co,global
 host-suffix,dtci.technology,global
@@ -13177,6 +13179,7 @@ host-suffix,gettyimages.se,global
 host-suffix,gettyimages.us,global
 host-suffix,getuploader.com,global
 host-suffix,getws1.com,global
+host-suffix,getwsj.com,global
 host-suffix,getwsone.com,global
 host-suffix,getzola.org,global
 host-suffix,gfacecbook.com,global
@@ -17228,6 +17231,7 @@ host-suffix,javdoe.to,global
 host-suffix,javdove.com,global
 host-suffix,javdove8.xyz,global
 host-suffix,javextreme.net,global
+host-suffix,javfc2.xyz,global
 host-suffix,javfilms.com,global
 host-suffix,javfinder.ai,global
 host-suffix,javfor.me,global
@@ -17706,6 +17710,7 @@ host-suffix,justporno.tv,global
 host-suffix,justswallows.com,global
 host-suffix,justtristan.com,global
 host-suffix,justusboys.com,global
+host-suffix,justveryok.com,global
 host-suffix,juyangbee.xyz,global
 host-suffix,juyangto.info,global
 host-suffix,juyuange.org,global
@@ -17908,6 +17913,7 @@ host-suffix,kew.ac.uk,global
 host-suffix,kex.com,global
 host-suffix,keybase.io,global
 host-suffix,keybaseapi.com,global
+host-suffix,keyboardmen.com,global
 host-suffix,keycdn.com,global
 host-suffix,keyhole.com,global
 host-suffix,keyporntube.com,global
@@ -22840,7 +22846,15 @@ host-suffix,oculusrift.com,global
 host-suffix,oculusvr.com,global
 host-suffix,ocvc.ac.uk,global
 host-suffix,odkl.ru,global
+host-suffix,odnoklasniki.by,global
+host-suffix,odnoklasniki.ua,global
+host-suffix,odnoklassniki.am,global
+host-suffix,odnoklassniki.by,global
+host-suffix,odnoklassniki.co.ee,global
+host-suffix,odnoklassniki.eu,global
+host-suffix,odnoklassniki.lv,global
 host-suffix,odnoklassniki.ru,global
+host-suffix,odnoklassniki.tj,global
 host-suffix,odysee.com,global
 host-suffix,oed.com,global
 host-suffix,oekakiskey.com,global
@@ -25317,6 +25331,7 @@ host-suffix,r34porn.net,global
 host-suffix,ra-review.ac.uk,global
 host-suffix,ra.gg,global
 host-suffix,raa.ac.uk,global
+host-suffix,rabbitcounter.com,global
 host-suffix,rabbitscams.com,global
 host-suffix,rabbitscams.sex,global
 host-suffix,rabbitsreviews.com,global
@@ -26405,6 +26420,7 @@ host-suffix,savitahd.net,global
 host-suffix,savoycomputing.com,global
 host-suffix,savvyshopper.net.au,global
 host-suffix,say2.info,global
+host-suffix,sayeasy.eu,global
 host-suffix,saynow.com,global
 host-suffix,sb-cd.com,global
 host-suffix,sb-mobile.jp,global
@@ -33575,6 +33591,7 @@ host-suffix,xxbbx.com,global
 host-suffix,xxbook.cc,global
 host-suffix,xxbrits.com,global
 host-suffix,xxeronetxx.info,global
+host-suffix,xxfbiaa.xyz,global
 host-suffix,xxgasm.com,global
 host-suffix,xxindianporn.com,global
 host-suffix,xxiqiyiavxx.buzz,global

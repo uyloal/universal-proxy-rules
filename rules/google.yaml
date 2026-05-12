@@ -1,7 +1,7 @@
 # Name: Google
 # Behavior: domain
-# Count: 705
-# Generated: 2026-05-11T14:47:08.496Z
+# Count: 698
+# Generated: 2026-05-12T02:50:20.505Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list
 payload:
   - domain,voice.telephony.goog
@@ -207,7 +207,6 @@ payload:
   - domain-suffix,doubleclick-cn.net
   - domain-suffix,doubleclick.com
   - domain-suffix,doubleclick.net
-  - domain-suffix,download.qatp1.net
   - domain-suffix,episodic.com
   - domain-suffix,fastlane.ci
   - domain-suffix,fastlane.tools
@@ -556,7 +555,6 @@ payload:
   - domain-suffix,meet.new
   - domain-suffix,mfg-inspector.com
   - domain-suffix,mobileview.page
-  - domain-suffix,monitoring.qpdp1.net
   - domain-suffix,moodstocks.com
   - domain-suffix,near.by
   - domain-suffix,nest.com
@@ -600,12 +598,8 @@ payload:
   - domain-suffix,projectara.com
   - domain-suffix,projectbaseline.com
   - domain-suffix,publishproxy.com
-  - domain-suffix,qagpublic.qatp1.net
-  - domain-suffix,qgadmin.qcpp1.net
   - domain-suffix,qiao-cn.com
   - domain-suffix,qpx.googleflights.net
-  - domain-suffix,qualysapi.qatp1.net
-  - domain-suffix,qualysguard.qpdp1.net
   - domain-suffix,questvisual.com
   - domain-suffix,quickoffice.com
   - domain-suffix,quiksee.com
@@ -622,7 +616,6 @@ payload:
   - domain-suffix,run.app
   - domain-suffix,savethedate.foo
   - domain-suffix,saynow.com
-  - domain-suffix,scanservice1.qcpp1.net
   - domain-suffix,schema.org
   - domain-suffix,schemer.com
   - domain-suffix,screenwisetrends.com

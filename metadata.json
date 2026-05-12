@@ -1,8 +1,8 @@
 {
-  "version": "v20260511144707",
-  "generatedAt": "2026-05-11T14:47:07.085Z",
+  "version": "v20260512025019",
+  "generatedAt": "2026-05-12T02:50:19.510Z",
   "commitSha": "7f93748",
-  "totalRules": 46412,
+  "totalRules": 46422,
   "upstreams": {
     "ai": 51,
     "youtube": 190,
@@ -31,7 +31,7 @@
     "gaming": 597,
     "github": 31,
     "microsoft": 671,
-    "google": 705,
+    "google": 698,
     "apple": 1881,
     "google-drive": 8,
     "onedrive": 16,
@@ -40,7 +40,7 @@
     "amazon": 205,
     "baidu": 251,
     "douban": 3,
-    "global": 34861,
+    "global": 34878,
     "china": 3755,
     "lan": 140,
     "port-direct": 11
