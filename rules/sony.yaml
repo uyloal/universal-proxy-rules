@@ -1,7 +1,7 @@
 # Name: Sony
 # Behavior: domain
 # Count: 116
-# Generated: 2026-05-12T02:50:20.505Z
+# Generated: 2026-05-12T14:21:57.598Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Sony/Sony.list
 payload:
   - domain,sonyliveevents-nonssai.akamaized.net
