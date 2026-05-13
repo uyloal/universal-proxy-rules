@@ -2,7 +2,7 @@
 # Behavior: classical
 # Type: Custom
 # Count: 11
-# Generated: 2026-05-13T02:55:14.836Z
+# Generated: 2026-05-13T14:30:29.026Z
 # Merged From: port-direct
 # Source: custom-rules.yaml
 dst-port,143,direct
