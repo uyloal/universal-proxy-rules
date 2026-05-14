@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34878
-# Generated: 2026-05-13T14:30:29.026Z
+# Count: 34965
+# Generated: 2026-05-14T02:57:46.517Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 payload:
   - host,1password.drift.click,global
@@ -1562,6 +1562,7 @@ payload:
   - host-suffix,abs.ac.uk,global
   - host-suffix,abs.edu,global
   - host-suffix,absoluporn.com,global
+  - host-suffix,absolutbank.ru,global
   - host-suffix,absolutewhores.com,global
   - host-suffix,ac-pocketcamp.com,global
   - host-suffix,ac.ir,global
@@ -2292,6 +2293,7 @@ payload:
   - host-suffix,akastream.com,global
   - host-suffix,akastream.net,global
   - host-suffix,akatns.net,global
+  - host-suffix,akbars.ru,global
   - host-suffix,akiba-online.com,global
   - host-suffix,akiba-souken.com,global
   - host-suffix,akiba-web.com,global
@@ -2314,6 +2316,7 @@ payload:
   - host-suffix,alchemysynth.com,global
   - host-suffix,alcs.ac.uk,global
   - host-suffix,aldinhe.ac.uk,global
+  - host-suffix,alefbank.com,global
   - host-suffix,alexa.com,global
   - host-suffix,alexanderlondoncollege.ac.uk,global
   - host-suffix,alexanderstreet.com,global
@@ -2824,6 +2827,7 @@ payload:
   - host-suffix,aniscartujo.com,global
   - host-suffix,anistreaming.xyz,global
   - host-suffix,ankarazirvesi2018.com,global
+  - host-suffix,ankb.ru,global
   - host-suffix,ankiuser.net,global
   - host-suffix,ankiweb.net,global
   - host-suffix,anm.co.uk,global
@@ -3492,6 +3496,7 @@ payload:
   - host-suffix,ashridge.ac.uk,global
   - host-suffix,ashtoninstitute.ac.uk,global
   - host-suffix,asia-gaming.com,global
+  - host-suffix,asia-pay.ru,global
   - host-suffix,asiabrox.ac.uk,global
   - host-suffix,asiacrazy.xyz,global
   - host-suffix,asiaharvest.org,global
@@ -3595,6 +3600,7 @@ payload:
   - host-suffix,at.ua,global
   - host-suffix,atandt.com,global
   - host-suffix,atasale.com,global
+  - host-suffix,atb.su,global
   - host-suffix,atc.org.au,global
   - host-suffix,atchinese.com,global
   - host-suffix,atdmt2.com,global
@@ -3841,6 +3847,7 @@ payload:
   - host-suffix,autodraw.com,global
   - host-suffix,autoesporte.com,global
   - host-suffix,autoesporte.com.br,global
+  - host-suffix,autokreditbank.ru,global
   - host-suffix,automaton-media.com,global
   - host-suffix,automobile.fr,global
   - host-suffix,automotive-cadcam.com,global
@@ -3868,6 +3875,7 @@ payload:
   - host-suffix,av6k.vip,global
   - host-suffix,avaaz.org,global
   - host-suffix,avail.googleflights.net,global
+  - host-suffix,avangard.ru,global
   - host-suffix,avant.ac.uk,global
   - host-suffix,avast.com,global
   - host-suffix,avatara.com,global
@@ -3887,6 +3895,7 @@ payload:
   - host-suffix,avdwang.xyz,global
   - host-suffix,avelip.com,global
   - host-suffix,aventertainments.com,global
+  - host-suffix,aversbank.ru,global
   - host-suffix,avfantasy.com,global
   - host-suffix,avfox.cc,global
   - host-suffix,avg.com,global
@@ -4191,7 +4200,11 @@ payload:
   - host-suffix,bangumi.tv,global
   - host-suffix,bangyoulater.com,global
   - host-suffix,bangyourwife.com,global
+  - host-suffix,bank-arzamas.ru,global
+  - host-suffix,bank-credit-suisse-moscow.ru,global
   - host-suffix,bank-maskan.ir,global
+  - host-suffix,bank131.com,global
+  - host-suffix,bankermak.ru,global
   - host-suffix,bankline.ru,global
   - host-suffix,bankmellat.ir,global
   - host-suffix,bankmobilevibe.com,global
@@ -4304,6 +4317,7 @@ payload:
   - host-suffix,bbkz.com,global
   - host-suffix,bbnradio.org,global
   - host-suffix,bbqm1.xyz,global
+  - host-suffix,bbr.ru,global
   - host-suffix,bbs-cove.ac.uk,global
   - host-suffix,bbs-tw.com,global
   - host-suffix,bbs.tuitui.info,global
@@ -4852,6 +4866,7 @@ payload:
   - host-suffix,beyondcore.com,global
   - host-suffix,beyondfirewall.com,global
   - host-suffix,beyondtext.ac.uk,global
+  - host-suffix,bfa.ru,global
   - host-suffix,bffshd.com,global
   - host-suffix,bfmat.ac.uk,global
   - host-suffix,bfnn.org,global
@@ -5370,6 +5385,7 @@ payload:
   - host-suffix,blws.ac.uk,global
   - host-suffix,blylq.buzz,global
   - host-suffix,blz-contentstack.com,global
+  - host-suffix,bm-bank.ru,global
   - host-suffix,bm14.ac.uk,global
   - host-suffix,bmac.ac.uk,global
   - host-suffix,bmc.ac.uk,global
@@ -6206,6 +6222,7 @@ payload:
   - host-suffix,bsnti.ac.uk,global
   - host-suffix,bso.ac.uk,global
   - host-suffix,bsom.ac.uk,global
+  - host-suffix,bspb.ru,global
   - host-suffix,bsr.ac.uk,global
   - host-suffix,bsrg.ac.uk,global
   - host-suffix,bssd.ac.uk,global
@@ -7980,6 +7997,7 @@ payload:
   - host-suffix,comments.app,global
   - host-suffix,commentshk.com,global
   - host-suffix,commerceos.com,global
+  - host-suffix,commerzbank.ru,global
   - host-suffix,commnet.ac.uk,global
   - host-suffix,communistcrimes.org,global
   - host-suffix,communitychoicecu.com,global
@@ -8239,6 +8257,7 @@ payload:
   - host-suffix,creativity-cetl.ac.uk,global
   - host-suffix,creatwhatsnext.com,global
   - host-suffix,crececonebay.com,global
+  - host-suffix,credit-zenit.ru,global
   - host-suffix,creditcardsbay.com,global
   - host-suffix,creditkarma.com,global
   - host-suffix,creditlink-east.ac.uk,global
@@ -8727,6 +8746,7 @@ payload:
   - host-suffix,dba.dk,global
   - host-suffix,dbc.hk,global
   - host-suffix,dbgjd.com,global
+  - host-suffix,dbmoscow.ru,global
   - host-suffix,dbo-dengi.online,global
   - host-suffix,dca.ac.uk,global
   - host-suffix,dcard.cc,global
@@ -9089,8 +9109,10 @@ payload:
   - host-suffix,dettolsitishield.co.in,global
   - host-suffix,dettolthailand.com,global
   - host-suffix,deutsch-sexfilme.com,global
+  - host-suffix,deutsche-bank.ru,global
   - host-suffix,deutsche-pornos-kostenlos.xxx,global
   - host-suffix,deutsche-welle.de,global
+  - host-suffix,deutschebank.ru,global
   - host-suffix,deutschepornos-kostenlos.net,global
   - host-suffix,deutschsex.com,global
   - host-suffix,dev-guardianapis.com,global
@@ -9607,6 +9629,7 @@ payload:
   - host-suffix,domaintoday.com.au,global
   - host-suffix,dombosco.com.br,global
   - host-suffix,domesticabuserisk.ac.uk,global
+  - host-suffix,domrfbank.ru,global
   - host-suffix,domywife.com,global
   - host-suffix,don.ac.uk,global
   - host-suffix,donatecarsoh.org,global
@@ -11568,6 +11591,7 @@ payload:
   - host-suffix,fanbox.cc,global
   - host-suffix,fandango.com,global
   - host-suffix,fandom.com,global
+  - host-suffix,fanfictionero.com,global
   - host-suffix,fanfox.net,global
   - host-suffix,fangbinxing.com,global
   - host-suffix,fangeming.com,global
@@ -11869,9 +11893,12 @@ payload:
   - host-suffix,fi11tv1.com,global
   - host-suffix,fibank.bg,global
   - host-suffix,fibre-diffraction.ac.uk,global
+  - host-suffix,fic.fan,global
+  - host-suffix,ficador.com,global
   - host-suffix,ficbook.net,global
   - host-suffix,ficeboock.com,global
   - host-suffix,ficm.ac.uk,global
+  - host-suffix,ficmania.com,global
   - host-suffix,fictionmania.tv,global
   - host-suffix,fifastreet.com,global
   - host-suffix,fifastreet3.com,global
@@ -11909,6 +11936,7 @@ payload:
   - host-suffix,filton.ac.uk,global
   - host-suffix,fimfiction.net,global
   - host-suffix,finalcutpro.com,global
+  - host-suffix,finambank.ru,global
   - host-suffix,financeleadsonline.com,global
   - host-suffix,financetwitter.com,global
   - host-suffix,financialadvisoriq.com,global
@@ -12185,6 +12213,7 @@ payload:
   - host-suffix,formitfactory.com,global
   - host-suffix,forms.new,global
   - host-suffix,forpojie.pics,global
+  - host-suffix,forshtadt.ru,global
   - host-suffix,forster.ac.uk,global
   - host-suffix,fortawesome.com,global
   - host-suffix,forte.ac.uk,global
@@ -15081,6 +15110,7 @@ payload:
   - host-suffix,homealonemilfs.com,global
   - host-suffix,homebox.com,global
   - host-suffix,homeboxoffice.com,global
+  - host-suffix,homecredit.ru,global
   - host-suffix,homedepot-static.com,global
   - host-suffix,homedepot.com,global
   - host-suffix,homefieldcollege.ac.uk,global
@@ -15732,6 +15762,7 @@ payload:
   - host-suffix,iavian.net,global
   - host-suffix,iavnight.com,global
   - host-suffix,ib.metapix.net,global
+  - host-suffix,ibamoscow.ru,global
   - host-suffix,ibb.co,global
   - host-suffix,ibd-boost.ac.uk,global
   - host-suffix,ibeats-uk.com,global
@@ -17625,6 +17656,7 @@ payload:
   - host-suffix,jpg4.info,global
   - host-suffix,jpg4.pw,global
   - host-suffix,jpg4us.net,global
+  - host-suffix,jpmorgan.ru,global
   - host-suffix,jpopforum.net,global
   - host-suffix,jpvhub.com,global
   - host-suffix,jquery.com,global
@@ -18107,6 +18139,7 @@ payload:
   - host-suffix,koreanpornmovie.com,global
   - host-suffix,korenan2.com,global
   - host-suffix,korewaeroi.com,global
+  - host-suffix,korona.com,global
   - host-suffix,koshelek.app,global
   - host-suffix,koskade.com,global
   - host-suffix,kostenlosepornoclips.com,global
@@ -18152,6 +18185,7 @@ payload:
   - host-suffix,kuanrenxs.com,global
   - host-suffix,kubakuba.global,global
   - host-suffix,kubakuba1996.com,global
+  - host-suffix,kubankredit.ru,global
   - host-suffix,kubeacademy.com,global
   - host-suffix,kubeapps.com,global
   - host-suffix,kubernetes.io,global
@@ -19725,6 +19759,7 @@ payload:
   - host-suffix,mcreasite.com,global
   - host-suffix,mcrouter.net,global
   - host-suffix,mcrouter.org,global
+  - host-suffix,mcs.st,global
   - host-suffix,mcstories.com,global
   - host-suffix,mcsw.ac.uk,global
   - host-suffix,mctimoney-college.ac.uk,global
@@ -19947,6 +19982,7 @@ payload:
   - host-suffix,meyou.jp,global
   - host-suffix,meyul.com,global
   - host-suffix,mfg-inspector.com,global
+  - host-suffix,mfk-bank.ru,global
   - host-suffix,mfk-t-finance.ru,global
   - host-suffix,mfmf.club,global
   - host-suffix,mfo.ac.uk,global
@@ -19958,6 +19994,8 @@ payload:
   - host-suffix,mgsdtp.ac.uk,global
   - host-suffix,mgstage.com,global
   - host-suffix,mh4u.org,global
+  - host-suffix,mhcb.ru,global
+  - host-suffix,mhcbr.ru,global
   - host-suffix,mhdss.ac.uk,global
   - host-suffix,mhhanman.xyz,global
   - host-suffix,mhie.ac.uk,global
@@ -21066,6 +21104,7 @@ payload:
   - host-suffix,mvideoporno.xxx,global
   - host-suffix,mvk.com,global
   - host-suffix,mvnrepository.com,global
+  - host-suffix,mvs-bank.ru,global
   - host-suffix,mwcu00.com,global
   - host-suffix,mwdbank.com,global
   - host-suffix,mwell.ac.uk,global
@@ -21994,6 +22033,8 @@ payload:
   - host-suffix,nicats.ac.uk,global
   - host-suffix,nicd.ac.uk,global
   - host-suffix,niceanimegames.com,global
+  - host-suffix,nicegram.app,global
+  - host-suffix,nicegram.cloud,global
   - host-suffix,niceporn.tv,global
   - host-suffix,nicer.ac.uk,global
   - host-suffix,nicesrv.de,global
@@ -22324,6 +22365,7 @@ payload:
   - host-suffix,nonstopfap.com,global
   - host-suffix,noodlemagazine.com,global
   - host-suffix,noodlevpn.com,global
+  - host-suffix,noosferabank.ru,global
   - host-suffix,norbulingka.org,global
   - host-suffix,nordstrom.com,global
   - host-suffix,nordstromimage.com,global
@@ -23283,6 +23325,7 @@ payload:
   - host-suffix,otleyonline.ac.uk,global
   - host-suffix,otnd.org,global
   - host-suffix,otokonokoland.com,global
+  - host-suffix,otpbank.ru,global
   - host-suffix,otto.de,global
   - host-suffix,otzo.com,global
   - host-suffix,ou.ac.uk,global
@@ -24852,6 +24895,7 @@ payload:
   - host-suffix,priestleycollege.ac.uk,global
   - host-suffix,prifysgolioncymru.ac.uk,global
   - host-suffix,primarygoal.ac.uk,global
+  - host-suffix,primbank.ru,global
   - host-suffix,prime-video.com,global
   - host-suffix,primecurves.com,global
   - host-suffix,primeday.info,global
@@ -24991,6 +25035,7 @@ payload:
   - host-suffix,prs-ltsn.ac.uk,global
   - host-suffix,prts.plus,global
   - host-suffix,prucomm.ac.uk,global
+  - host-suffix,prvbank.ru,global
   - host-suffix,ps-exchange.com,global
   - host-suffix,psa.ac.uk,global
   - host-suffix,psb-ocenka.ru,global
@@ -25008,6 +25053,7 @@ payload:
   - host-suffix,psiphon.ca,global
   - host-suffix,psiphon3.com,global
   - host-suffix,psiphontoday.com,global
+  - host-suffix,pskb.ru,global
   - host-suffix,pssru.ac.uk,global
   - host-suffix,pstatic.net,global
   - host-suffix,pstorage.space,global
@@ -25096,6 +25142,7 @@ payload:
   - host-suffix,pvp.net,global
   - host-suffix,pvp.tv,global
   - host-suffix,pvt.sexy,global
+  - host-suffix,pvubank.com,global
   - host-suffix,pvue1.com,global
   - host-suffix,pvue2.com,global
   - host-suffix,pvzgw2.com,global
@@ -25376,6 +25423,8 @@ payload:
   - host-suffix,ragnaporn.com,global
   - host-suffix,raidcall.com.tw,global
   - host-suffix,raidtalk.com.tw,global
+  - host-suffix,raiffeisen-media.ru,global
+  - host-suffix,raiffeisen.ru,global
   - host-suffix,rainbowplan.org,global
   - host-suffix,raindrop.io,global
   - host-suffix,raizoji.or.jp,global
@@ -25745,7 +25794,9 @@ payload:
   - host-suffix,remirepo.net,global
   - host-suffix,rems-cdt.ac.uk,global
   - host-suffix,renaissanceskin.ac.uk,global
+  - host-suffix,rencapbank.ru,global
   - host-suffix,renchead.com,global
+  - host-suffix,rencredit.ru,global
   - host-suffix,renderingtoolkit.org,global
   - host-suffix,renderos.com,global
   - host-suffix,reneerossvideos.com,global
@@ -25931,6 +25982,7 @@ payload:
   - host-suffix,rnc.ac.uk,global
   - host-suffix,rncb.ac.uk,global
   - host-suffix,rncm.ac.uk,global
+  - host-suffix,rncoluminis.ru,global
   - host-suffix,rnib-redhill.ac.uk,global
   - host-suffix,rnibcollege.ac.uk,global
   - host-suffix,rnibncw.ac.uk,global
@@ -26134,6 +26186,7 @@ payload:
   - host-suffix,rts.ch,global
   - host-suffix,rtycminnesota.org,global
   - host-suffix,ru-moscow-1.myhuaweicloud.com,global
+  - host-suffix,ru.ccb.com,global
   - host-suffix,rua-project.ac.uk,global
   - host-suffix,ruanyifeng.com,global
   - host-suffix,ruby-lang.org,global
@@ -26455,6 +26508,7 @@ payload:
   - host-suffix,sbertech.ru,global
   - host-suffix,sbertroika.ru,global
   - host-suffix,sbgkstv.shop,global
+  - host-suffix,sbibankllc.ru,global
   - host-suffix,sbirmc.ac.uk,global
   - host-suffix,sbishinseibank.co.jp,global
   - host-suffix,sbitravelcard.com,global
@@ -26688,6 +26742,7 @@ payload:
   - host-suffix,seatguru.com,global
   - host-suffix,seattlefdc.com,global
   - host-suffix,seattlespheres.com,global
+  - host-suffix,seb.ru,global
   - host-suffix,secom.co.jp,global
   - host-suffix,secomtrust.net,global
   - host-suffix,second-ns.com,global
@@ -26763,6 +26818,7 @@ payload:
   - host-suffix,selectelpro.ru,global
   - host-suffix,selectyourgame.com,global
   - host-suffix,selfloversworld.com,global
+  - host-suffix,selkombank.ru,global
   - host-suffix,sellclassics.com,global
   - host-suffix,sellercommunity.com,global
   - host-suffix,sellyoak.ac.uk,global
@@ -27387,6 +27443,7 @@ payload:
   - host-suffix,sina.com.tw,global
   - host-suffix,sinabank.ir,global
   - host-suffix,sinapse.ac.uk,global
+  - host-suffix,sinara.ru,global
   - host-suffix,sinchew.com.my,global
   - host-suffix,sinchew.my,global
   - host-suffix,sinet.ac.uk,global
@@ -27541,6 +27598,7 @@ payload:
   - host-suffix,slandr.net,global
   - host-suffix,slashdot.org,global
   - host-suffix,slashine.onl,global
+  - host-suffix,slavbank.ru,global
   - host-suffix,slaytizle.com,global
   - host-suffix,slc.ac.uk,global
   - host-suffix,slc.tl,global
@@ -27615,6 +27673,7 @@ payload:
   - host-suffix,smartthings.com,global
   - host-suffix,smashed.xxx,global
   - host-suffix,smbc.co.jp,global
+  - host-suffix,smbcr-bank.ru,global
   - host-suffix,smbctb.co.jp,global
   - host-suffix,smbgroup.ac.uk,global
   - host-suffix,smc.ac.uk,global
@@ -27767,6 +27826,7 @@ payload:
   - host-suffix,solent.ac.uk,global
   - host-suffix,solentmarineacademy.ac.uk,global
   - host-suffix,solentuniversity.ac.uk,global
+  - host-suffix,solid.ru,global
   - host-suffix,solidaritetibet.org,global
   - host-suffix,solidfiles.com,global
   - host-suffix,solihull.ac.uk,global
@@ -27974,6 +28034,7 @@ payload:
   - host-suffix,southwestcollege.ac.uk,global
   - host-suffix,southwestiot.ac.uk,global
   - host-suffix,southwestnuclearhub.ac.uk,global
+  - host-suffix,sovcombank.ru,global
   - host-suffix,sovec.net,global
   - host-suffix,sowers.org.hk,global
   - host-suffix,sowiki.net,global
@@ -28155,6 +28216,7 @@ payload:
   - host-suffix,ss2.us,global
   - host-suffix,ss7.app,global
   - host-suffix,ssa.gov,global
+  - host-suffix,ssb.msk.ru,global
   - host-suffix,ssdevrd.com,global
   - host-suffix,ssees.ac.uk,global
   - host-suffix,ssfc.ac.uk,global
@@ -28952,6 +29014,7 @@ payload:
   - host-suffix,taedp.org.tw,global
   - host-suffix,tafm.org,global
   - host-suffix,tagapie.com.tw,global
+  - host-suffix,tagbank.ru,global
   - host-suffix,tags.ac.uk,global
   - host-suffix,tagwa.org.au,global
   - host-suffix,tagwalk.com,global
@@ -29060,6 +29123,7 @@ payload:
   - host-suffix,tasteofpremium.jp,global
   - host-suffix,tastyblacks.com,global
   - host-suffix,tati-log.com,global
+  - host-suffix,tatsotsbank.ru,global
   - host-suffix,tau.ac.uk,global
   - host-suffix,tauntons.ac.uk,global
   - host-suffix,taup.net,global
@@ -29213,6 +29277,7 @@ payload:
   - host-suffix,tegrazone.kr,global
   - host-suffix,tehnodom.com,global
   - host-suffix,tehrantimes.com,global
+  - host-suffix,teinon.net,global
   - host-suffix,tejaratbank.ir,global
   - host-suffix,tel.ac.uk,global
   - host-suffix,tele2.ru,global
@@ -29839,6 +29904,7 @@ payload:
   - host-suffix,tjsbfj.com,global
   - host-suffix,tkb008.xyz,global
   - host-suffix,tkb2233.life,global
+  - host-suffix,tkbbank.ru,global
   - host-suffix,tkbqf2.life,global
   - host-suffix,tkcs-collins.com,global
   - host-suffix,tksex.com,global
@@ -30602,6 +30668,7 @@ payload:
   - host-suffix,ubncloud.com,global
   - host-suffix,ubnt.com,global
   - host-suffix,ubnw.net,global
+  - host-suffix,ubs.com,global
   - host-suffix,ubuntu-touch.io,global
   - host-suffix,ubuntu.com,global
   - host-suffix,ubuntu.net,global
@@ -30667,6 +30734,7 @@ payload:
   - host-suffix,ucoz.ru,global
   - host-suffix,ucoz.site,global
   - host-suffix,ucoz.ua,global
+  - host-suffix,ucozmail.com,global
   - host-suffix,ucozmedia.com,global
   - host-suffix,ucozmedia.ru,global
   - host-suffix,ucoztemplates.com,global
@@ -30712,6 +30780,7 @@ payload:
   - host-suffix,ufreevpn.com,global
   - host-suffix,ugo.com,global
   - host-suffix,uguide.ru,global
+  - host-suffix,uguide.su,global
   - host-suffix,uguisupapa.net,global
   - host-suffix,uhairy.com,global
   - host-suffix,uhdwallpapers.org,global
@@ -30795,6 +30864,7 @@ payload:
   - host-suffix,uknibc.ac.uk,global
   - host-suffix,ukoln.ac.uk,global
   - host-suffix,ukorea.ac.uk,global
+  - host-suffix,ukoz.ru,global
   - host-suffix,ukpass.ac.uk,global
   - host-suffix,ukpmc.ac.uk,global
   - host-suffix,ukpmcplus.ac.uk,global
@@ -31006,6 +31076,7 @@ payload:
   - host-suffix,ur7s.com,global
   - host-suffix,ura-akiba.jp,global
   - host-suffix,uraban.me,global
+  - host-suffix,uralsib.ru,global
   - host-suffix,urasma.com,global
   - host-suffix,urbanairship.com,global
   - host-suffix,urbanbigdatacentre.ac.uk,global
@@ -31059,6 +31130,7 @@ payload:
   - host-suffix,usma.edu,global
   - host-suffix,usmc.mil,global
   - host-suffix,usocctn.com,global
+  - host-suffix,usocial.pro,global
   - host-suffix,uspcollege.ac.uk,global
   - host-suffix,uspto.gov,global
   - host-suffix,usstratford.ac.uk,global
@@ -31113,6 +31185,7 @@ payload:
   - host-suffix,uwchgyfrifiaduracymru.ac.uk,global
   - host-suffix,uwe-bristol.ac.uk,global
   - host-suffix,uwe.ac.uk,global
+  - host-suffix,uweb.ru,global
   - host-suffix,uwern.ac.uk,global
   - host-suffix,uwic.ac.uk,global
   - host-suffix,uwinat.ac.uk,global
@@ -31769,6 +31842,7 @@ payload:
   - host-suffix,vk.com,global
   - host-suffix,vk.company,global
   - host-suffix,vk.design,global
+  - host-suffix,vk.kz,global
   - host-suffix,vk.link,global
   - host-suffix,vk.me,global
   - host-suffix,vk.ru,global
@@ -31776,7 +31850,9 @@ payload:
   - host-suffix,vkcache.com,global
   - host-suffix,vkcdnservice.com,global
   - host-suffix,vkclips.app,global
+  - host-suffix,vkcloud-static.kz,global
   - host-suffix,vkcloud-static.ru,global
+  - host-suffix,vkcloud.kz,global
   - host-suffix,vkcs.cloud,global
   - host-suffix,vkfest.ru,global
   - host-suffix,vkgo.app,global
@@ -31805,7 +31881,9 @@ payload:
   - host-suffix,vkuservideo.net,global
   - host-suffix,vkuservideo.ru,global
   - host-suffix,vkvideo.ru,global
+  - host-suffix,vkworkspace.kz,global
   - host-suffix,vl4x.net,global
+  - host-suffix,vlb100.ru,global
   - host-suffix,vllcs.org,global
   - host-suffix,vmailru.net,global
   - host-suffix,vmglobal.net,global
@@ -32170,7 +32248,10 @@ payload:
   - host-suffix,vsphere.com,global
   - host-suffix,vsphere.net,global
   - host-suffix,vssn.ac.uk,global
+  - host-suffix,vtb-direct.com,global
+  - host-suffix,vtb-grants.fut.ru,global
   - host-suffix,vtb.ru,global
+  - host-suffix,vtbglobalperspectives.com,global
   - host-suffix,vtrahe.page,global
   - host-suffix,vtri.ac.uk,global
   - host-suffix,vts.ac.uk,global
@@ -32528,6 +32609,7 @@ payload:
   - host-suffix,westengland.ac.uk,global
   - host-suffix,westerndigital.com,global
   - host-suffix,westernshugdensociety.org,global
+  - host-suffix,westernunion.ru,global
   - host-suffix,westernwolves.com,global
   - host-suffix,westherts.ac.uk,global
   - host-suffix,westhill.ac.uk,global
@@ -33388,6 +33470,7 @@ payload:
   - host-suffix,xn--czq75pvv1aj5c.org,global
   - host-suffix,xn--d1abkf4ap.fun,global
   - host-suffix,xn--d1acpjx3f.xn--p1ai,global
+  - host-suffix,xn--d1aqf.xn--p1ai,global
   - host-suffix,xn--d4ty0ojsqzfd.com,global
   - host-suffix,xn--e1adjldbbpv.xn--90ais,global
   - host-suffix,xn--e1aigb.xn--p1ai,global
@@ -34088,6 +34171,7 @@ payload:
   - host-suffix,yomiuri-systec.co.jp,global
   - host-suffix,yomiuri.co.jp,global
   - host-suffix,yong.hu,global
+  - host-suffix,yoobusiness.ru,global
   - host-suffix,yopornshop.com,global
   - host-suffix,york-sfc.ac.uk,global
   - host-suffix,york.ac.uk,global
@@ -34535,6 +34619,8 @@ payload:
   - host-suffix,zencoder.com,global
   - host-suffix,zendesk.com,global
   - host-suffix,zengjinyan.org,global
+  - host-suffix,zenit-card.ru,global
+  - host-suffix,zenit.ru,global
   - host-suffix,zenmate.com,global
   - host-suffix,zenodo.org,global
   - host-suffix,zeplerinstitute.ac.uk,global
@@ -34594,6 +34680,7 @@ payload:
   - host-suffix,zipcine.com,global
   - host-suffix,ziporn.com,global
   - host-suffix,zippyshare.com,global
+  - host-suffix,ziraatbank.ru,global
   - host-suffix,zishy.com,global
   - host-suffix,zkaip.com,global
   - host-suffix,zkiz.com,global
