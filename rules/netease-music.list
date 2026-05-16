@@ -1,7 +1,7 @@
 # Name: NetEase Music
 # Behavior: domain
 # Count: 30
-# Generated: 2026-05-15T14:04:08.464Z
+# Generated: 2026-05-16T02:47:07.555Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/NetEaseMusic/NetEaseMusic.list
 domain,netease.ugcvideoss.ourdvs.com
 domain-suffix,163yun.com

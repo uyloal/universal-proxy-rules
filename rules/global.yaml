@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34965
-# Generated: 2026-05-15T14:04:08.464Z
+# Count: 34967
+# Generated: 2026-05-16T02:47:07.555Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 payload:
   - host,1password.drift.click,global
@@ -7444,6 +7444,7 @@ payload:
   - host-suffix,chocotv.com.tw,global
   - host-suffix,choicereviews.org,global
   - host-suffix,chomp.com,global
+  - host-suffix,chonglangtv.org,global
   - host-suffix,chopinonline.ac.uk,global
   - host-suffix,chosun.com,global
   - host-suffix,chrdnet.com,global
@@ -18198,6 +18199,7 @@ payload:
   - host-suffix,kumapon.jp,global
   - host-suffix,kumo.com,global
   - host-suffix,kun.im,global
+  - host-suffix,kun66.xyz,global
   - host-suffix,kundun1069.com,global
   - host-suffix,kuper.ru,global
   - host-suffix,kurashsultan.com,global
