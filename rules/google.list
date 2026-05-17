@@ -1,7 +1,7 @@
 # Name: Google
 # Behavior: domain
 # Count: 698
-# Generated: 2026-05-16T13:19:11.460Z
+# Generated: 2026-05-17T02:55:31.958Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Google/Google.list
 domain,voice.telephony.goog
 domain-keyword,appspot
