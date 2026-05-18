@@ -1,7 +1,7 @@
 # Universal Proxy Rules for Clash Meta/Mihomo
-# Generated: 2026-05-18T16:09:26.114Z
-# Version: v20260518160926
-# Commit: 02efdff
+# Generated: 2026-05-18T16:10:43.939Z
+# Version: v20260518161043
+# Commit: 92d2085
 #
 mixed-port: 7890
 allow-lan: true
@@ -530,14 +530,14 @@ rule-providers:
     url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/lan.yaml
     path: ./rules/lan.yaml
     interval: 86400
-  port-direct:
+  custom-direct:
     type: http
     behavior: classical
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/port-direct.yaml
-    path: ./rules/port-direct.yaml
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/custom-direct.yaml
+    path: ./rules/custom-direct.yaml
     interval: 86400
 rules:
-  - RULE-SET,port-direct,自动直连
+  - RULE-SET,custom-direct,自动直连
   - RULE-SET,lan,自动直连
   - RULE-SET,ai,AI 服务
   - RULE-SET,youtube,选择代理

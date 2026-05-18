@@ -1,8 +1,8 @@
 {
-  "version": "v20260518160926",
-  "generatedAt": "2026-05-18T16:09:26.114Z",
-  "commitSha": "02efdff",
-  "totalRules": 46515,
+  "version": "v20260518161043",
+  "generatedAt": "2026-05-18T16:10:43.939Z",
+  "commitSha": "92d2085",
+  "totalRules": 46516,
   "upstreams": {
     "ai": 51,
     "youtube": 190,
@@ -43,7 +43,7 @@
     "global": 34971,
     "china": 3755,
     "lan": 140,
-    "port-direct": 11
+    "custom-direct": 12
   },
   "custom": {
     "merged": 0,

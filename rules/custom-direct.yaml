@@ -1,11 +1,12 @@
-# Name: Port Direct
+# Name: Custom Direct
 # Behavior: classical
 # Type: Custom
-# Count: 11
-# Generated: 2026-05-18T16:09:26.760Z
-# Merged From: port-direct
+# Count: 12
+# Generated: 2026-05-18T16:10:44.307Z
+# Merged From: custom-direct
 # Source: custom-rules.yaml
 payload:
+  - domain-keyword,headscale,direct
   - dst-port,143,direct
   - dst-port,22,direct
   - dst-port,23,direct
