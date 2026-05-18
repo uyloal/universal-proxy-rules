@@ -177,8 +177,38 @@ export interface GeneratedConfig {
   'proxy-groups'?: ProxyGroup[]
   // 规则提供者
   'rule-providers'?: Record<string, RuleProviderEntry>
+  // 代理提供者
+  'proxy-providers'?: Record<string, ProxyProviderConfig>
+  // 代理节点
+  proxies?: Array<Record<string, unknown>>
   // 规则
   rules?: string[]
+}
+
+// ==================== 代理提供者类型 ====================
+
+export interface ProxyProviderConfig {
+  type: 'http' | 'file' | 'inline'
+  url?: string
+  path?: string
+  interval?: number
+  proxy?: string
+  header?: Record<string, string[]>
+  'health-check'?: Record<string, unknown>
+  override?: Record<string, unknown>
+  filter?: string
+  'exclude-filter'?: string
+  'exclude-type'?: string
+  payload?: unknown[]
+  [key: string]: unknown
+}
+
+export interface ProxyProvidersConfig {
+  'proxy-providers': Record<string, ProxyProviderConfig>
+}
+
+export interface ProxiesConfig {
+  proxies: Array<Record<string, unknown>>
 }
 
 // ==================== 自定义规则类型 ====================

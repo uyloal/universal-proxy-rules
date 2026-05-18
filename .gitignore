@@ -34,6 +34,10 @@ lerna-debug.log*
 .env.local
 .env.*.local
 
+# User proxy configs (optional, local-only)
+config/proxy-providers.yaml
+config/proxies.yaml
+
 # Test
 coverage/
 *.lcov

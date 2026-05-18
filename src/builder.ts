@@ -19,6 +19,8 @@ import {
   GeneratedConfig,
   FetchResult,
   MergedFetchResult,
+  ProxyProvidersConfig,
+  ProxiesConfig,
 } from './types.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -464,7 +466,9 @@ export async function buildClashConfig(
   upstreamsConfig: UpstreamsConfig,
   policyConfig: PolicyGroupsConfig,
   customConfig: CustomRulesConfig,
-  fetchResults: Map<string, MergedFetchResult>
+  fetchResults: Map<string, MergedFetchResult>,
+  proxyProvidersConfig?: ProxyProvidersConfig,
+  proxiesConfig?: ProxiesConfig
 ): Promise<GeneratedConfig> {
   // 1. 读取基础模板
   const baseConfig = await readBaseTemplate('clash-base.yaml')
@@ -481,6 +485,16 @@ export async function buildClashConfig(
     'proxy-groups': policyConfig['proxy-groups'],
     'rule-providers': ruleProviders,
     rules,
+  }
+
+  // 5. 合并用户定义的 proxy-providers（如果存在）
+  if (proxyProvidersConfig?.['proxy-providers']) {
+    finalConfig['proxy-providers'] = proxyProvidersConfig['proxy-providers']
+  }
+
+  // 6. 合并用户定义的 proxies（如果存在）
+  if (proxiesConfig?.proxies) {
+    finalConfig.proxies = proxiesConfig.proxies
   }
 
   return finalConfig
@@ -607,6 +621,34 @@ export async function buildAll(): Promise<void> {
   console.log(`  ✓ Upstreams: ${Object.keys(upstreamsConfig.upstreams).length} sources`)
   console.log(`  ✓ Policy groups: ${policyConfig['proxy-groups'].length} groups`)
 
+  // 读取可选的 proxy-providers 配置（存在时才加载）
+  let proxyProvidersConfig: ProxyProvidersConfig | undefined
+  try {
+    proxyProvidersConfig = await readYamlFile<ProxyProvidersConfig>(
+      join(CONFIG_DIR, 'proxy-providers.yaml')
+    )
+    const providerCount = Object.keys(proxyProvidersConfig?.['proxy-providers'] || {}).length
+    if (providerCount > 0) {
+      console.log(`  ✓ Proxy providers: ${providerCount} providers`)
+    }
+  } catch {
+    // 文件不存在，跳过
+  }
+
+  // 读取可选的 proxies 配置（存在时才加载）
+  let proxiesConfig: ProxiesConfig | undefined
+  try {
+    proxiesConfig = await readYamlFile<ProxiesConfig>(
+      join(CONFIG_DIR, 'proxies.yaml')
+    )
+    const proxyCount = proxiesConfig?.proxies?.length || 0
+    if (proxyCount > 0) {
+      console.log(`  ✓ Proxies: ${proxyCount} nodes`)
+    }
+  } catch {
+    // 文件不存在，跳过
+  }
+
   // 获取所有上游规则
   const { fetchAllUpstreams, mergeCustomRules } = await import('./fetcher.js')
   console.log('\n🌐 Fetching upstream rules...')
@@ -651,7 +693,14 @@ export async function buildAll(): Promise<void> {
 
   // 构建 Clash 配置
   console.log('\n🔨 Building Clash configuration...')
-  const clashConfig = await buildClashConfig(upstreamsConfig, policyConfig, customConfig, mergedResults)
+  const clashConfig = await buildClashConfig(
+    upstreamsConfig,
+    policyConfig,
+    customConfig,
+    mergedResults,
+    proxyProvidersConfig,
+    proxiesConfig
+  )
 
   // 准备 Clash 头部注释
   const clashHeader = `# Universal Proxy Rules for Clash Meta/Mihomo

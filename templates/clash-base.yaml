@@ -20,9 +20,6 @@ tcp-concurrent: true        # TCP 并发连接
 enable-process: true        # 启用进程识别
 find-process-mode: strict   # 严格进程查找模式
 
-# 全局 TLS 指纹伪装（防止流量特征识别）
-global-client-fingerprint: chrome
-
 # 日志级别
 log-level: warning
 
