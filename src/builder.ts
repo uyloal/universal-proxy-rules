@@ -13,11 +13,8 @@ import {
   UpstreamsConfig,
   PolicyGroupsConfig,
   CustomRulesConfig,
-  ProxyGroup,
-  Rule,
   RuleProviderEntry,
   GeneratedConfig,
-  FetchResult,
   MergedFetchResult,
   ProxyProvidersConfig,
   ProxiesConfig,
@@ -64,59 +61,12 @@ async function writeTextFile(path: string, content: string): Promise<void> {
 }
 
 /**
- * 读取文本模板文件
- */
-async function readTextTemplate(name: string): Promise<string> {
-  const path = join(TEMPLATES_DIR, name)
-  return readFile(path, 'utf-8')
-}
-
-/**
  * 读取基础模板
  */
 async function readBaseTemplate(name: string): Promise<Record<string, unknown>> {
   const path = join(TEMPLATES_DIR, name)
   const content = await readFile(path, 'utf-8')
   return parse(content) as Record<string, unknown>
-}
-
-/**
- * 转换规则为 Clash 格式字符串
- */
-function formatRuleToClash(rule: Rule): string | null {
-  switch (rule.type) {
-    case 'domain':
-      return `DOMAIN,${rule.payload.join(',')},${rule.policy}`
-    case 'domain-suffix':
-      return `DOMAIN-SUFFIX,${rule.payload.join(',')},${rule.policy}`
-    case 'domain-keyword':
-      return `DOMAIN-KEYWORD,${rule.payload.join(',')},${rule.policy}`
-    case 'ipcidr': {
-      const noResolve = rule['no-resolve'] ? ',no-resolve' : ''
-      return `IP-CIDR,${rule.payload.join(',')},${rule.policy}${noResolve}`
-    }
-    case 'geoip': {
-      const noResolve = rule['no-resolve'] ? ',no-resolve' : ''
-      return `GEOIP,${rule.country},${rule.policy}${noResolve}`
-    }
-    case 'geosite':
-      return `GEOSITE,${rule.site},${rule.policy}`
-    case 'dst-port':
-      return `DST-PORT,${rule.ports.join(',')},${rule.policy}`
-    case 'src-port':
-      return `SRC-PORT,${rule.ports.join(',')},${rule.policy}`
-    case 'process-name':
-      return `PROCESS-NAME,${rule.processes.join(',')},${rule.policy}`
-    case 'process-path':
-      return `PROCESS-PATH,${rule.processes.join(',')},${rule.policy}`
-    case 'match':
-      return `MATCH,${rule.policy}`
-    case 'upstream':
-      // 上游规则会被转换为 RULE-SET 引用
-      return `RULE-SET,${rule.upstream},${rule.policy}`
-    default:
-      return null
-  }
 }
 
 /**
@@ -227,239 +177,6 @@ function buildRules(
 }
 
 /**
- * 转换规则为 Shadowrocket 格式
- */
-function formatRuleToShadowrocket(rule: Rule): string | null {
-  switch (rule.type) {
-    case 'domain':
-      // Shadowrocket 不支持多 payload，取第一个
-      return `DOMAIN,${rule.payload[0]},${rule.policy}`
-    case 'domain-suffix':
-      return `DOMAIN-SUFFIX,${rule.payload[0]},${rule.policy}`
-    case 'domain-keyword':
-      return `DOMAIN-KEYWORD,${rule.payload[0]},${rule.policy}`
-    case 'ipcidr': {
-      const noResolve = rule['no-resolve'] ? ',no-resolve' : ''
-      return `IP-CIDR,${rule.payload[0]},${rule.policy}${noResolve}`
-    }
-    case 'geoip': {
-      const noResolve = rule['no-resolve'] ? ',no-resolve' : ''
-      return `GEOIP,${rule.country},${rule.policy}${noResolve}`
-    }
-    case 'dst-port':
-      return `DST-PORT,${rule.ports[0]},${rule.policy}`
-    case 'src-port':
-      return `SRC-PORT,${rule.ports[0]},${rule.policy}`
-    case 'match':
-      return `FINAL,${rule.policy}`
-    default:
-      return null
-  }
-}
-
-/**
- * 转换 Shadowrocket 策略名称：核心组引用转为 PROXY
- */
-function mapShadowrocketPolicy(policy: string): string {
-  return CORE_PROXY_GROUPS.includes(policy) ? 'PROXY' : policy
-}
-
-/**
- * 构建 Shadowrocket 规则列表
- * 对于上游规则，使用 DOMAIN-SET 引用外部规则文件
- * 简化策略：引用核心组的规则改为直接使用 PROXY，兜底规则为 FINAL,PROXY
- */
-function buildShadowrocketRules(
-  policyConfig: PolicyGroupsConfig,
-  fetchResults: Map<string, MergedFetchResult>
-): string[] {
-  const rules: string[] = []
-
-  for (const ruleDef of policyConfig.rules) {
-    const type = ruleDef.type as string
-
-    if (type === 'upstream') {
-      const upstreamName = ruleDef.upstream as string
-      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
-
-      // 检查上游是否存在且有数据
-      const result = fetchResults.get(upstreamName)
-      if (result && result.count > 0) {
-        // 使用 DOMAIN-SET 引用规则文件的 GitHub raw URL
-        // Shadowrocket 使用 .list 格式
-        const ruleUrl = `https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/${upstreamName}.list`
-        rules.push(`DOMAIN-SET,${ruleUrl},${policy}`)
-      }
-    } else if (type === 'domain') {
-      const payload = ruleDef.payload as string[]
-      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
-      for (const domain of payload) {
-        rules.push(`DOMAIN,${domain},${policy}`)
-      }
-    } else if (type === 'domain-suffix') {
-      const payload = ruleDef.payload as string[]
-      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
-      for (const domain of payload) {
-        rules.push(`DOMAIN-SUFFIX,${domain},${policy}`)
-      }
-    } else if (type === 'domain-keyword') {
-      const payload = ruleDef.payload as string[]
-      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
-      for (const keyword of payload) {
-        rules.push(`DOMAIN-KEYWORD,${keyword},${policy}`)
-      }
-    } else if (type === 'ipcidr') {
-      const payload = ruleDef.payload as string[]
-      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
-      const noResolve = ruleDef['no-resolve'] ? ',no-resolve' : ''
-      for (const cidr of payload) {
-        rules.push(`IP-CIDR,${cidr},${policy}${noResolve}`)
-      }
-    } else if (type === 'geoip') {
-      const country = ruleDef.country as string
-      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
-      const noResolve = ruleDef['no-resolve'] ? ',no-resolve' : ''
-      rules.push(`GEOIP,${country},${policy}${noResolve}`)
-    } else if (type === 'dst-port') {
-      const ports = ruleDef.ports as string[]
-      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
-      for (const port of ports) {
-        rules.push(`DST-PORT,${port},${policy}`)
-      }
-    } else if (type === 'src-port') {
-      const ports = ruleDef.ports as string[]
-      const policy = mapShadowrocketPolicy(ruleDef.policy as string)
-      for (const port of ports) {
-        rules.push(`SRC-PORT,${port},${policy}`)
-      }
-    } else if (type === 'match') {
-      // 简化策略：兜底规则直接使用 PROXY
-      rules.push('FINAL,PROXY')
-    }
-  }
-
-  return rules
-}
-
-/**
- * Shadowrocket 核心组名称（这些组会被简化移除）
- */
-const CORE_PROXY_GROUPS = ['🚀 节点选择', '⚡ 自动测速', '♻️ 故障转移']
-
-/**
- * 构建 Shadowrocket 代理组配置
- * 简化策略：移除核心组，其他组引用核心组的地方替换为 PROXY
- */
-function buildShadowrocketProxyGroups(policyConfig: PolicyGroupsConfig): string[] {
-  const lines: string[] = []
-
-  for (const group of policyConfig['proxy-groups']) {
-    // 跳过核心组（这些在 Shadowrocket 中用 FINAL,PROXY 替代）
-    if (CORE_PROXY_GROUPS.includes(group.name)) {
-      continue
-    }
-
-    const parts: string[] = []
-
-    // 基本格式: name = type, options...
-    if (group.type === 'select') {
-      // select 类型: name = select, option1, option2, ...
-      // Shadowrocket: include-all=true 时使用 PROXY 代表所有实际节点
-      let options: string[]
-      if (group.proxies) {
-        // 将引用核心组的项替换为 PROXY，并去重
-        options = group.proxies.map(p => CORE_PROXY_GROUPS.includes(p) ? 'PROXY' : p)
-        options = [...new Set(options)]
-      } else if (group['include-all']) {
-        options = ['PROXY', 'DIRECT']
-      } else {
-        options = ['DIRECT', 'REJECT']
-      }
-      parts.push(`${group.name} = ${group.type}, ${options.join(', ')}`)
-    } else if (group.type === 'url-test' || group.type === 'fallback') {
-      // url-test/fallback: name = type, PROXY, url=..., interval=...
-      const options: string[] = []
-
-      // Shadowrocket: 使用 PROXY 作为所有节点的占位符
-      if (group['include-all']) {
-        options.push('PROXY')
-      } else if (group.proxies) {
-        // 同样替换核心组引用
-        const proxyList = group.proxies.map(p => CORE_PROXY_GROUPS.includes(p) ? 'PROXY' : p)
-        options.push(...[...new Set(proxyList)])
-      }
-      if (group.filter) {
-        options.push(`policy-regex-filter=${group.filter}`)
-      }
-      if (group.url) {
-        options.push(`url=${group.url}`)
-      }
-      if (group.interval) {
-        options.push(`interval=${group.interval}`)
-      }
-      if (group.tolerance) {
-        options.push(`tolerance=${group.tolerance}`)
-      }
-      if (group.timeout) {
-        options.push(`timeout=${group.timeout}`)
-      }
-
-      parts.push(`${group.name} = ${group.type}, ${options.join(', ')}`)
-    }
-
-    if (parts.length > 0) {
-      lines.push(parts[0])
-    }
-  }
-
-  return lines
-}
-
-/**
- * 构建完整 Shadowrocket 配置
- */
-export async function buildShadowrocketConfig(
-  policyConfig: PolicyGroupsConfig,
-  fetchResults: Map<string, MergedFetchResult>,
-  buildInfo?: { version?: string; commitSha?: string; generatedAt?: string }
-): Promise<string> {
-  // 1. 读取基础模板
-  let baseConfig = await readTextTemplate('shadowrocket-base.conf')
-
-  // 1.5 添加动态生成信息头部
-  if (buildInfo) {
-    const generatedAt = buildInfo.generatedAt || new Date().toISOString()
-    const version = buildInfo.version || 'dev'
-    const commitSha = buildInfo.commitSha || 'unknown'
-    const generatedHeader = `# --- Build Info ---
-# Generated: ${generatedAt}
-# Version: ${version}
-# Commit: ${commitSha}
-#`
-    // 在第一个 [Section] 之前插入生成信息
-    baseConfig = baseConfig.replace(/^(\[General\])/m, `${generatedHeader}\n$1`)
-  }
-
-  // 2. 构建代理组配置
-  const proxyGroups = buildShadowrocketProxyGroups(policyConfig)
-
-  // 3. 替换 [Proxy Group] 部分（保留 [Proxy Group] 标题行）
-  const proxyGroupPattern = /(\[Proxy Group\])[^\[]*/
-  const proxyGroupContent = proxyGroups.join('\n')
-  baseConfig = baseConfig.replace(proxyGroupPattern, `$1\n${proxyGroupContent}\n\n`)
-
-  // 4. 构建规则列表
-  const rules = buildShadowrocketRules(policyConfig, fetchResults)
-
-  // 5. 替换 [Rule] 部分（保留 [Rule] 标题行，并确保换行）
-  const rulePattern = /(\[Rule\])[^\[]*/
-  const ruleContent = rules.join('\n')
-  baseConfig = baseConfig.replace(rulePattern, `$1\n${ruleContent}\n\n`)
-
-  return baseConfig
-}
-
-/**
  * 构建完整 Clash 配置
  */
 export async function buildClashConfig(
@@ -502,7 +219,7 @@ export async function buildClashConfig(
 
 /**
  * 生成独立规则文件 (用于 HTTP rule-providers)
- * 输出: .yaml (Clash) 和 .list (Shadowrocket)
+ * 输出: .yaml (Clash)
  */
 export async function exportStandaloneRules(
   fetchResults: Map<string, MergedFetchResult>,
@@ -553,16 +270,11 @@ export async function exportStandaloneRules(
     const yamlContent = stringify({ payload: result.rules }, { indent: 2 })
     await writeTextFile(join(rulesDir, `${name}.yaml`), `${yamlMetadata}\n${yamlContent}`)
 
-    // List 格式 (Shadowrocket) - 纯规则列表带头部注释
-    const listMetadata = metadataLines.map(line => line.replace(/^# /, '# ')).join('\n')
-    const listContent = result.rules.join('\n')
-    await writeTextFile(join(rulesDir, `${name}.list`), `${listMetadata}\n${listContent}`)
-
     // 输出信息
     const extraInfo = result.mergedFrom && result.mergedFrom.length > 0
       ? ` (merged: ${result.mergedFrom.join(', ')})`
       : ''
-    console.log(`✓ Exported rules/${name}.yaml / ${name}.list (${result.count} rules)${extraInfo}`)
+    console.log(`✓ Exported rules/${name}.yaml (${result.count} rules)${extraInfo}`)
   }
 }
 
@@ -713,13 +425,6 @@ export async function buildAll(): Promise<void> {
   const outputPath = join(OUTPUT_DIR, 'clash-full.yaml')
   await writeYamlFile(outputPath, clashConfig, clashHeader)
   console.log(`  ✓ ${outputPath}`)
-
-  // 构建 Shadowrocket 配置
-  console.log('\n🚀 Building Shadowrocket configuration...')
-  const shadowrocketConfig = await buildShadowrocketConfig(policyConfig, mergedResults, buildInfo)
-  const srOutputPath = join(OUTPUT_DIR, 'shadowrocket-full.conf')
-  await writeTextFile(srOutputPath, shadowrocketConfig)
-  console.log(`  ✓ ${srOutputPath}`)
 
   // 输出独立规则文件 (供外部引用)
   console.log('\n📦 Exporting standalone rule files...')

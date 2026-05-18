@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-Config-driven proxy rules aggregation engine for Clash Meta/Mihomo and Shadowrocket. Fetches upstream rule sets, deduplicates them, and generates configuration templates containing no proxy nodes (intentionally decoupled).
+Config-driven proxy rules aggregation engine for Clash Meta/Mihomo. Fetches upstream rule sets, deduplicates them, and generates configuration templates containing no proxy nodes (intentionally decoupled).
 
 ### Data Flow
 
@@ -25,7 +25,7 @@ src/fetcher.ts  - Concurrent download, YAML/text parsing, deduplication
 src/builder.ts  - Template assembly, inline rule-provider construction
      │
      ▼
-output/         - clash-full.yaml, shadowrocket-full.conf, rules/
+output/         - clash-full.yaml, rules/
 ```
 
 ### Key Implementation Details

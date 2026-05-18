@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/Uyloal/universal-proxy-rules/workflows/Build%20and%20Release/badge.svg)](https://github.com/Uyloal/universal-proxy-rules/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-支持自定义与多源代理规则聚合的程序。自动从多个上游源获取规则，去重合并后生成 Clash Meta/Mihomo 和 Shadowrocket 配置文件。
+支持自定义与多源代理规则聚合的程序。自动从多个上游源获取规则，去重合并后生成 Clash Meta/Mihomo 配置文件。
 
 ## 特性
 
@@ -11,7 +11,7 @@
 - **智能去重**：跨源去重，支持 30 万+ 条规则
 - **自定义规则**：通过 YAML 配置添加个人规则，可合并到现有分组或独立成组
 - **零运行时依赖**：生成的配置使用 `inline` 规则提供者，无需外部下载
-- **双格式输出**：同时生成 Clash (YAML) 和 Shadowrocket (.conf) 配置
+- **单格式输出**：生成 Clash (YAML) 配置
 - **自动更新**：GitHub Actions 每日构建两次（UTC 00:00 和 12:00）
 
 ## 使用方式
@@ -34,10 +34,6 @@
          cipher: aes-256-gcm
          password: "password"
    ```
-
-### Shadowrocket
-
-从 [Releases](../../releases) 下载 `shadowrocket-full.conf` 导入。
 
 ## 支持的规则集
 
@@ -97,7 +93,6 @@ pnpm generate   # 生成配置（输出到 output/）
 | 文件 | 说明 |
 |------|------|
 | `clash-full.yaml` | Clash 完整配置（30 万+ 条规则） |
-| `shadowrocket-full.conf` | Shadowrocket 配置 |
 | `rules/*.yaml` | 独立规则集（YAML） |
 | `rules/*.txt` | 独立规则集（文本） |
 | `metadata.json` | 构建统计 |

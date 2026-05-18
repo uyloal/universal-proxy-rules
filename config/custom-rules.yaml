@@ -9,9 +9,9 @@
 #   interval: 更新间隔 (仅单独成组时有效，默认：86400)
 
 custom_rules:
-  # 端口直连规则（解决 fake-ip 导致的连接问题）
-  port-direct:
-    name: "Port Direct"
+  # 自定义直连规则
+  custom-direct:
+    name: "Custom Direct"
     behavior: classical
     rules:
       - "DST-PORT,22,DIRECT"
@@ -25,3 +25,4 @@ custom_rules:
       - "DST-PORT,5900,DIRECT"
       - "DST-PORT,6443,DIRECT"
       - "DST-PORT,9418,DIRECT"
+      - "DOMAIN-KEYWORD,headscale,DIRECT"
