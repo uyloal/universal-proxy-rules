@@ -1,7 +1,7 @@
 # Name: Global
 # Behavior: domain
-# Count: 34967
-# Generated: 2026-05-17T13:17:31.834Z
+# Count: 34971
+# Generated: 2026-05-18T03:33:44.815Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Global/Global.list
 payload:
   - host,1password.drift.click,global
@@ -3385,6 +3385,7 @@ payload:
   - host-suffix,archivx.to,global
   - host-suffix,archlinux.de,global
   - host-suffix,archlinux.org,global
+  - host-suffix,archlinux.page,global
   - host-suffix,archlinuxarm.org,global
   - host-suffix,archlinuxcn.org,global
   - host-suffix,archway.ac.uk,global
@@ -25930,6 +25931,7 @@ payload:
   - host-suffix,rightbtc.com,global
   - host-suffix,rightster.com,global
   - host-suffix,rigpa.org,global
+  - host-suffix,rigums.xyz,global
   - host-suffix,riku.me,global
   - host-suffix,rileyguide.com,global
   - host-suffix,rime.im,global
@@ -27131,6 +27133,7 @@ payload:
   - host-suffix,sgwritings.com,global
   - host-suffix,sgzhan.com,global
   - host-suffix,sh-xuxingda.com,global
+  - host-suffix,sh83.xyz,global
   - host-suffix,shadbase.com,global
   - host-suffix,shadeyouvpn.com,global
   - host-suffix,shadow.ma,global
@@ -32267,6 +32270,7 @@ payload:
   - host-suffix,vultr.com,global
   - host-suffix,vultryhw.com,global
   - host-suffix,vuvuzela.io,global
+  - host-suffix,vv1865.com,global
   - host-suffix,vxnbbrs.xyz,global
   - host-suffix,vxxsred.xyz,global
   - host-suffix,vyprvpn.com,global
