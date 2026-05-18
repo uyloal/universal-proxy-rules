@@ -1,7 +1,7 @@
 # Universal Proxy Rules for Clash Meta/Mihomo
-# Generated: 2026-05-18T03:33:44.364Z
-# Version: v20260518033344
-# Commit: 7f93748
+# Generated: 2026-05-18T15:29:13.488Z
+# Version: v20260518152913
+# Commit: 02efdff
 #
 mixed-port: 7890
 allow-lan: true
@@ -11,7 +11,6 @@ unified-delay: true
 tcp-concurrent: true
 enable-process: true
 find-process-mode: strict
-global-client-fingerprint: chrome
 log-level: warning
 keep-alive-idle: 600
 keep-alive-interval: 15
@@ -176,37 +175,32 @@ profile:
   store-selected: true
   store-fake-ip: true
 proxy-groups:
-  - name: 🚀 节点选择
+  - name: 选择代理
     type: select
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png
     include-all: true
-    default: ⚡ 自动测速
-  - name: ⚡ 自动测速
+    default: 自动选择
+  - name: 自动选择
     type: url-test
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Speedtest.png
     include-all: true
+    filter: ^(?!.*(?i:Relay)).*$
     url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
     lazy: true
     timeout: 5000
-  - name: ♻️ 故障转移
+  - name: 故障转移
     type: fallback
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
+    proxies:
+      - 自动选择
     include-all: true
     url: https://www.gstatic.com/generate_204
     interval: 300
     lazy: true
     timeout: 5000
-  - name: 🛠️ 自建节点
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Server.png
-    include-all: true
-    filter: (?i)自建|vps|home|self|dedicated|私有
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 50
-  - name: 🇭🇰 香港节点
+  - name: HK 香港
     type: url-test
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
     include-all: true
@@ -215,7 +209,7 @@ proxy-groups:
     interval: 600
     tolerance: 0
     timeout: 5000
-  - name: 🇨🇳 台湾节点
+  - name: TW 台湾
     type: url-test
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China.png
     include-all: true
@@ -224,7 +218,7 @@ proxy-groups:
     interval: 600
     tolerance: 0
     timeout: 5000
-  - name: 🇯🇵 日本节点
+  - name: JP 日本
     type: url-test
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
     include-all: true
@@ -233,7 +227,7 @@ proxy-groups:
     interval: 600
     tolerance: 0
     timeout: 5000
-  - name: 🇸🇬 新加坡节点
+  - name: SG 新加坡
     type: url-test
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
     include-all: true
@@ -242,7 +236,7 @@ proxy-groups:
     interval: 600
     tolerance: 0
     timeout: 5000
-  - name: 🇰🇷 韩国节点
+  - name: KR 韩国
     type: url-test
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png
     include-all: true
@@ -251,7 +245,7 @@ proxy-groups:
     interval: 600
     tolerance: 0
     timeout: 5000
-  - name: 🇺🇸 美国节点
+  - name: US 美国
     type: url-test
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
     include-all: true
@@ -260,182 +254,47 @@ proxy-groups:
     interval: 600
     tolerance: 0
     timeout: 5000
-  - name: 🇪🇺 欧洲节点
+  - name: SA 南美
     type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Nations.png
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Brazil.png
     include-all: true
-    filter: (?i)英|uk|德|de|法|fr|意|it|荷|nl|瑞|se|西|es|eu|europe|england|germany|france
+    filter: 🇧🇷|🇦🇷|🇨🇱|🇵🇪|🇨🇴|🇺🇾|BR|AR|CL|PE|CO|UY|Brazil|brazil|Argentina|argentina|Chile|chile|Peru|peru|Colombia|colombia|Uruguay|uruguay|巴西|阿根廷|智利|秘鲁|哥伦比亚|乌拉圭|圣保罗|里约|布宜诺斯艾利斯|圣地亚哥|南美
     url: http://www.gstatic.com/generate_204
     interval: 600
     tolerance: 0
     timeout: 5000
-  - name: 🎬 流媒体
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Streaming.png
-    proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-      - 🇭🇰 香港节点
-      - 🇨🇳 台湾节点
-      - 🇯🇵 日本节点
-      - 🇰🇷 韩国节点
-      - 🇸🇬 新加坡节点
-      - 🇺🇸 美国节点
-      - 🇪🇺 欧洲节点
-    default: 🚀 节点选择
-  - name: 🎥 Netflix
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png
-    proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-      - 🇭🇰 香港节点
-      - 🇨🇳 台湾节点
-      - 🇯🇵 日本节点
-      - 🇰🇷 韩国节点
-      - 🇸🇬 新加坡节点
-      - 🇺🇸 美国节点
-      - 🇪🇺 欧洲节点
-    default: 🚀 节点选择
-  - name: 📺 YouTube
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
-    proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-      - 🇭🇰 香港节点
-      - 🇯🇵 日本节点
-      - 🇸🇬 新加坡节点
-    default: 🚀 节点选择
-  - name: 🎵 TikTok
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png
-    proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-      - 🇭🇰 香港节点
-      - 🇸🇬 新加坡节点
-    default: 🚀 节点选择
-  - name: 📱 国内流媒体
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili.png
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-    default: DIRECT
-  - name: 🤖 AI 服务
+  - name: EU 欧洲
+    type: url-test
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Nations.png
+    include-all: true
+    filter: (?i)(🇬🇧|🇩🇪|🇫🇷|🇮🇹|🇪🇸|🇳🇱|🇧🇪|🇦🇹|🇨🇭|🇸🇪|🇳🇴|🇩🇰|🇫🇮|🇮🇪|🇵🇹|🇵🇱|uk|de|fr|it|es|nl|be|at|ch|se|no|dk|fi|ie|pt|pl|eu|europe|england|britain|germany|france|italy|spain|netherlands|belgium|austria|switzerland|sweden|norway|denmark|finland|ireland|portugal|poland|英国|德国|法国|意大利|西班牙|荷兰|比利时|奥地利|瑞士|瑞典|挪威|丹麦|芬兰|爱尔兰|葡萄牙|波兰|英|德|法|意|西|荷|比|奥|瑞|挪|丹|芬|爱|葡|波)
+    url: http://www.gstatic.com/generate_204
+    interval: 600
+    tolerance: 0
+    timeout: 5000
+  - name: AI 服务
     type: select
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png
     proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-      - 🇯🇵 日本节点
-      - 🇰🇷 韩国节点
-      - 🇸🇬 新加坡节点
-      - 🇺🇸 美国节点
-      - 🇪🇺 欧洲节点
-    default: 🚀 节点选择
-  - name: 📲 电报消息
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
-    proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-      - 🇸🇬 新加坡节点
-      - ♻️ 故障转移
-    default: 🚀 节点选择
-  - name: 🐦 社交媒体
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Twitter.png
-    proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-      - 🇭🇰 香港节点
-      - 🇺🇸 美国节点
-    default: 🚀 节点选择
-  - name: 🍎 苹果服务
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-    default: DIRECT
-  - name: 🔍 谷歌服务
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
-    proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-      - 🇭🇰 香港节点
-      - 🇺🇸 美国节点
-    default: 🚀 节点选择
-  - name: 🐱 GitHub
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/GitHub.png
-    proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-      - 🇭🇰 香港节点
-    default: 🚀 节点选择
-  - name: Ⓜ️ 微软服务
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-      - 🛠️ 自建节点
-    default: DIRECT
-  - name: 🎮 游戏平台
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - 🛠️ 自建节点
-    default: DIRECT
-  - name: 🛒 电商支付
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/PayPal.png
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-      - 🛠️ 自建节点
-    default: DIRECT
-  - name: 🏠 国内服务
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China.png
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-      - 🛠️ 自建节点
-    default: DIRECT
-  - name: 🎯 全球直连
+      - 选择代理
+      - 自动选择
+      - 故障转移
+      - HK 香港
+      - TW 台湾
+      - JP 日本
+      - SG 新加坡
+      - KR 韩国
+      - US 美国
+      - EU 欧洲
+      - SA 南美
+    default: 选择代理
+  - name: 自动直连
     type: select
     icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png
     proxies:
       - DIRECT
-      - 🚀 节点选择
+      - 选择代理
     default: DIRECT
-  - name: 🐟 漏网之鱼
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png
-    proxies:
-      - 🚀 节点选择
-      - ⚡ 自动测速
-      - DIRECT
-    default: 🚀 节点选择
 rule-providers:
   ai:
     type: http
@@ -678,40 +537,40 @@ rule-providers:
     path: ./rules/port-direct.yaml
     interval: 86400
 rules:
-  - RULE-SET,port-direct,🎯 全球直连
-  - RULE-SET,lan,🎯 全球直连
-  - RULE-SET,ai,🤖 AI 服务
-  - RULE-SET,youtube,📺 YouTube
-  - RULE-SET,netflix,🎥 Netflix
-  - RULE-SET,disney,🎬 流媒体
-  - RULE-SET,hbo,🎬 流媒体
-  - RULE-SET,spotify,🎬 流媒体
-  - RULE-SET,tiktok,🎵 TikTok
-  - RULE-SET,bilibili,📱 国内流媒体
-  - RULE-SET,netease-music,📱 国内流媒体
-  - RULE-SET,douyin,📱 国内流媒体
-  - RULE-SET,telegram,📲 电报消息
-  - RULE-SET,twitter,🐦 社交媒体
-  - RULE-SET,facebook,🐦 社交媒体
-  - RULE-SET,wechat,🏠 国内服务
-  - RULE-SET,sina,🏠 国内服务
-  - RULE-SET,zhihu,🏠 国内服务
-  - RULE-SET,xiaohongshu,🏠 国内服务
-  - RULE-SET,sony,🎮 游戏平台
-  - RULE-SET,nintendo,🎮 游戏平台
-  - RULE-SET,epic,🎮 游戏平台
-  - RULE-SET,steam-cn,🎯 全球直连
-  - RULE-SET,steam,🎮 游戏平台
-  - RULE-SET,gaming,🎮 游戏平台
-  - RULE-SET,github,🐱 GitHub
-  - RULE-SET,google,🔍 谷歌服务
-  - RULE-SET,microsoft,Ⓜ️ 微软服务
-  - RULE-SET,apple,🍎 苹果服务
-  - RULE-SET,paypal,🛒 电商支付
-  - RULE-SET,amazon,🛒 电商支付
-  - RULE-SET,baidu,🏠 国内服务
-  - RULE-SET,douban,🏠 国内服务
-  - RULE-SET,china,🎯 全球直连
-  - RULE-SET,global,🚀 节点选择
-  - GEOIP,CN,🎯 全球直连
-  - MATCH,🐟 漏网之鱼
+  - RULE-SET,port-direct,自动直连
+  - RULE-SET,lan,自动直连
+  - RULE-SET,ai,AI 服务
+  - RULE-SET,youtube,选择代理
+  - RULE-SET,netflix,选择代理
+  - RULE-SET,disney,选择代理
+  - RULE-SET,hbo,选择代理
+  - RULE-SET,spotify,选择代理
+  - RULE-SET,tiktok,选择代理
+  - RULE-SET,bilibili,自动直连
+  - RULE-SET,netease-music,自动直连
+  - RULE-SET,douyin,自动直连
+  - RULE-SET,telegram,选择代理
+  - RULE-SET,twitter,选择代理
+  - RULE-SET,facebook,选择代理
+  - RULE-SET,wechat,自动直连
+  - RULE-SET,sina,自动直连
+  - RULE-SET,zhihu,自动直连
+  - RULE-SET,xiaohongshu,自动直连
+  - RULE-SET,sony,选择代理
+  - RULE-SET,nintendo,选择代理
+  - RULE-SET,epic,选择代理
+  - RULE-SET,steam-cn,自动直连
+  - RULE-SET,steam,选择代理
+  - RULE-SET,gaming,选择代理
+  - RULE-SET,github,选择代理
+  - RULE-SET,google,选择代理
+  - RULE-SET,microsoft,选择代理
+  - RULE-SET,apple,选择代理
+  - RULE-SET,paypal,选择代理
+  - RULE-SET,amazon,选择代理
+  - RULE-SET,baidu,自动直连
+  - RULE-SET,douban,自动直连
+  - RULE-SET,china,自动直连
+  - RULE-SET,global,选择代理
+  - GEOIP,CN,自动直连
+  - MATCH,选择代理
