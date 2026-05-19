@@ -217,6 +217,8 @@ export interface CustomRuleSource {
   name: string
   behavior: 'domain' | 'ipcidr' | 'classical'
   rules: string[]
+  /** 模式: append 合并到已有组, standalone 独立成组 (默认) */
+  mode?: 'append' | 'standalone'
   merge_into?: string
   interval?: number
 }

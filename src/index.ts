@@ -3,7 +3,7 @@
  * Proxy Rules Aggregation Engine
  * 主入口文件
  *
- * 命令:
+ * 命令：
  *   pnpm dev          - 开发模式 (tsx)
  *   pnpm generate     - 生成配置
  */
@@ -19,7 +19,7 @@ async function main(): Promise<void> {
       case 'build':
       case 'generate':
         await buildAll()
-        break
+        process.exit(0)
 
       default:
         console.log(`Unknown command: ${command}`)

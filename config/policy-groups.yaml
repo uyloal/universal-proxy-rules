@@ -161,138 +161,36 @@ rules:
 
   # ========== 流媒体服务 ==========
   - type: upstream
-    upstream: "youtube"
+    upstream: "streaming"
     policy: "选择代理"
 
   - type: upstream
-    upstream: "netflix"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "disney"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "hbo"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "spotify"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "tiktok"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "bilibili"
-    policy: "自动直连"
-
-  - type: upstream
-    upstream: "netease-music"
-    policy: "自动直连"
-
-  - type: upstream
-    upstream: "douyin"
+    upstream: "streaming-cn"
     policy: "自动直连"
 
   # ========== 社交服务 ==========
   - type: upstream
-    upstream: "telegram"
+    upstream: "social"
     policy: "选择代理"
 
   - type: upstream
-    upstream: "twitter"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "facebook"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "wechat"
+    upstream: "social-cn"
     policy: "自动直连"
 
+  # ========== Apple CN 服务 ==========
   - type: upstream
-    upstream: "sina"
+    upstream: "apple-cn"
     policy: "自动直连"
 
-  - type: upstream
-    upstream: "zhihu"
-    policy: "自动直连"
-
-  - type: upstream
-    upstream: "xiaohongshu"
-    policy: "自动直连"
-
-  # ========== 游戏平台 ==========
-  - type: upstream
-    upstream: "sony"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "nintendo"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "epic"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "steam-cn"
-    policy: "自动直连"
-
-  - type: upstream
-    upstream: "steam"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "gaming"
-    policy: "选择代理"
-
-  # ========== 科技 & 云服务 ==========
-  - type: upstream
-    upstream: "github"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "google"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "microsoft"
-    policy: "选择代理"
-
+  # ========== Apple Proxy 服务 ==========
   - type: upstream
     upstream: "apple"
     policy: "选择代理"
-
-  # ========== 电商 & 支付 ==========
-  - type: upstream
-    upstream: "paypal"
-    policy: "选择代理"
-
-  - type: upstream
-    upstream: "amazon"
-    policy: "选择代理"
-
-  # ========== 国内服务 ==========
-  - type: upstream
-    upstream: "baidu"
-    policy: "自动直连"
-
-  - type: upstream
-    upstream: "douban"
-    policy: "自动直连"
 
   # ========== 网络 & GeoIP ==========
   - type: upstream
     upstream: "china"
     policy: "自动直连"
-
-  - type: upstream
-    upstream: "global"
-    policy: "选择代理"
 
   # GEOIP 中国
   - type: geoip

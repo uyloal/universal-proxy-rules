@@ -44,13 +44,12 @@ async function fetchUrl(
 }
 
 /**
- * 解析规则内容 - 优化版
- * 支持多种格式: YAML (payload), 纯文本 (每行一条), 经典格式 (DOMAIN-SUFFIX,xxx)
+ * 解析 YAML payload 格式的规则内容
+ * 仅支持 Clash 标准 YAML 格式 (payload: 列表)
  */
-function parseRules(content: string, behavior: string): string[] {
+function parseRules(content: string): string[] {
   const rules: string[] = []
   const lines = content.split('\n')
-  const isYaml = content.includes('payload:')
   let inPayload = false
 
   for (const rawLine of lines) {
@@ -59,51 +58,28 @@ function parseRules(content: string, behavior: string): string[] {
       ? rawLine.slice(0, -1)
       : rawLine
 
-    if (isYaml) {
-      const trimmed = line.trim()
-      if (trimmed.startsWith('payload:')) {
-        inPayload = true
-        continue
-      }
-      if (!inPayload) continue
+    const trimmed = line.trim()
+    if (trimmed.startsWith('payload:')) {
+      inPayload = true
+      continue
+    }
+    if (!inPayload) continue
 
-      // 退出条件: 非空行且非缩进
-      if (trimmed && line[0] !== ' ' && line[0] !== '-') {
-        inPayload = false
-        continue
-      }
+    // 退出条件: 非空行且非缩进
+    if (trimmed && line[0] !== ' ' && line[0] !== '-') {
+      inPayload = false
+      continue
+    }
 
-      // 手动解析列表项: 跳过前导空格和 "- "
-      let i = 0
-      const len = line.length
-      while (i < len && (line[i] === ' ' || line[i] === '\t')) i++
-      if (i >= len || line[i] !== '-') continue
-      i++ // 跳过 -
-      if (i < len && line[i] === ' ') i++ // 跳过空格
-      if (i < len) {
-        rules.push(line.slice(i).trim())
-      }
-    } else {
-      const trimmed = line.trim()
-      if (!trimmed || trimmed[0] === '#') continue
-
-      // 检测是否已是规则格式 (简单字符检查，避免正则)
-      let isRuleFormat = false
-      for (let i = 0; i < trimmed.length && i < 30; i++) {
-        const c = trimmed.charCodeAt(i)
-        if (c === 44) { // ','
-          isRuleFormat = true
-          break
-        }
-        // 小写字母，不是规则格式
-        if (c >= 97 && c <= 122) break
-      }
-
-      if (isRuleFormat) {
-        rules.push(trimmed)
-      } else if (trimmed.indexOf('.') !== -1) {
-        rules.push(`${behavior.toUpperCase()},${trimmed}`)
-      }
+    // 手动解析列表项: 跳过前导空格和 "- "
+    let i = 0
+    const len = line.length
+    while (i < len && (line[i] === ' ' || line[i] === '\t')) i++
+    if (i >= len || line[i] !== '-') continue
+    i++ // 跳过 -
+    if (i < len && line[i] === ' ') i++ // 跳过空格
+    if (i < len) {
+      rules.push(line.slice(i).trim())
     }
   }
 
@@ -227,7 +203,7 @@ async function fetchSingleUpstream(
     }
 
     try {
-      const parsed = parseRules(result.content, source.behavior)
+      const parsed = parseRules(result.content)
       const cleaned = cleanupRules(parsed, excludePatterns)
       // 避免使用展开运算符导致栈溢出
       for (const rule of cleaned) {
@@ -392,7 +368,10 @@ export function mergeCustomRules(
       }
     }
 
-    if (customRule.merge_into) {
+    // 判断模式: mode 优先, 否则兼容 merge_into 字段
+    const mode = customRule.mode || (customRule.merge_into ? 'append' : 'standalone')
+
+    if (mode === 'append' && customRule.merge_into) {
       // 合并到指定 upstream
       const targetUpstream = customRule.merge_into
       const targetResult = mergedResults.get(targetUpstream)
@@ -438,6 +417,10 @@ export function mergeCustomRules(
         })
       }
     } else {
+      if (mode === 'append' && !customRule.merge_into) {
+        console.warn(`  ⚠ Custom rule "${customKey}" mode is append but merge_into not specified, treating as standalone`)
+      }
+
       // 单独成组
       mergedResults.set(customKey, {
         upstreamName: customKey,

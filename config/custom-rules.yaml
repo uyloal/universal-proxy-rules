@@ -5,14 +5,16 @@
 #   name: 显示名称 (必填)
 #   behavior: 规则行为 domain/ipcidr/classical (默认：domain)
 #   rules: 规则列表 (必填)
-#   merge_into: 合并到指定 upstream (可选，不指定则单独成组)
+#   mode: 模式，append 合并到已有组 / standalone 独立成组 (默认)
+#   merge_into: 合并到指定 upstream (mode=append 时必填)
 #   interval: 更新间隔 (仅单独成组时有效，默认：86400)
 
 custom_rules:
-  # 自定义直连规则
+  # 自定义直连规则 (独立规则组)
   custom-direct:
     name: "Custom Direct"
     behavior: classical
+    mode: standalone
     rules:
       - "DST-PORT,22,DIRECT"
       - "DST-PORT,23,DIRECT"
@@ -26,3 +28,22 @@ custom_rules:
       - "DST-PORT,6443,DIRECT"
       - "DST-PORT,9418,DIRECT"
       - "DOMAIN-KEYWORD,headscale,DIRECT"
+
+  # Apple Push Notification Service (APNS) (append 到 apple-proxy)
+  apple:
+    name: "Apple"
+    behavior: classical
+    mode: append
+    merge_into: apple
+    rules:
+      - "DOMAIN-SUFFIX,push.apple.com"
+      - "IP-CIDR,17.0.0.0/8,no-resolve"
+      - "IP-CIDR,17.249.0.0/16,no-resolve"
+      - "IP-CIDR,17.252.0.0/16,no-resolve"
+      - "IP-CIDR,17.57.144.0/22,no-resolve"
+      - "IP-CIDR,17.188.128.0/18,no-resolve"
+      - "IP-CIDR,17.188.20.0/23,no-resolve"
+      - "IP-CIDR6,2620:149:a44::/48,no-resolve"
+      - "IP-CIDR6,2403:300:a42::/48,no-resolve"
+      - "IP-CIDR6,2403:300:a51::/48,no-resolve"
+      - "IP-CIDR6,2a01:b740:a42::/48,no-resolve"

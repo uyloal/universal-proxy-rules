@@ -10,6 +10,7 @@
     "declaration": false,
     "outDir": "dist",
     "rootDir": "src",
+    "lib": ["ES2023", "DOM"],
     "types": ["node"]
   },
   "include": ["src/**/*"],

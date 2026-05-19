@@ -70,8 +70,34 @@ async function readBaseTemplate(name: string): Promise<Record<string, unknown>> 
 }
 
 /**
+ * 为规则追加策略，正确处理已有 no-resolve 标记
+ */
+function appendPolicyToRule(rule: string, policy: string): string {
+  const trimmed = rule.trim().toLowerCase()
+  const parts = trimmed.split(',')
+
+  if (parts.length < 2) {
+    return `${trimmed},${policy}`
+  }
+
+  const type = parts[0].toUpperCase()
+  const value = parts[1]
+
+  // 检查是否已有 no-resolve
+  const hasNoResolve = parts.some((p, i) => i >= 2 && p.trim() === 'no-resolve')
+
+  let result = `${type},${value},${policy}`
+  if (hasNoResolve) {
+    result += ',no-resolve'
+  }
+
+  return result
+}
+
+/**
  * 构建 Rule Providers
  * 使用 http 类型从 release 分支获取规则文件
+ * 纯自定义规则直接内联到 rules 中，不创建 rule-provider
  */
 function buildRuleProviders(
   fetchResults: Map<string, MergedFetchResult>,
@@ -82,6 +108,8 @@ function buildRuleProviders(
 
   for (const [name, result] of fetchResults) {
     if (result.count === 0) continue
+    // 跳过纯自定义规则（直接内联到 rules 中）
+    if (result.isCustomOnly) continue
 
     const upstreamDef = upstreamsConfig.upstreams[name]
     const customDef = customConfig?.custom_rules?.[name]
@@ -122,8 +150,16 @@ function buildRules(
       // 检查上游是否存在且有数据
       const result = fetchResults.get(upstreamName)
       if (result && result.count > 0) {
-        // 使用 RULE-SET 引用 rule-provider
-        rules.push(`RULE-SET,${upstreamName},${policy}`)
+        if (result.isCustomOnly) {
+          // 纯自定义规则直接内联展开，不构建 RULE-SET
+          // 优先使用自定义规则自身定义的 policy，否则使用绑定配置
+          for (const rule of result.rules) {
+            rules.push(appendPolicyToRule(rule, policy))
+          }
+        } else {
+          // 使用 RULE-SET 引用 rule-provider
+          rules.push(`RULE-SET,${upstreamName},${policy}`)
+        }
       }
     } else if (type === 'domain') {
       const payload = ruleDef.payload as string[]
@@ -230,7 +266,7 @@ export async function exportStandaloneRules(
   const generatedAt = new Date().toISOString()
 
   for (const [name, result] of fetchResults) {
-    if (result.count === 0) continue
+    if (result.count === 0 || result.isCustomOnly) continue
 
     const upstreamDef = upstreamsConfig.upstreams[name]
     const customDef = customConfig?.custom_rules?.[name]
@@ -259,8 +295,11 @@ export async function exportStandaloneRules(
     }
 
     // 源信息
-    if (upstreamDef?.urls?.[0]) {
+    if (upstreamDef?.urls && upstreamDef.urls.length > 0) {
       metadataLines.push(`# Source: ${upstreamDef.urls[0]}`)
+      for (let i = 1; i < upstreamDef.urls.length; i++) {
+        metadataLines.push(`# Source: ${upstreamDef.urls[i]}`)
+      }
     } else if (customDef) {
       metadataLines.push(`# Source: custom-rules.yaml`)
     }
