@@ -1,8 +1,8 @@
 # Name: LAN
 # Behavior: ipcidr
 # Count: 140
-# Generated: 2026-05-19T03:26:20.148Z
-# Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Lan/Lan.list
+# Generated: 2026-05-19T09:25:33.003Z
+# Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml
 payload:
   - domain,asusrouter.com
   - domain,instant.arubanetworks.com
@@ -126,21 +126,21 @@ payload:
   - domain-suffix,ts.net
   - domain-suffix,wifi.cmcc
   - domain-suffix,zte.home
-  - ip-cidr,0.0.0.0/8,no-resolve
-  - ip-cidr,10.0.0.0/8,no-resolve
-  - ip-cidr,100.64.0.0/10,no-resolve
-  - ip-cidr,127.0.0.0/8,no-resolve
-  - ip-cidr,169.254.0.0/16,no-resolve
-  - ip-cidr,172.16.0.0/12,no-resolve
-  - ip-cidr,192.0.0.0/24,no-resolve
-  - ip-cidr,192.0.2.0/24,no-resolve
-  - ip-cidr,192.168.0.0/16,no-resolve
-  - ip-cidr,192.88.99.0/24,no-resolve
-  - ip-cidr,198.18.0.0/15,no-resolve
-  - ip-cidr,198.51.100.0/24,no-resolve
-  - ip-cidr,203.0.113.0/24,no-resolve
-  - ip-cidr,224.0.0.0/3,no-resolve
-  - ip-cidr,::/127,no-resolve
-  - ip-cidr,fc00::/7,no-resolve
-  - ip-cidr,fe80::/10,no-resolve
-  - ip-cidr,ff00::/8,no-resolve
+  - ip-cidr,0.0.0.0/8
+  - ip-cidr,10.0.0.0/8
+  - ip-cidr,100.64.0.0/10
+  - ip-cidr,127.0.0.0/8
+  - ip-cidr,169.254.0.0/16
+  - ip-cidr,172.16.0.0/12
+  - ip-cidr,192.0.0.0/24
+  - ip-cidr,192.0.2.0/24
+  - ip-cidr,192.168.0.0/16
+  - ip-cidr,192.88.99.0/24
+  - ip-cidr,198.18.0.0/15
+  - ip-cidr,198.51.100.0/24
+  - ip-cidr,203.0.113.0/24
+  - ip-cidr,224.0.0.0/3
+  - ip-cidr6,::/127
+  - ip-cidr6,fc00::/7
+  - ip-cidr6,fe80::/10
+  - ip-cidr6,ff00::/8

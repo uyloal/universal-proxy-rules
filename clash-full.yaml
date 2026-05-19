@@ -1,7 +1,7 @@
 # Universal Proxy Rules for Clash Meta/Mihomo
-# Generated: 2026-05-19T03:26:19.262Z
-# Version: v20260519032619
-# Commit: 92d2085
+# Generated: 2026-05-19T09:25:32.520Z
+# Version: v20260519092532
+# Commit: 09d1591
 #
 mixed-port: 7890
 allow-lan: true
@@ -9,9 +9,17 @@ bind-address: "*"
 ipv6: true
 unified-delay: true
 tcp-concurrent: true
-enable-process: true
 find-process-mode: strict
 log-level: warning
+geodata-mode: true
+geodata-loader: memconservative
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  geoip: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
+  geosite: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+  mmdb: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb
+  asn: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb
 keep-alive-idle: 600
 keep-alive-interval: 15
 dns:
@@ -129,7 +137,7 @@ dns:
       - +.twitter.com
       - +.x.com
 tun:
-  enable: true
+  enable: false
   stack: mixed
   dns-hijack:
     - any:53
@@ -138,7 +146,7 @@ tun:
   auto-detect-interface: true
   auto-redirect: false
   strict-route: false
-  device: utun123
+  device: utun111
 sniffer:
   enable: true
   sniff:
@@ -158,14 +166,20 @@ sniffer:
   force-domain:
     - +.v2ex.com
     - +.netflix.com
-    - +.hbomax.com
+    - +.nflxvideo.net
+    - +.amazonaws.com
+    - +.media.dssott.com
+    - +.hbo.com
+    - +.hbomaxcdn.com
+    - +.tiktok.com
   skip-domain:
     - +.apple.com
-    - +.icloud.com
-    - +.icloud-content.com
-    - +.cdn-apple.com
-    - +.mzstatic.com
+    - +.push.apple.com
     - Mijia Cloud
+    - dlg.io.mi.com
+    - +.oray.com
+    - +.sunlogin.net
+    - +.crashlytics.com
 listeners:
   - name: mixed-in
     type: mixed
@@ -302,167 +316,29 @@ rule-providers:
     url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/ai.yaml
     path: ./rules/ai.yaml
     interval: 86400
-  youtube:
+  streaming:
     type: http
     behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/youtube.yaml
-    path: ./rules/youtube.yaml
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/streaming.yaml
+    path: ./rules/streaming.yaml
     interval: 86400
-  netflix:
+  streaming-cn:
     type: http
     behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/netflix.yaml
-    path: ./rules/netflix.yaml
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/streaming-cn.yaml
+    path: ./rules/streaming-cn.yaml
     interval: 86400
-  disney:
+  social:
     type: http
     behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/disney.yaml
-    path: ./rules/disney.yaml
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/social.yaml
+    path: ./rules/social.yaml
     interval: 86400
-  hbo:
+  social-cn:
     type: http
     behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/hbo.yaml
-    path: ./rules/hbo.yaml
-    interval: 86400
-  spotify:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/spotify.yaml
-    path: ./rules/spotify.yaml
-    interval: 86400
-  tiktok:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/tiktok.yaml
-    path: ./rules/tiktok.yaml
-    interval: 86400
-  bilibili:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/bilibili.yaml
-    path: ./rules/bilibili.yaml
-    interval: 86400
-  netease-music:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/netease-music.yaml
-    path: ./rules/netease-music.yaml
-    interval: 86400
-  douyin:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/douyin.yaml
-    path: ./rules/douyin.yaml
-    interval: 86400
-  telegram:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/telegram.yaml
-    path: ./rules/telegram.yaml
-    interval: 86400
-  twitter:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/twitter.yaml
-    path: ./rules/twitter.yaml
-    interval: 86400
-  facebook:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/facebook.yaml
-    path: ./rules/facebook.yaml
-    interval: 86400
-  wechat:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/wechat.yaml
-    path: ./rules/wechat.yaml
-    interval: 86400
-  sina:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/sina.yaml
-    path: ./rules/sina.yaml
-    interval: 86400
-  zhihu:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/zhihu.yaml
-    path: ./rules/zhihu.yaml
-    interval: 86400
-  xiaohongshu:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/xiaohongshu.yaml
-    path: ./rules/xiaohongshu.yaml
-    interval: 86400
-  discord:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/discord.yaml
-    path: ./rules/discord.yaml
-    interval: 86400
-  reddit:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/reddit.yaml
-    path: ./rules/reddit.yaml
-    interval: 86400
-  sony:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/sony.yaml
-    path: ./rules/sony.yaml
-    interval: 86400
-  nintendo:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/nintendo.yaml
-    path: ./rules/nintendo.yaml
-    interval: 86400
-  epic:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/epic.yaml
-    path: ./rules/epic.yaml
-    interval: 86400
-  steam-cn:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/steam-cn.yaml
-    path: ./rules/steam-cn.yaml
-    interval: 86400
-  steam:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/steam.yaml
-    path: ./rules/steam.yaml
-    interval: 86400
-  gaming:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/gaming.yaml
-    path: ./rules/gaming.yaml
-    interval: 86400
-  github:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/github.yaml
-    path: ./rules/github.yaml
-    interval: 86400
-  microsoft:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/microsoft.yaml
-    path: ./rules/microsoft.yaml
-    interval: 86400
-  google:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/google.yaml
-    path: ./rules/google.yaml
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/social-cn.yaml
+    path: ./rules/social-cn.yaml
     interval: 86400
   apple:
     type: http
@@ -470,53 +346,11 @@ rule-providers:
     url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/apple.yaml
     path: ./rules/apple.yaml
     interval: 86400
-  google-drive:
+  apple-cn:
     type: http
     behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/google-drive.yaml
-    path: ./rules/google-drive.yaml
-    interval: 86400
-  onedrive:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/onedrive.yaml
-    path: ./rules/onedrive.yaml
-    interval: 86400
-  docker:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/docker.yaml
-    path: ./rules/docker.yaml
-    interval: 86400
-  paypal:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/paypal.yaml
-    path: ./rules/paypal.yaml
-    interval: 86400
-  amazon:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/amazon.yaml
-    path: ./rules/amazon.yaml
-    interval: 86400
-  baidu:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/baidu.yaml
-    path: ./rules/baidu.yaml
-    interval: 86400
-  douban:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/douban.yaml
-    path: ./rules/douban.yaml
-    interval: 86400
-  global:
-    type: http
-    behavior: domain
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/global.yaml
-    path: ./rules/global.yaml
+    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/apple-cn.yaml
+    path: ./rules/apple-cn.yaml
     interval: 86400
   china:
     type: http
@@ -530,47 +364,27 @@ rule-providers:
     url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/lan.yaml
     path: ./rules/lan.yaml
     interval: 86400
-  custom-direct:
-    type: http
-    behavior: classical
-    url: https://raw.githubusercontent.com/uyloal/universal-proxy-rules/release/rules/custom-direct.yaml
-    path: ./rules/custom-direct.yaml
-    interval: 86400
 rules:
-  - RULE-SET,custom-direct,自动直连
+  - DOMAIN-KEYWORD,headscale,自动直连
+  - DST-PORT,143,自动直连
+  - DST-PORT,22,自动直连
+  - DST-PORT,23,自动直连
+  - DST-PORT,3389,自动直连
+  - DST-PORT,465,自动直连
+  - DST-PORT,587,自动直连
+  - DST-PORT,5900,自动直连
+  - DST-PORT,6443,自动直连
+  - DST-PORT,9418,自动直连
+  - DST-PORT,993,自动直连
+  - DST-PORT,995,自动直连
   - RULE-SET,lan,自动直连
   - RULE-SET,ai,AI 服务
-  - RULE-SET,youtube,选择代理
-  - RULE-SET,netflix,选择代理
-  - RULE-SET,disney,选择代理
-  - RULE-SET,hbo,选择代理
-  - RULE-SET,spotify,选择代理
-  - RULE-SET,tiktok,选择代理
-  - RULE-SET,bilibili,自动直连
-  - RULE-SET,netease-music,自动直连
-  - RULE-SET,douyin,自动直连
-  - RULE-SET,telegram,选择代理
-  - RULE-SET,twitter,选择代理
-  - RULE-SET,facebook,选择代理
-  - RULE-SET,wechat,自动直连
-  - RULE-SET,sina,自动直连
-  - RULE-SET,zhihu,自动直连
-  - RULE-SET,xiaohongshu,自动直连
-  - RULE-SET,sony,选择代理
-  - RULE-SET,nintendo,选择代理
-  - RULE-SET,epic,选择代理
-  - RULE-SET,steam-cn,自动直连
-  - RULE-SET,steam,选择代理
-  - RULE-SET,gaming,选择代理
-  - RULE-SET,github,选择代理
-  - RULE-SET,google,选择代理
-  - RULE-SET,microsoft,选择代理
+  - RULE-SET,streaming,选择代理
+  - RULE-SET,streaming-cn,自动直连
+  - RULE-SET,social,选择代理
+  - RULE-SET,social-cn,自动直连
+  - RULE-SET,apple-cn,自动直连
   - RULE-SET,apple,选择代理
-  - RULE-SET,paypal,选择代理
-  - RULE-SET,amazon,选择代理
-  - RULE-SET,baidu,自动直连
-  - RULE-SET,douban,自动直连
   - RULE-SET,china,自动直连
-  - RULE-SET,global,选择代理
   - GEOIP,CN,自动直连
   - MATCH,选择代理
