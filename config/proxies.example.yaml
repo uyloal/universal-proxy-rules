@@ -1,0 +1,47 @@
+# Proxies 示例配置
+# 复制此文件为 proxies.yaml 并填入你的节点信息
+# 构建时会自动合并到最终配置中
+#
+# 支持类型: ss / ss-rust / vmess / vless / trojan / hysteria / hysteria2 / tuic / wireguard / direct / reject
+# 文档: https://wiki.metacubex.one/config/proxies/
+
+proxies:
+  # 示例：Shadowsocks 节点
+  - name: "SS-Node-1"
+    type: ss
+    server: example.com
+    port: 8388
+    cipher: aes-256-gcm
+    password: "your-password"
+    udp: true
+
+  # 示例：VMess 节点
+  - name: "VMess-Node-1"
+    type: vmess
+    server: example.com
+    port: 443
+    uuid: "00000000-0000-0000-0000-000000000000"
+    alterId: 0
+    cipher: auto
+    tls: true
+    network: ws
+    ws-opts:
+      path: "/path"
+      headers:
+        Host: example.com
+
+  # 示例：Trojan 节点
+  - name: "Trojan-Node-1"
+    type: trojan
+    server: example.com
+    port: 443
+    password: "your-password"
+    sni: example.com
+    alpn:
+      - h2
+      - http/1.1
+
+  # 示例：直连（用于兜底或特殊用途）
+  - name: "DIRECT-FALLBACK"
+    type: direct
+    udp: true

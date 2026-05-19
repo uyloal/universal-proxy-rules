@@ -14,28 +14,33 @@ Config-driven proxy rules aggregation engine for Clash Meta/Mihomo. Fetches upst
 ### Data Flow
 
 ```
-config/upstreams.yaml     - Define upstream rule sources (multiple URLs per group)
-config/policy-groups.yaml - Define proxy groups and rule-to-policy mappings  
-config/custom-rules.yaml  - User-defined custom rules (merge or standalone)
+config/upstreams.yaml        - Define upstream rule sources (multiple URLs per group)
+config/policy-groups.yaml    - Define proxy groups and rule-to-policy mappings
+config/custom-rules.yaml     - User-defined custom rules (append or standalone)
+config/proxy-providers.yaml  - Optional: proxy provider subscriptions (merged if present)
+config/proxies.yaml          - Optional: inline proxy nodes (merged if present)
+templates/clash-base.yaml    - Base template (ports, DNS, TUN, sniffer)
      │
      ▼
 src/fetcher.ts  - Concurrent download, YAML/text parsing, deduplication
      │
      ▼
-src/builder.ts  - Template assembly, inline rule-provider construction
+src/builder.ts  - Template assembly, HTTP rule-provider construction
      │
      ▼
-output/         - clash-full.yaml, rules/
+output/         - clash-full.yaml, rules/*.yaml, metadata.json
 ```
 
 ### Key Implementation Details
 
 **Fetcher** (`src/fetcher.ts`): Uses `for...of` loops instead of `array.push(...largeArray)` to avoid stack overflow when processing 100k+ rules. Downloads from multiple URLs per rule set concurrently and deduplicates across sources.
 
-**Builder** (`src/builder.ts`): Constructs `rule-providers` with `type: inline` for zero external dependencies at runtime. Parses both `payload:` YAML format and plain text rules, normalizing to `DOMAIN-SUFFIX,example.com` format.
+**Builder** (`src/builder.ts`): Assembles the final config by merging `templates/clash-base.yaml` with generated `rule-providers` (type: `http`, pointing to the `release` branch), `proxy-groups`, and `rules`. If `config/proxy-providers.yaml` or `config/proxies.yaml` exist, they are merged into the output automatically.
 
-**Custom Rules** (`config/custom-rules.yaml`): Rules with `merge_into` field are merged into the specified upstream group; rules without it become standalone groups with their own rule files.
+**Custom Rules** (`config/custom-rules.yaml`): Each entry has a `mode` field (`append` or `standalone`). `append` rules with `merge_into` are deduplicated and merged into the specified upstream group. `standalone` rules are inlined directly into the final `rules` array without creating a rule-provider.
+
+**Types** (`src/types.ts`): The central type contract. `UpstreamSource`, `ProxyGroup`, `Rule`, `CustomRuleSource`, `GeneratedConfig`, and `ProxyProviderConfig` are all defined here and used across `fetcher.ts` and `builder.ts`.
 
 ### GitHub Actions
 
-`.github/workflows/deploy.yml` runs daily (cron `0 0,12 * * *`) to fetch fresh rules, generate configurations, create GitHub Release with ZIP, and push to `release` branch for raw URL access.
+`.github/workflows/deploy.yml` runs daily (cron `0 0,12 * * *`) to fetch fresh rules, generate configurations, create GitHub Release with ZIP, and force-push the `output/` contents to the `release` branch for raw URL access.

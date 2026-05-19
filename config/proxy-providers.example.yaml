@@ -1,0 +1,42 @@
+# Proxy Provider 示例配置
+# 复制此文件为 proxy-providers.yaml 并填入你的机场订阅链接
+# 构建时会自动合并到最终配置中
+#
+# 支持类型: http / file
+# 文档: https://wiki.metacubex.one/config/proxies/proxy-provider/
+
+proxy-providers:
+  # 示例：HTTP 订阅（推荐）
+  机场A:
+    type: http
+    url: "https://example.com/subscribe?token=YOUR_TOKEN"
+    path: ./providers/airport-a.yaml
+    interval: 86400
+    header:
+      User-Agent:
+        - "clash-verge/v2.4.7"
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 600
+
+  # 示例：本地文件（手动下载后使用）
+  机场B:
+    type: file
+    path: ./providers/airport-b.yaml
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 600
+
+  # 示例：带过滤器（只保留特定节点）
+  香港节点:
+    type: http
+    url: "https://example.com/subscribe?token=YOUR_TOKEN"
+    path: ./providers/hk-only.yaml
+    interval: 86400
+    filter: "🇭🇰|HK|Hong|hong|香港|深港|沪港|京港|港"
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 600
