@@ -17,11 +17,23 @@ ipv6: true                 # 启用 IPv6 支持
 # ==================== 性能与安全优化 ====================
 unified-delay: true        # 统一延迟计算（更准确的测速）
 tcp-concurrent: true        # TCP 并发连接
-enable-process: true        # 启用进程识别
-find-process-mode: strict   # 严格进程查找模式
+find-process-mode: strict   # 进程查找模式：strict=自动判断，always=强制匹配，off=关闭
 
 # 日志级别
 log-level: warning
+
+# ==================== Geo 数据库配置 ====================
+geodata-mode: true            # 使用 dat 格式（比 mmdb 更轻量）
+geodata-loader: memconservative # 内存受限设备优化加载器（小内存设备更友好）
+geo-auto-update: true           # 自动更新 Geo 数据库
+geo-update-interval: 24         # 更新间隔（单位：小时）
+
+# Geo 数据库下载地址（使用 MetaCubeX 维护版本 + jsDelivr CDN 加速）
+geox-url:
+  geoip: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+  asn: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
 
 # ==================== TCP Keepalive 优化 ====================
 # 长连接保持设置，减少连接重建开销
@@ -169,7 +181,7 @@ dns:
 
 # ==================== TUN 模式配置（透明代理）====================
 tun:
-  enable: true
+  enable: false
   # 协议栈选择：
   #   - system:   macOS 首选（性能最好）
   #   - gvisor:   Windows/Linux 兼容性更好
@@ -193,7 +205,7 @@ tun:
   strict-route: false
 
   # macOS 设备名称
-  device: utun123
+  device: utun111
 
   # NAT 配置
   # endpoint-independent-nat: true
@@ -210,19 +222,27 @@ sniffer:
       ports: [443, 8443]
     QUIC:
       ports: [443, 8443]
-  # 强制嗅探域名（某些网站需要）
+  # 强制嗅探域名（社区共识：流媒体 CDN SNI 不一致 / 非标准端口）
+  # 来源: archlinuxcn/repo, wukibaka/openwrt-packages, vxiaov/vClash, HenryChiao/MIHOMO_AIO
   force-domain:
     - "+.v2ex.com"
     - "+.netflix.com"
-    - "+.hbomax.com"
-  # 跳过嗅探域名（避免问题）
+    - "+.nflxvideo.net"
+    - "+.amazonaws.com"
+    - "+.media.dssott.com"
+    - "+.hbo.com"
+    - "+.hbomaxcdn.com"
+    - "+.tiktok.com"
+  # 跳过嗅探域名（社区共识：Apple 推送 / 米家 / 向日葵远程）
+  # 来源: archlinuxcn/repo, wukibaka/openwrt-packages, HenryChiao/MIHOMO_AIO
   skip-domain:
     - "+.apple.com"
-    - "+.icloud.com"
-    - "+.icloud-content.com"
-    - "+.cdn-apple.com"
-    - "+.mzstatic.com"
+    - "+.push.apple.com"
     - "Mijia Cloud"
+    - "dlg.io.mi.com"
+    - "+.oray.com"
+    - "+.sunlogin.net"
+    - "+.crashlytics.com"
 
 # ==================== 入站监听配置 ====================
 # 混合端口（HTTP/HTTPS/SOCKS5 合一）
