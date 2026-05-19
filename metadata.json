@@ -1,7 +1,7 @@
 {
-  "version": "v20260519092532",
-  "generatedAt": "2026-05-19T09:25:32.520Z",
-  "commitSha": "09d1591",
+  "version": "v20260519145918",
+  "generatedAt": "2026-05-19T14:59:18.634Z",
+  "commitSha": "5bd58a7",
   "totalRules": 6595,
   "upstreams": {
     "ai": 73,

@@ -1,7 +1,7 @@
 # Universal Proxy Rules for Clash Meta/Mihomo
-# Generated: 2026-05-19T09:25:32.520Z
-# Version: v20260519092532
-# Commit: 09d1591
+# Generated: 2026-05-19T14:59:18.634Z
+# Version: v20260519145918
+# Commit: 5bd58a7
 #
 mixed-port: 7890
 allow-lan: true
