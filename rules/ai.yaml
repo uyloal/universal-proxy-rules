@@ -1,7 +1,7 @@
 # Name: AI
 # Behavior: domain
 # Count: 51
-# Generated: 2026-05-18T16:10:44.307Z
+# Generated: 2026-05-19T03:26:20.148Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/OpenAI/OpenAI.list
 payload:
   - domain,ai.google.dev
