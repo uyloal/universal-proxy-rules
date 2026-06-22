@@ -1,7 +1,7 @@
 # Name: China
 # Behavior: domain
-# Count: 3723
-# Generated: 2026-06-21T14:07:02.485Z
+# Count: 3721
+# Generated: 2026-06-22T04:04:25.575Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_Classical.yaml
 payload:
   - domain,analytics.strava.com
@@ -1382,8 +1382,6 @@ payload:
   - domain-suffix,funnycore.com
   - domain-suffix,funshion.com
   - domain-suffix,funshion.net
-  - domain-suffix,futu5.com
-  - domain-suffix,futunn.com
   - domain-suffix,fuwai.com
   - domain-suffix,fuwj.com
   - domain-suffix,fxxz.com
