@@ -1,12 +1,12 @@
 {
-  "version": "v20260706032231",
-  "generatedAt": "2026-07-06T03:22:31.144Z",
+  "version": "v20260706152824",
+  "generatedAt": "2026-07-06T15:28:24.557Z",
   "commitSha": "5bd58a7",
-  "totalRules": 6594,
+  "totalRules": 6543,
   "upstreams": {
     "ai": 73,
     "streaming": 564,
-    "streaming-cn": 367,
+    "streaming-cn": 316,
     "social": 157,
     "social-cn": 164,
     "apple": 17,
