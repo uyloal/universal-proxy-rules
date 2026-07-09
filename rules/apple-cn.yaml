@@ -1,7 +1,7 @@
 # Name: Apple CN
 # Behavior: domain
-# Count: 1372
-# Generated: 2026-07-09T02:50:06.312Z
+# Count: 1379
+# Generated: 2026-07-09T14:54:48.482Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppStore/AppStore.yaml
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/iCloud/iCloud.yaml
@@ -23,6 +23,8 @@
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleID/AppleID.yaml
 payload:
   - domain,amp-api.fitness.apple.com
+  - domain,aod-ssl.itunes.apple.com
+  - domain,aod.itunes.apple.com
   - domain,api-glb-sea.smoot.apple.com
   - domain,appldnld-cdn.apple.com.akadns.net
   - domain,appldnld-cdn.origin-apple.com.akadns.net
@@ -31,6 +33,8 @@ payload:
   - domain,appleid.apple.com
   - domain,appleid.cdn-apple.com
   - domain,apps.apple.com
+  - domain,audio-ssl.itunes.apple.com
+  - domain,audio.itunes.apple.com
   - domain,beta.apple.com
   - domain,books.itunes.apple.com
   - domain,cdn.apple-cloudkit.com
@@ -81,6 +85,7 @@ payload:
   - domain,mesu-lb.apple.com.akadns.net
   - domain,mesu.apple.com.akadns.net
   - domain,mesu.apple.com.mwcname.com
+  - domain,mvod.itunes.apple.com
   - domain,news-assets.apple.com
   - domain,news-client-search.apple.com
   - domain,news-client.apple.com
@@ -105,6 +110,7 @@ payload:
   - domain,sandbox.itunes.apple.com
   - domain,skl.apple.com
   - domain,statici.icloud.com
+  - domain,streamingaudio.itunes.apple.com
   - domain,swcdn.apple.com
   - domain,swdist.apple.com
   - domain,swdownload.apple.com
@@ -1215,6 +1221,7 @@ payload:
   - domain-suffix,monstershopcheapbeats.net
   - domain-suffix,moreheadphones.com
   - domain-suffix,ms4dre.com
+  - domain-suffix,music.apple.com
   - domain-suffix,musickit.net
   - domain-suffix,mvod.itunes.apple.com
   - domain-suffix,myappleid.com

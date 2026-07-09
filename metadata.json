@@ -1,8 +1,8 @@
 {
-  "version": "v20260709025002",
-  "generatedAt": "2026-07-09T02:50:02.503Z",
+  "version": "v20260709145447",
+  "generatedAt": "2026-07-09T14:54:47.808Z",
   "commitSha": "5bd58a7",
-  "totalRules": 6587,
+  "totalRules": 6594,
   "upstreams": {
     "ai": 73,
     "streaming": 564,
@@ -10,7 +10,7 @@
     "social": 157,
     "social-cn": 164,
     "apple": 17,
-    "apple-cn": 1372,
+    "apple-cn": 1379,
     "china": 3721,
     "lan": 140,
     "custom-direct": 12
