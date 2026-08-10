@@ -1,7 +1,7 @@
 # Name: China
 # Behavior: domain
 # Count: 3721
-# Generated: 2026-08-10T01:39:05.354Z
+# Generated: 2026-08-10T13:02:34.145Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_Classical.yaml
 payload:
   - domain,analytics.strava.com
