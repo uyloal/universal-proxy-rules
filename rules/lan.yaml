@@ -1,7 +1,7 @@
 # Name: LAN
 # Behavior: ipcidr
 # Count: 140
-# Generated: 2026-08-24T01:09:04.559Z
+# Generated: 2026-08-24T12:43:56.792Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml
 payload:
   - domain,asusrouter.com
