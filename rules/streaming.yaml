@@ -1,7 +1,7 @@
 # Name: Streaming
 # Behavior: domain
-# Count: 564
-# Generated: 2026-09-04T15:45:57.077Z
+# Count: 534
+# Generated: 2026-09-05T02:59:15.713Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTubeMusic/YouTubeMusic.yaml
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.yaml
@@ -11,27 +11,20 @@
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.yaml
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml
 payload:
-  - domain,audio4-ak-spotify-com.akamaized.net
-  - domain,cdn-spotify-experiments.conductrics.com
   - domain,e13252.dscg.akamaiedge.net
   - domain,h-netflix.online-metrix.net
-  - domain,heads-ak-spotify-com.akamaized.net
   - domain,lf16-effectcdn.byteeffecttos-g.com
   - domain,lf16-pkgcdn.pitaya-clientai.com
   - domain,live-mediashield-ava-hulustream-com.akamaized.net
   - domain,music.youtube.com
   - domain,netflix.com.edgesuite.net
   - domain,p16-tiktokcdn-com.akamaized.net
-  - domain,spotify.com.edgesuite.net
-  - domain,spotify.map.fastly.net
-  - domain,spotify.map.fastlylb.net
   - domain,trae-api-sg.mchost.guru
   - domain-keyword,apiproxy-device-prod-nlb-
   - domain-keyword,dualstack.apiproxy-
   - domain-keyword,dualstack.ichnaea-web-
   - domain-keyword,musical.ly
   - domain-keyword,netflixdnstest
-  - domain-keyword,spotify
   - domain-keyword,tiktok
   - domain-keyword,youtube
   - domain-suffix,112263.com
@@ -45,7 +38,6 @@ payload:
   - domain-suffix,adobedtm.com
   - domain-suffix,adventuresbydisney.com
   - domain-suffix,assetshuluimcom-a.akamaihd.net
-  - domain-suffix,audio-ak-spotify-com.akamaized.net
   - domain-suffix,babble.com
   - domain-suffix,babyzone.com
   - domain-suffix,bam.nr-data.net
@@ -53,7 +45,6 @@ payload:
   - domain-suffix,bcbolthboa-a.akamaihd.net
   - domain-suffix,beautyandthebeastmusical.co.uk
   - domain-suffix,braze.com
-  - domain-suffix,byspotify.com
   - domain-suffix,bytedapm.com
   - domain-suffix,bytegecko-i18n.com
   - domain-suffix,byteintlapi.com
@@ -221,7 +212,6 @@ payload:
   - domain-suffix,hbomaxdash.s.llnwi.net
   - domain-suffix,hbonow.com
   - domain-suffix,hbounify-prod.evergent.com
-  - domain-suffix,heads4-ak-spotify-com.akamaized.net
   - domain-suffix,hjholdings.jp
   - domain-suffix,hooloo.tv
   - domain-suffix,hoolu.com
@@ -333,29 +323,13 @@ payload:
   - domain-suffix,players.brightcove.net
   - domain-suffix,playmation.com
   - domain-suffix,prod.hjholdings.tv
-  - domain-suffix,pscdn.co
   - domain-suffix,registerhulu.com
-  - domain-suffix,scdn.co
   - domain-suffix,sgpstatp.com
   - domain-suffix,shopdisney.com
   - domain-suffix,shops-disney.com
   - domain-suffix,snssdk.com
   - domain-suffix,sorcerersarena.com
   - domain-suffix,spaindisney.com
-  - domain-suffix,spoti.fi
-  - domain-suffix,spotify-com.akamaized.net
-  - domain-suffix,spotify-everywhere.com
-  - domain-suffix,spotify.app.link
-  - domain-suffix,spotify.com
-  - domain-suffix,spotify.design
-  - domain-suffix,spotifycdn.com
-  - domain-suffix,spotifycdn.net
-  - domain-suffix,spotifycharts.com
-  - domain-suffix,spotifycodes.com
-  - domain-suffix,spotifyforbrands.com
-  - domain-suffix,spotifyjobs.com
-  - domain-suffix,spotifynewsroom.jp
-  - domain-suffix,spotilocal.com
   - domain-suffix,star-brasil.com
   - domain-suffix,star-latam.com
   - domain-suffix,starott.com
@@ -379,7 +353,6 @@ payload:
   - domain-suffix,tiktokmusic.app
   - domain-suffix,tiktokv.com
   - domain-suffix,tiktokv.us
-  - domain-suffix,tospotify.com
   - domain-suffix,trae.ai
   - domain-suffix,ttwebview.com
   - domain-suffix,us-west-2.amazonaws.com
@@ -563,15 +536,12 @@ payload:
   - domain-suffix,youtubemobilesupport.com
   - domain-suffix,yt.be
   - domain-suffix,ytimg.com
-  - ip-cidr,104.154.127.126/32
   - ip-cidr,172.110.32.0/21
   - ip-cidr,216.73.80.0/20
-  - ip-cidr,35.186.224.47/32
   - ip-cidr6,2620:120:e000::/40
   - process-name,com.disney.datg.videoplatforms.android.abc
   - process-name,com.disney.disneyplus
   - process-name,com.hbo.hbonow
   - process-name,com.hulu.plus
   - process-name,com.netflix.mediaclient
-  - process-name,com.spotify.music
   - process-name,com.zhiliaoapp.musically
