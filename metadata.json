@@ -1,11 +1,11 @@
 {
-  "version": "v20261015161925",
-  "generatedAt": "2026-10-15T16:19:25.469Z",
+  "version": "v20261016031019",
+  "generatedAt": "2026-10-16T03:10:19.090Z",
   "commitSha": "5bd58a7",
-  "totalRules": 6594,
+  "totalRules": 6597,
   "upstreams": {
     "ai": 73,
-    "streaming": 564,
+    "streaming": 567,
     "streaming-cn": 367,
     "social": 157,
     "social-cn": 164,
