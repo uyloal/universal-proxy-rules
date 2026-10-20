@@ -1,12 +1,14 @@
 # Name: LAN
 # Behavior: ipcidr
-# Count: 140
-# Generated: 2026-10-19T18:20:35.072Z
+# Count: 142
+# Generated: 2026-10-20T03:26:38.222Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml
 payload:
   - domain,asusrouter.com
   - domain,instant.arubanetworks.com
   - domain,local.adguard.org
+  - domain,localhost.weixin.qq.com
+  - domain,localhost.work.weixin.qq.com
   - domain,oasisauth.h3c.com
   - domain,router.asus.com
   - domain,setmeup.arubanetworks.com
