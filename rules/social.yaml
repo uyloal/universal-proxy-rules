@@ -1,7 +1,7 @@
 # Name: Social
 # Behavior: domain
-# Count: 145
-# Generated: 2026-11-23T05:48:56.494Z
+# Count: 157
+# Generated: 2026-11-23T23:23:29.114Z
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.yaml
 # Source: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Discord/Discord.yaml
@@ -13,6 +13,9 @@
 payload:
   - domain,api.imem.app
   - domain,api.swiftgram.app
+  - domain,e122475.dscg.akamaiedge.net
+  - domain,licdn.cn.cdn20.com
+  - domain,linkedin.sc.omtrdc.net
   - domain-keyword,instagram
   - domain-keyword,nicegram
   - domain-keyword,twitter
@@ -20,6 +23,7 @@ payload:
   - domain-suffix,airhorn.solutions
   - domain-suffix,airhornbot.com
   - domain-suffix,bigbeans.solutions
+  - domain-suffix,bizographics.com
   - domain-suffix,cdn-telegram.org
   - domain-suffix,cdninstagram.com
   - domain-suffix,cms-twdigitalassets.com
@@ -54,13 +58,21 @@ payload:
   - domain-suffix,hammerandchisel.ssl.zendesk.com
   - domain-suffix,instagr.am
   - domain-suffix,instagram.com
+  - domain-suffix,l-0005.dc-msedge.net
+  - domain-suffix,l-0005.l-msedge.net
   - domain-suffix,legra.ph
+  - domain-suffix,licdn.cn
+  - domain-suffix,licdn.com
   - domain-suffix,lin.ee
   - domain-suffix,line-apps.com
   - domain-suffix,line-cdn.net
   - domain-suffix,line-scdn.net
   - domain-suffix,line.me
   - domain-suffix,linecorp.com
+  - domain-suffix,linkedin.at
+  - domain-suffix,linkedin.cn
+  - domain-suffix,linkedin.com
+  - domain-suffix,lnkd.in
   - domain-suffix,mbrx.app
   - domain-suffix,naver.jp
   - domain-suffix,nhncorp.jp
